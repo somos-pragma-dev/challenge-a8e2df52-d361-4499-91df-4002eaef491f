@@ -1,237 +1,184 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/constants/app_constants.dart';
-import '../bloc/sync/sync_bloc.dart';
-import '../bloc/sync/sync_state.dart';
 
-enum SyncIndicatorStyle { compact, detailed, animated }
+enum SyncStatusType {
+  synced,
+  pending,
+  conflict,
+}
 
 class SyncIndicator extends StatelessWidget {
-  final SyncIndicatorStyle style;
-  final bool showLabel;
+  final SyncStatusType status;
   final double size;
+  final bool showLabel;
+  final bool animate;
 
   const SyncIndicator({
     super.key,
-    this.style = SyncIndicatorStyle.compact,
-    this.showLabel = true,
+    required this.status,
     this.size = 24,
+    this.showLabel = false,
+    this.animate = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SyncBloc, SyncState>(
-      builder: (context, state) {
-        switch (style) {
-          case SyncIndicatorStyle.compact:
-            return _buildCompactIndicator(state);
-          case SyncIndicatorStyle.detailed:
-            return _buildDetailedIndicator(context, state);
-          case SyncIndicatorStyle.animated:
-            return _buildAnimatedIndicator(state);
-        }
-      },
-    );
+    final config = _getStatusConfig();
+
+    if (showLabel) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildIcon(config),
+          const SizedBox(width: 8),
+          Text(
+            config.label,
+            style: TextStyle(
+              color: config.color,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      );
+    }
+
+    return _buildIcon(config);
   }
 
-  Widget _buildCompactIndicator(SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
+  Widget _buildIcon(StatusConfig config) {
+    if (animate && status == SyncStatusType.pending) {
+      return SizedBox(
+        width: size,
+        height: size,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(config.color),
+        ),
+      );
+    }
+
     return Tooltip(
-      message: tooltip,
-      child: Icon(
-        icon,
-        color: color,
-        size: size,
+      message: config.tooltip,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: config.color.withValues(alpha: 0.15),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          config.icon,
+          size: size * 0.6,
+          color: config.color,
+        ),
       ),
     );
   }
 
-  Widget _buildDetailedIndicator(BuildContext context, SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
-    final pendingCount = state is SyncInProgress
-        ? (state as SyncInProgress).pendingCount
-        : 0;
-    final failedCount = state is SyncFailed
-        ? (state as SyncFailed).failedCount
-        : 0;
+  StatusConfig _getStatusConfig() {
+    switch (status) {
+      case SyncStatusType.synced:
+        return StatusConfig(
+          icon: Icons.cloud_done,
+          color: const Color(0xFF4CAF50),
+          label: 'Sincronizado',
+          tooltip: 'Datos sincronizados con el servidor',
+        );
+      case SyncStatusType.pending:
+        return StatusConfig(
+          icon: Icons.cloud_upload,
+          color: const Color(0xFFFF9800),
+          label: 'Pendiente',
+          tooltip: 'Esperando para sincronizar',
+        );
+      case SyncStatusType.conflict:
+        return StatusConfig(
+          icon: Icons.warning,
+          color: const Color(0xFFF44336),
+          label: 'Conflicto',
+          tooltip: 'Conflicto de datos detectado',
+        );
+    }
+  }
+}
 
+class StatusConfig {
+  final IconData icon;
+  final Color color;
+  final String label;
+  final String tooltip;
+
+  const StatusConfig({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.tooltip,
+  });
+}
+
+class SyncStatusBadge extends StatelessWidget {
+  final int pendingCount;
+  final int syncedCount;
+  final int conflictCount;
+
+  const SyncStatusBadge({
+    super.key,
+    required this.pendingCount,
+    required this.syncedCount,
+    required this.conflictCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: Colors.grey[100],
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 18),
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                tooltip,
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                ),
-              ),
-              if (pendingCount > 0 || failedCount > 0)
-                Text(
-                  '${pendingCount > 0 ? "$pendingCount pending" : ""}'
-                  '${pendingCount > 0 && failedCount > 0 ? ", " : ""}'
-                  '${failedCount > 0 ? "$failedCount failed" : ""}',
-                  style: TextStyle(
-                    color: color.withValues(alpha: 0.8),
-                    fontSize: 10,
-                  ),
-                ),
-            ],
+          _buildCountBadge(
+            count: pendingCount,
+            status: SyncStatusType.pending,
           ),
+          const SizedBox(width: 8),
+          _buildCountBadge(
+            count: syncedCount,
+            status: SyncStatusType.synced,
+          ),
+          if (conflictCount > 0) ...[
+            const SizedBox(width: 8),
+            _buildCountBadge(
+              count: conflictCount,
+              status: SyncStatusType.conflict,
+            ),
+          ],
         ],
       ),
     );
   }
 
-  Widget _buildAnimatedIndicator(SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
-    final isSyncing = state is SyncInProgress;
-
-    return Tooltip(
-      message: tooltip,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        child: isSyncing
-            ? _AnimatedSyncIcon(color: color, size: size)
-            : Icon(icon, color: color, size: size),
-      ),
-    );
-  }
-
-  (IconData, Color, String) _getSyncData(SyncState state) {
-    if (state is SyncInitial) {
-      return (
-        Icons.cloud_queue,
-        Colors.grey,
-        'Not synced',
-      );
-    } else if (state is SyncInProgress) {
-      return (
-        Icons.sync,
-        AppConstants.primaryColor,
-        'Syncing... ${state.pendingCount} items',
-      );
-    } else if (state is SyncSuccess) {
-      return (
-        Icons.cloud_done,
-        Colors.green,
-        'Synced successfully',
-      );
-    } else if (state is SyncFailed) {
-      return (
-        Icons.cloud_off,
-        AppConstants.errorColor,
-        'Sync failed - ${state.failedCount} errors',
-      );
-    } else if (state is SyncOffline) {
-      return (
-        Icons.cloud_off,
-        Colors.orange,
-        'Offline - changes saved locally',
-      );
-    } else if (state is SyncConflict) {
-      return (
-        Icons.warning_amber_rounded,
-        Colors.purple,
-        '${state.conflictCount} conflicts need resolution',
-      );
-    }
-    return (
-      Icons.cloud_queue,
-      Colors.grey,
-      'Unknown status',
-    );
-  }
-}
-
-class _AnimatedSyncIcon extends StatefulWidget {
-  final Color color;
-  final double size;
-
-  const _AnimatedSyncIcon({required this.color, required this.size});
-
-  @override
-  State<_AnimatedSyncIcon> createState() => _AnimatedSyncIconState();
-}
-
-class _AnimatedSyncIconState extends State<_AnimatedSyncIcon>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RotationTransition(
-      turns: _controller,
-      child: Icon(
-        Icons.sync,
-        color: widget.color,
-        size: widget.size,
-      ),
-    );
-  }
-}
-
-class SyncStatusBadge extends StatelessWidget {
-  final String syncStatus;
-  final bool showCount;
-  final int? count;
-
-  const SyncStatusBadge({
-    super.key,
-    required this.syncStatus,
-    this.showCount = false,
-    this.count,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final (icon, color, label) = _getStatusData();
-
+  Widget _buildCountBadge({required int count, required SyncStatusType status}) {
+    final config = _getConfigForStatus(status);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
+        color: config.color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 14),
+          Icon(config.icon, size: 14, color: config.color),
           const SizedBox(width: 4),
           Text(
-            showCount && count != null ? '$label ($count)' : label,
+            count.toString(),
             style: TextStyle(
-              color: color,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
+              color: config.color,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
           ),
         ],
@@ -239,76 +186,29 @@ class SyncStatusBadge extends StatelessWidget {
     );
   }
 
-  (IconData, Color, String) _getStatusData() {
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        return (Icons.check_circle, Colors.green, 'Synced');
-      case AppConstants.syncStatusPending:
-        return (Icons.schedule, Colors.orange, 'Pending');
-      case AppConstants.syncStatusFailed:
-        return (Icons.error, AppConstants.errorColor, 'Failed');
-      case AppConstants.syncStatusConflict:
-        return (Icons.warning, Colors.purple, 'Conflict');
-      default:
-        return (Icons.help, Colors.grey, 'Unknown');
+  StatusConfig _getConfigForStatus(SyncStatusType status) {
+    switch (status) {
+      case SyncStatusType.synced:
+        return const StatusConfig(
+          icon: Icons.cloud_done,
+          color: Color(0xFF4CAF50),
+          label: 'Sincronizado',
+          tooltip: '',
+        );
+      case SyncStatusType.pending:
+        return const StatusConfig(
+          icon: Icons.cloud_upload,
+          color: Color(0xFFFF9800),
+          label: 'Pendiente',
+          tooltip: '',
+        );
+      case SyncStatusType.conflict:
+        return const StatusConfig(
+          icon: Icons.warning,
+          color: Color(0xFFF44336),
+          label: 'Conflicto',
+          tooltip: '',
+        );
     }
-  }
-}
-
-class SyncProgressIndicator extends StatelessWidget {
-  final double progress;
-  final String? label;
-  final bool showPercentage;
-
-  const SyncProgressIndicator({
-    super.key,
-    required this.progress,
-    this.label,
-    this.showPercentage = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (label != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  label!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                if (showPercentage)
-                  Text(
-                    '${(progress * 100).toInt()}%',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: progress,
-            backgroundColor: Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(
-              AppConstants.primaryColor,
-            ),
-            minHeight: 6,
-          ),
-        ),
-      ],
-    );
   }
 }

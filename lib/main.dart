@@ -1,111 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:offline_field_app/core/constants/app_constants.dart';
-import 'package:offline_field_app/core/network/network_info.dart';
-import 'package:offline_field_app/data/datasources/local/database_helper.dart';
-import 'package:offline_field_app/data/datasources/local/transaction_local_datasource.dart';
-import 'package:offline_field_app/data/datasources/local/sync_local_datasource.dart';
-import 'package:offline_field_app/data/repositories/transaction_repository_impl.dart';
-import 'package:offline_field_app/data/repositories/sync_repository_impl.dart';
-import 'package:offline_field_app/domain/repositories/transaction_repository.dart';
-import 'package:offline_field_app/domain/repositories/sync_repository.dart';
-import 'package:offline_field_app/domain/usecases/create_transaction.dart';
-import 'package:offline_field_app/domain/usecases/get_pending_transactions.dart';
-import 'package:offline_field_app/domain/usecases/sync_transactions.dart';
-import 'package:offline_field_app/domain/usecases/resolve_conflict.dart';
-import 'package:offline_field_app/presentation/providers/transaction_provider.dart';
-import 'package:offline_field_app/presentation/providers/sync_provider.dart';
-import 'package:offline_field_app/presentation/screens/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:drift/drift.dart';
+import 'package:drift_flutter/drift_flutter.dart';
+
+import 'core/config/app_config.dart';
+import 'core/database/app_database.dart';
+import 'core/network/connectivity_service.dart';
+import 'core/error/failures.dart';
+import 'domain/repositories/client_repository.dart';
+import 'domain/repositories/credit_application_repository.dart';
+import 'data/repositories/client_repository_impl.dart';
+import 'data/repositories/credit_application_repository_impl.dart';
+import 'presentation/screens/client_list_screen.dart';
+import 'presentation/viewmodels/client_viewmodel.dart';
+import 'presentation/viewmodels/sync_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  final databaseHelper = DatabaseHelper();
-  await databaseHelper.database;
+  final database = AppDatabase.instance;
+  final connectivityService = ConnectivityService();
+  final appConfig = AppConfig();
   
-  runApp(const OfflineFieldApp());
+  await database.initialize();
+  
+  final getIt = GetIt.instance;
+  getIt.registerSingleton<AppDatabase>(database);
+  getIt.registerSingleton<ConnectivityService>(connectivityService);
+  getIt.registerSingleton<AppConfig>(appConfig);
+  
+  getIt.registerLazySingleton<ClientRepository>(
+    () => ClientRepositoryImpl(
+      localDataSource: getIt(),
+      remoteDataSource: getIt(),
+      connectivityService: getIt(),
+    ),
+  );
+  
+  getIt.registerLazySingleton<CreditApplicationRepository>(
+    () => CreditApplicationRepositoryImpl(
+      localDataSource: getIt(),
+      remoteDataSource: getIt(),
+      connectivityService: getIt(),
+    ),
+  );
+  
+  runApp(const CreditFieldApp());
 }
 
-class OfflineFieldApp extends StatelessWidget {
-  const OfflineFieldApp({super.key});
+class CreditFieldApp extends StatelessWidget {
+  const CreditFieldApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        Provider<DatabaseHelper>(
-          create: (_) => DatabaseHelper(),
-        ),
-        Provider<TransactionLocalDataSource>(
-          create: (context) => TransactionLocalDataSourceImpl(
-            databaseHelper: context.read<DatabaseHelper>(),
+        BlocProvider<ClientViewModel>(
+          create: (context) => ClientViewModel(
+            clientRepository: GetIt.instance<ClientRepository>(),
+            connectivityService: GetIt.instance<ConnectivityService>(),
           ),
         ),
-        Provider<SyncLocalDataSource>(
-          create: (context) => SyncLocalDataSourceImpl(
-            databaseHelper: context.read<DatabaseHelper>(),
-          ),
-        ),
-        Provider<TransactionRepository>(
-          create: (context) => TransactionRepositoryImpl(
-            localDataSource: context.read<TransactionLocalDataSource>(),
-            syncLocalDataSource: context.read<SyncLocalDataSource>(),
-          ),
-        ),
-        Provider<SyncRepository>(
-          create: (context) => SyncRepositoryImpl(
-            localDataSource: context.read<SyncLocalDataSource>(),
-          ),
-        ),
-        Provider<CreateTransaction>(
-          create: (context) => CreateTransaction(
-            repository: context.read<TransactionRepository>(),
-          ),
-        ),
-        Provider<GetPendingTransactions>(
-          create: (context) => GetPendingTransactions(
-            repository: context.read<TransactionRepository>(),
-          ),
-        ),
-        Provider<SyncTransactions>(
-          create: (context) => SyncTransactions(
-            transactionRepository: context.read<TransactionRepository>(),
-            syncRepository: context.read<SyncRepository>(),
-          ),
-        ),
-        Provider<ResolveConflict>(
-          create: (context) => ResolveConflict(
-            syncRepository: context.read<SyncRepository>(),
-          ),
-        ),
-        StreamProvider<NetworkStatus>(
-          create: (context) => NetworkInfoImpl().onConnectivityChanged,
-          initialData: NetworkStatus.unknown,
-        ),
-        ChangeNotifierProvider<TransactionProvider>(
-          create: (context) => TransactionProvider(
-            createTransaction: context.read<CreateTransaction>(),
-            getPendingTransactions: context.read<GetPendingTransactions>(),
-          ),
-        ),
-        ChangeNotifierProvider<SyncProvider>(
-          create: (context) => SyncProvider(
-            syncTransactions: context.read<SyncTransactions>(),
-            resolveConflict: context.read<ResolveConflict>(),
+        BlocProvider<SyncViewModel>(
+          create: (context) => SyncViewModel(
+            clientRepository: GetIt.instance<ClientRepository>(),
+            creditApplicationRepository: GetIt.instance<CreditApplicationRepository>(),
+            connectivityService: GetIt.instance<ConnectivityService>(),
           ),
         ),
       ],
       child: MaterialApp(
-        title: AppConstants.appName,
-        debugShowCheckedModeBanner: false,
+        title: 'Campo de Crédito',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: AppConstants.primaryColor,
-            brightness: Brightness.light,
-          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home: const ClientListScreen(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

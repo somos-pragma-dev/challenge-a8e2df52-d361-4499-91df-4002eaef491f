@@ -1,15 +1,15 @@
-# Implementación de una app de campo offline-first
+# Implementación de una aplicación offline-first
 
-La aplicación de campo debe permitir a los agentes realizar operaciones de manera eficiente tanto en línea como sin conexión. Los agentes deben poder registrar transacciones, consultar datos y sincronizar la información cuando vuelvan a tener conectividad. La aplicación debe manejar la sincronización de datos de manera idempotente para evitar duplicados y mantener la consistencia de la información.
+La aplicación de campo de una entidad financiera necesita operar sin conexión a internet de manera eficiente. La app debe sincronizar datos cuando la conexión sea restablecida. Los usuarios del campo (agentes de crédito) deben poder capturar información de clientes y solicitudes de crédito sin depender de la conectividad. La app debe asegurar que los datos capturados offline se envíen al servidor una vez que la conexión esté disponible, manejando conflictos y asegurando la integridad de los datos.
 
 ## Informacion General
 
 | Campo | Valor |
 |-------|-------|
 | **Tema** | Arquitectura offline-first en Flutter |
-| **Nivel** | senior-l2 |
+| **Nivel** | semi-senior |
 | **Tipo** | practical |
-| **Tiempo estimado** | 40 horas |
+| **Tiempo estimado** | 3 semanas |
 
 ## Fases del Reto
 
@@ -38,85 +38,86 @@ La aplicación de campo debe permitir a los agentes realizar operaciones de mane
 
 </details>
 
-### Fase 1: Diseño del modelo de datos y persistencia local
+### Fase 1: Diseño del modelo de datos offline
 
-**Objetivo:** Definir el modelo de datos y la estrategia de persistencia local para la aplicación.
+**Objetivo:** Definir la estructura de datos que permitirá la operación offline y la sincronización posterior.
 
-**Tiempo estimado:** 10 horas
+**Tiempo estimado:** 1 semana
 
 **Instrucciones:**
 
 - Identificar los datos que deben ser almacenados localmente.
-- Definir el modelo de datos para las transacciones y consultas.
-- Establecer una estrategia para la persistencia local que garantice la idempotencia y la consistencia.
+- Definir el esquema de la base de datos local.
+- Establecer las reglas de sincronización de datos.
 
-**Entregable:** Modelo de datos y estrategia de persistencia local documentados.
+**Entregable:** Esquema de la base de datos local y reglas de sincronización definidas.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Considerar el uso de un sistema de base de datos local.
-- Evaluar diferentes opciones para la persistencia de datos.
+- Considerar la frecuencia de cambios en los datos.
+- Evaluar la necesidad de versionado de datos.
 
 </details>
 
-### Fase 2: Implementación de la lógica de negocio y widgets
+### Fase 2: Implementación de la lógica de sincronización
 
-**Objetivo:** Implementar la lógica de negocio y los widgets necesarios para la interacción del usuario.
+**Objetivo:** Desarrollar la lógica que permita la sincronización de datos entre la aplicación y el servidor.
 
-**Tiempo estimado:** 15 horas
+**Tiempo estimado:** 1 semana
 
 **Instrucciones:**
 
-- Desarrollar los widgets para la entrada y visualización de datos.
-- Implementar la lógica de negocio para el registro y consulta de transacciones.
-- Asegurar que la aplicación funcione correctamente tanto en línea como sin conexión.
+- Implementar la captura de datos localmente.
+- Crear la lógica para detectar cambios en la conectividad.
+- Desarrollar el proceso de sincronización de datos con el servidor.
 
-**Entregable:** Widgets y lógica de negocio implementados y funcionales.
+**Entregable:** Lógica de sincronización implementada y funcional.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Utilizar patrones de diseño adecuados para la separación de la lógica de negocio y la interfaz de usuario.
-- Implementar mecanismos para manejar la conectividad y la sincronización de datos.
+- Utilizar mecanismos de detención y reintento para manejar la sincronización.
+- Implementar un sistema de versionado para resolver conflictos de datos.
 
 </details>
 
-### Fase 3: Sincronización de datos y manejo de conflictos
+### Fase 3: Optimización y pruebas de la aplicación offline-first
 
-**Objetivo:** Implementar la sincronización de datos y el manejo de conflictos cuando la aplicación vuelve a tener conectividad.
+**Objetivo:** Optimizar el rendimiento de la aplicación y realizar pruebas exhaustivas para asegurar su funcionamiento offline y en línea.
 
-**Tiempo estimado:** 10 horas
+**Tiempo estimado:** 1 semana
 
 **Instrucciones:**
 
-- Desarrollar la lógica para la sincronización de datos con el servidor.
-- Implementar mecanismos para manejar conflictos de datos durante la sincronización.
-- Asegurar que la sincronización sea idempotente y no genere duplicados.
+- Optimizar la base de datos local para mejorar el rendimiento.
+- Realizar pruebas unitarias y de integración para la lógica de sincronización.
+- Simular escenarios de conectividad intermitente para probar la robustez de la aplicación.
 
-**Entregable:** Lógica de sincronización de datos y manejo de conflictos implementados.
+**Entregable:** Aplicación optimizada y pruebas completadas con reporte de resultados.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Utilizar técnicas de sincronización optimista o pesimista.
-- Implementar mecanismos para la resolución de conflictos de datos.
+- Utilizar herramientas de profiling para identificar cuellos de botella.
+- Implementar pruebas automáticas para asegurar la calidad del código.
 
 </details>
 
 ## Dimensiones Evaluadas
 
-- **queEs**: ¿Qué es la arquitectura offline-first y por qué es importante en una aplicación de campo?
-- **paraQueSirve**: ¿Para qué sirve la separación de la lógica de negocio y la interfaz de usuario en una aplicación Flutter?
-- **comoSeUsa**: ¿Cómo se usa un sistema de base de datos local para la persistencia de datos en una aplicación Flutter?
-- **erroresComunes**: ¿Cuáles son los errores comunes al implementar una aplicación offline-first y cómo se pueden evitar?
-- **queDecisionesImplica**: ¿Qué decisiones implica la implementación de la sincronización de datos y el manejo de conflictos en una aplicación offline-first?
+- **queEs**: ¿Qué es una arquitectura offline-first y por qué es importante para una aplicación de campo?
+- **paraQueSirve**: ¿Cómo se utiliza una arquitectura offline-first para mejorar la experiencia del usuario en una aplicación de campo?
+- **comoSeUsa**: ¿Cómo se implementa la sincronización de datos en una arquitectura offline-first?
+- **erroresComunes**: ¿Cuáles son los errores comunes al implementar una arquitectura offline-first y cómo se pueden evitar?
+- **queDecisionesImplica**: ¿Qué decisiones de diseño implica una arquitectura offline-first y cómo afectan al rendimiento y la usabilidad de la aplicación?
 
 ## Criterios de Evaluacion
 
-- Definición clara del modelo de datos y la estrategia de persistencia local.
-- Implementación funcional de los widgets y la lógica de negocio.
-- Implementación efectiva de la sincronización de datos y el manejo de conflictos.
+- Definición clara del modelo de datos offline.
+- Implementación funcional de la lógica de sincronización.
+- Optimización del rendimiento de la aplicación.
+- Pruebas exhaustivas de la aplicación en diferentes escenarios de conectividad.
 
 ## Como trabajar con un asistente de IA
 

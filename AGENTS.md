@@ -4,17 +4,17 @@ Instrucciones para el agente de IA que abra este repositorio (Claude Code, Curso
 
 ## Que es este repositorio
 
-Es el codigo base de un reto de aprendizaje de Pragma: **Implementación de una app de campo offline-first**.
+Es el codigo base de un reto de aprendizaje de Pragma: **Implementación de una aplicación offline-first**.
 
 | | |
 |---|---|
 | Tema | Arquitectura offline-first en Flutter |
-| Nivel | senior-l2 |
+| Nivel | semi-senior |
 | Chapter | Móvil |
 | Especialidad | Flutter |
-| Stack | Dart 3.6 / Flutter 3.27 |
+| Stack | Dart / Flutter 3.27 |
 | Patron arquitectonico | clean_architecture |
-| Tiempo estimado | 40 horas |
+| Tiempo estimado | 3 semanas |
 
 ## Tu tarea
 
@@ -34,9 +34,9 @@ En orden:
 
 No resuelvas nada de esto:
 
-- **Fase 1 — Diseño del modelo de datos y persistencia local**: Modelo de datos y estrategia de persistencia local documentados.
-- **Fase 2 — Implementación de la lógica de negocio y widgets**: Widgets y lógica de negocio implementados y funcionales.
-- **Fase 3 — Sincronización de datos y manejo de conflictos**: Lógica de sincronización de datos y manejo de conflictos implementados.
+- **Fase 1 — Diseño del modelo de datos offline**: Esquema de la base de datos local y reglas de sincronización definidas.
+- **Fase 2 — Implementación de la lógica de sincronización**: Lógica de sincronización implementada y funcional.
+- **Fase 3 — Optimización y pruebas de la aplicación offline-first**: Aplicación optimizada y pruebas completadas con reporte de resultados.
 
 Distincion operativa:
 
@@ -51,84 +51,130 @@ Sin esto el proyecto no compila ni arranca. **Es tu trabajo crearlo**, y no toca
 
 - [ ] **android/app/src/main/AndroidManifest.xml** — Sin el manifest embebido de Android, flutter build/run no tiene target de plataforma y no puede empaquetar el APK.
 
-### 2. Archivos que la arquitectura declara (1 de 35)
+### 2. Archivos que la arquitectura declara (1 de 36)
 
 La propuesta arquitectonica del reto los lista y no llegaron al repo. Crealos con implementacion real, respetando la capa en la que viven:
 
-- [ ] `lib/data/datasources/local/transaction_local_datasource.dart`
+- [ ] `lib/sync/services/sync_coordinator.dart`
 
-### 3. Referencias colgando (4)
+### 3. Referencias colgando (22)
 
 Salieron de un analisis estatico del codigo que SI esta en el repo. Cada una rompe la compilacion:
 
-- [ ] `lib/domain/usecases/resolve_conflict.dart` — `TransactionRepository.getById`
-      Se invoca `getById` sobre `TransactionRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/datasources/remote/transaction_remote_datasource.dart` — `TransactionModel.toServerMap`
-      Se invoca `toServerMap` sobre `TransactionModel`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getSyncHistory`
-      Se invoca `getSyncHistory` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getPendingOperationsCount`
-      Se invoca `getPendingOperationsCount` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/sync_clients.dart` — `ClientRepository.uploadClientToServer`
+      Se invoca `uploadClientToServer` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/sync_clients.dart` — `ClientRepository.updateClientSyncStatus`
+      Se invoca `updateClientSyncStatus` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/resolve_conflicts.dart` — `ClientRepository.getConflictedClients`
+      Se invoca `getConflictedClients` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/resolve_conflicts.dart` — `ClientRepository.getClientFromServer`
+      Se invoca `getClientFromServer` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/resolve_conflicts.dart` — `CreditApplicationRepository.getConflictedApplications`
+      Se invoca `getConflictedApplications` sobre `CreditApplicationRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/screens/application_form_screen.dart` — `ClientRepository.getAllClients`
+      Se invoca `getAllClients` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/screens/application_form_screen.dart` — `CreditApplicationRepository.saveApplication`
+      Se invoca `saveApplication` sobre `CreditApplicationRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/client_viewmodel.dart` — `ClientRepository.searchClients`
+      Se invoca `searchClients` sobre `ClientRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.syncPendingChanges`
+      Se invoca `syncPendingChanges` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.cancelSync`
+      Se invoca `cancelSync` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.getPendingItemsCount`
+      Se invoca `getPendingItemsCount` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.getConflicts`
+      Se invoca `getConflicts` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.getLastSyncTime`
+      Se invoca `getLastSyncTime` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.resolveConflict`
+      Se invoca `resolveConflict` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.forceSyncAll`
+      Se invoca `forceSyncAll` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/viewmodels/sync_viewmodel.dart` — `SyncCoordinator.clearSyncHistory`
+      Se invoca `clearSyncHistory` sobre `SyncCoordinator`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockAppDatabase.getPendingClients`
+      Se invoca `getPendingClients` sobre `MockAppDatabase`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockAppDatabase.updateClientsSyncStatus`
+      Se invoca `updateClientsSyncStatus` sobre `MockAppDatabase`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockAppDatabase.getPendingCreditApplications`
+      Se invoca `getPendingCreditApplications` sobre `MockAppDatabase`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockAppDatabase.updateCreditApplicationsSyncStatus`
+      Se invoca `updateCreditApplicationsSyncStatus` sobre `MockAppDatabase`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockConnectivityService.checkConnectivity`
+      Se invoca `checkConnectivity` sobre `MockConnectivityService`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `test/unit/sync_test.dart` — `MockConnectivityService.startListening`
+      Se invoca `startListening` sobre `MockConnectivityService`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
 
-### Presentes (34)
+### Presentes (39)
 
 - `pubspec.yaml`
 - `lib/main.dart`
-- `lib/core/constants/app_constants.dart`
-- `lib/core/errors/failures.dart`
-- `lib/core/errors/exceptions.dart`
-- `lib/core/network/network_info.dart`
+- `lib/core/config/app_config.dart`
 - `lib/core/network/connectivity_service.dart`
-- `lib/core/sync/sync_engine.dart`
-- `lib/core/sync/conflict_resolver.dart`
-- `lib/core/sync/idempotency_manager.dart`
-- `lib/domain/entities/base_entity.dart`
-- `lib/domain/entities/transaction.dart`
-- `lib/domain/entities/sync_record.dart`
-- `lib/domain/repositories/transaction_repository.dart`
-- `lib/domain/repositories/sync_repository.dart`
-- `lib/domain/usecases/create_transaction.dart`
-- `lib/domain/usecases/get_pending_transactions.dart`
-- `lib/domain/usecases/sync_transactions.dart`
-- `lib/domain/usecases/resolve_conflict.dart`
-- `lib/data/models/transaction_model.dart`
-- `lib/data/models/sync_record_model.dart`
-- `lib/data/datasources/local/database_helper.dart`
-- `lib/data/datasources/local/sync_local_datasource.dart`
-- `lib/data/datasources/remote/transaction_remote_datasource.dart`
-- `lib/data/repositories/transaction_repository_impl.dart`
-- `lib/data/repositories/sync_repository_impl.dart`
-- `lib/presentation/screens/home_screen.dart`
-- `lib/presentation/screens/transaction_form_screen.dart`
+- `lib/core/database/app_database.dart`
+- `lib/core/error/failures.dart`
+- `lib/domain/entities/client.dart`
+- `lib/domain/entities/credit_application.dart`
+- `lib/domain/entities/sync_status.dart`
+- `lib/domain/repositories/client_repository.dart`
+- `lib/domain/repositories/credit_application_repository.dart`
+- `lib/domain/usecases/save_client.dart`
+- `lib/domain/usecases/sync_clients.dart`
+- `lib/domain/usecases/resolve_conflicts.dart`
+- `lib/data/models/client_model.dart`
+- `lib/data/models/credit_application_model.dart`
+- `lib/data/datasources/local/client_local_datasource.dart`
+- `lib/data/datasources/local/credit_application_local_datasource.dart`
+- `lib/data/datasources/remote/client_remote_datasource.dart`
+- `lib/data/datasources/remote/credit_application_remote_datasource.dart`
+- `lib/data/repositories/client_repository_impl.dart`
+- `lib/data/repositories/credit_application_repository_impl.dart`
+- `lib/presentation/screens/client_list_screen.dart`
+- `lib/presentation/screens/client_form_screen.dart`
+- `lib/presentation/screens/application_form_screen.dart`
 - `lib/presentation/screens/sync_status_screen.dart`
-- `lib/presentation/widgets/transaction_tile.dart`
-- `lib/presentation/widgets/connectivity_banner.dart`
-- `lib/presentation/widgets/sync_progress_indicator.dart`
-- `lib/presentation/providers/transaction_provider.dart`
-- `lib/presentation/providers/sync_provider.dart`
+- `lib/presentation/widgets/client_card.dart`
+- `lib/presentation/widgets/sync_indicator.dart`
+- `lib/presentation/viewmodels/client_viewmodel.dart`
+- `lib/presentation/viewmodels/client_viewmodel_event.dart`
+- `lib/presentation/viewmodels/client_viewmodel_state.dart`
+- `lib/presentation/viewmodels/sync_viewmodel.dart`
+- `lib/presentation/viewmodels/sync_viewmodel_event.dart`
+- `lib/presentation/viewmodels/sync_viewmodel_state.dart`
+- `lib/sync/services/conflict_resolver.dart`
+- `lib/sync/handlers/sync_handler.dart`
+- `test/unit/database_test.dart`
+- `test/unit/sync_test.dart`
+- `test/integration/offline_flow_test.dart`
 
 ### Capas del patron declarado
 
 Cada una tiene que existir como directorio real con al menos un archivo. Codigo plano en la raiz no satisface el patron.
 
 - `lib/core`
-- `lib/core/constants`
-- `lib/core/errors`
+- `lib/core/config`
 - `lib/core/network`
-- `lib/core/sync`
+- `lib/core/database`
+- `lib/core/error`
 - `lib/domain`
 - `lib/domain/entities`
 - `lib/domain/repositories`
 - `lib/domain/usecases`
 - `lib/data`
+- `lib/data/models`
 - `lib/data/datasources/local`
 - `lib/data/datasources/remote`
 - `lib/data/repositories`
-- `lib/data/models`
 - `lib/presentation`
 - `lib/presentation/screens`
 - `lib/presentation/widgets`
-- `lib/presentation/providers`
+- `lib/presentation/viewmodels`
+- `lib/sync`
+- `lib/sync/services`
+- `lib/sync/handlers`
+- `test/unit`
+- `test/integration`
 
 ## Verificacion
 
