@@ -1,129 +1,111 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get_it/get_it.dart';
+import 'package:offline_field_app/core/errors/exceptions.dart';
+
+enum NetworkStatus {
+  online,
+  offline,
+  unknown,
+}
 
 abstract class NetworkInfo {
   Future<bool> get isConnected;
-  Stream<bool> get onConnectivityChanged;
-  Future<ConnectivityResult> get connectivityResult;
-  Future<List<ConnectivityResult>> get connectivityResults;
+  Stream<NetworkStatus> get onConnectivityChanged;
+  Future<void> checkConnectivity();
+}
+
+abstract class ConnectivityService {
+  Future<bool> get isConnected;
+  Stream<List<ConnectivityResult>> get onConnectivityChanged;
+  Future<List<ConnectivityResult>> checkConnectivity();
 }
 
 class NetworkInfoImpl implements NetworkInfo {
-  final Connectivity _connectivity;
-  final StreamController<bool> _connectivityStreamController;
-  bool _lastKnownState = false;
+  final ConnectivityService _connectivityService;
+  final StreamController<NetworkStatus> _connectivityController = StreamController<NetworkStatus>.broadcast();
   
-  NetworkInfoImpl({Connectivity? connectivity})
-      : _connectivity = connectivity ?? Connectivity(),
-        _connectivityStreamController = StreamController<bool>.broadcast() {
-    _initConnectivityListener();
-  }
-
-  void _initConnectivityListener() {
-    _connectivity.onConnectivityChanged.listen((results) {
-      final isConnected = _checkConnectivity(results);
-      if (isConnected != _lastKnownState) {
-        _lastKnownState = isConnected;
-        _connectivityStreamController.add(isConnected);
-      }
-    });
-  }
-
-  bool _checkConnectivity(List<ConnectivityResult> results) {
-    if (results.isEmpty || results.contains(ConnectivityResult.none)) {
-      return false;
-    }
-    return results.any((result) => result != ConnectivityResult.none);
-  }
-
+  NetworkInfoImpl({ConnectivityService? connectivityService})
+      : _connectivityService = connectivityService ?? GetIt.instance<ConnectivityService>();
+  
   @override
   Future<bool> get isConnected async {
-    final results = await _connectivity.checkConnectivity();
-    return _checkConnectivity(results);
+    try {
+      final result = await _connectivityService.checkConnectivity();
+      return _isConnectedFromResult(result);
+    } catch (e) {
+      throw OfflineException(
+        message: 'Error al verificar conectividad: $e',
+        code: 'NETWORK_INFO_CHECK_001',
+        originalError: e,
+      );
+    }
   }
-
+  
   @override
-  Stream<bool> get onConnectivityChanged => _connectivityStreamController.stream;
-
+  Stream<NetworkStatus> get onConnectivityChanged {
+    _connectivityService.onConnectivityChanged.listen((results) {
+      final status = _mapConnectivityResult(results);
+      _connectivityController.add(status);
+    });
+    return _connectivityController.stream;
+  }
+  
   @override
-  Future<ConnectivityResult> get connectivityResult async {
-    final results = await _connectivity.checkConnectivity();
+  Future<void> checkConnectivity() async {
+    final result = await _connectivityService.checkConnectivity();
+    final status = _mapConnectivityResult(result);
+    _connectivityController.add(status);
+  }
+  
+  bool _isConnectedFromResult(List<ConnectivityResult> results) {
+    return results.any((result) =>
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.ethernet);
+  }
+  
+  NetworkStatus _mapConnectivityResult(List<ConnectivityResult> results) {
     if (results.isEmpty || results.contains(ConnectivityResult.none)) {
-      return ConnectivityResult.none;
+      return NetworkStatus.offline;
     }
-    return results.first;
-  }
-
-  @override
-  Future<List<ConnectivityResult>> get connectivityResults async {
-    final results = await _connectivity.checkConnectivity();
-    return results;
-  }
-
-  Future<NetworkType> getNetworkType() async {
-    final result = await connectivityResult;
-    switch (result) {
-      case ConnectivityResult.wifi:
-        return NetworkType.wifi;
-      case ConnectivityResult.mobile:
-        return NetworkType.mobile;
-      case ConnectivityResult.ethernet:
-        return NetworkType.ethernet;
-      case ConnectivityResult.bluetooth:
-        return NetworkType.bluetooth;
-      case ConnectivityResult.vpn:
-        return NetworkType.vpn;
-      case ConnectivityResult.other:
-        return NetworkType.other;
-      case ConnectivityResult.none:
-      default:
-        return NetworkType.none;
+    if (_isConnectedFromResult(results)) {
+      return NetworkStatus.online;
     }
+    return NetworkStatus.unknown;
   }
-
-  bool isWifiConnected(List<ConnectivityResult> results) {
-    return results.contains(ConnectivityResult.wifi);
-  }
-
-  bool isMobileDataConnected(List<ConnectivityResult> results) {
-    return results.contains(ConnectivityResult.mobile);
-  }
-
+  
   void dispose() {
-    _connectivityStreamController.close();
+    _connectivityController.close();
   }
 }
 
-enum NetworkType {
-  wifi,
-  mobile,
-  ethernet,
-  bluetooth,
-  vpn,
-  other,
-  none,
-}
-
-extension NetworkTypeExtension on NetworkType {
-  String get displayName {
-    switch (this) {
-      case NetworkType.wifi:
-        return 'WiFi';
-      case NetworkType.mobile:
-        return 'Datos Móviles';
-      case NetworkType.ethernet:
-        return 'Ethernet';
-      case NetworkType.bluetooth:
-        return 'Bluetooth';
-      case NetworkType.vpn:
-        return 'VPN';
-      case NetworkType.other:
-        return 'Otra';
-      case NetworkType.none:
-        return 'Sin conexión';
-    }
+class ConnectivityServiceImpl implements ConnectivityService {
+  final Connectivity _connectivity;
+  
+  ConnectivityServiceImpl({Connectivity? connectivity})
+      : _connectivity = connectivity ?? Connectivity();
+  
+  @override
+  Future<bool> get isConnected async {
+    final result = await _connectivity.checkConnectivity();
+    return _isConnectedFromResult(result);
   }
-
-  bool get isAvailable => this != NetworkType.none;
-  bool get isHighSpeed => this == NetworkType.wifi || this == NetworkType.ethernet;
+  
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged {
+    return _connectivity.onConnectivityChanged;
+  }
+  
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() async {
+    return await _connectivity.checkConnectivity();
+  }
+  
+  bool _isConnectedFromResult(List<ConnectivityResult> results) {
+    return results.any((result) =>
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.ethernet);
+  }
 }

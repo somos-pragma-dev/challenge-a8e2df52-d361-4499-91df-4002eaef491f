@@ -4,17 +4,17 @@ Instrucciones para el agente de IA que abra este repositorio (Claude Code, Curso
 
 ## Que es este repositorio
 
-Es el codigo base de un reto de aprendizaje de Pragma: **Implementación de una arquitectura offline-first en una aplicación de campo**.
+Es el codigo base de un reto de aprendizaje de Pragma: **Implementación de una app de campo offline-first**.
 
 | | |
 |---|---|
 | Tema | Arquitectura offline-first en Flutter |
-| Nivel | junior-l3 |
+| Nivel | senior-l2 |
 | Chapter | Móvil |
 | Especialidad | Flutter |
 | Stack | Dart 3.6 / Flutter 3.27 |
-| Patron arquitectonico | clean_architecture_mvvm |
-| Tiempo estimado | 2 semanas |
+| Patron arquitectonico | clean_architecture |
+| Tiempo estimado | 40 horas |
 
 ## Tu tarea
 
@@ -34,9 +34,9 @@ En orden:
 
 No resuelvas nada de esto:
 
-- **Fase 1 — Diseño de la arquitectura offline-first**: Diagrama de la arquitectura propuesta y documento de diseño detallado.
-- **Fase 2 — Implementación del almacenamiento local**: Código fuente que implementa el almacenamiento local de datos.
-- **Fase 3 — Implementación de la sincronización de datos**: Código fuente que implementa la sincronización de datos.
+- **Fase 1 — Diseño del modelo de datos y persistencia local**: Modelo de datos y estrategia de persistencia local documentados.
+- **Fase 2 — Implementación de la lógica de negocio y widgets**: Widgets y lógica de negocio implementados y funcionales.
+- **Fase 3 — Sincronización de datos y manejo de conflictos**: Lógica de sincronización de datos y manejo de conflictos implementados.
 
 Distincion operativa:
 
@@ -51,46 +51,26 @@ Sin esto el proyecto no compila ni arranca. **Es tu trabajo crearlo**, y no toca
 
 - [ ] **android/app/src/main/AndroidManifest.xml** — Sin el manifest embebido de Android, flutter build/run no tiene target de plataforma y no puede empaquetar el APK.
 
-### 2. Archivos que la arquitectura declara (1 de 36)
+### 2. Archivos que la arquitectura declara (1 de 35)
 
 La propuesta arquitectonica del reto los lista y no llegaron al repo. Crealos con implementacion real, respetando la capa en la que viven:
 
-- [ ] `lib/presentation/widgets/task_card.dart`
+- [ ] `lib/data/datasources/local/transaction_local_datasource.dart`
 
-### 3. Referencias colgando (14)
+### 3. Referencias colgando (4)
 
 Salieron de un analisis estatico del codigo que SI esta en el repo. Cada una rompe la compilacion:
 
-- [ ] `lib/domain/usecases/sync_tasks.dart` — `SyncRepository.recordSyncOperation`
-      Se invoca `recordSyncOperation` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.syncTask`
-      Se invoca `syncTask` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.markTaskAsConflict`
-      Se invoca `markTaskAsConflict` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.resolveConflict`
-      Se invoca `resolveConflict` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.updateTask`
-      Se invoca `updateTask` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.getServerTaskById`
-      Se invoca `getServerTaskById` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.getConflictingTasks`
-      Se invoca `getConflictingTasks` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.cacheTasks`
-      Se invoca `cacheTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasks`
-      Se invoca `getTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.cacheTask`
-      Se invoca `cacheTask` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getPendingTasks`
-      Se invoca `getPendingTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.searchTasks`
-      Se invoca `searchTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasksByStatus`
-      Se invoca `getTasksByStatus` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- [ ] `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasksByPriority`
-      Se invoca `getTasksByPriority` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/domain/usecases/resolve_conflict.dart` — `TransactionRepository.getById`
+      Se invoca `getById` sobre `TransactionRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/data/datasources/remote/transaction_remote_datasource.dart` — `TransactionModel.toServerMap`
+      Se invoca `toServerMap` sobre `TransactionModel`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getSyncHistory`
+      Se invoca `getSyncHistory` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- [ ] `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getPendingOperationsCount`
+      Se invoca `getPendingOperationsCount` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
 
-### Presentes (35)
+### Presentes (34)
 
 - `pubspec.yaml`
 - `lib/main.dart`
@@ -98,35 +78,34 @@ Salieron de un analisis estatico del codigo que SI esta en el repo. Cada una rom
 - `lib/core/errors/failures.dart`
 - `lib/core/errors/exceptions.dart`
 - `lib/core/network/network_info.dart`
-- `lib/core/utils/date_utils.dart`
-- `lib/domain/entities/task_entity.dart`
-- `lib/domain/entities/sync_status_entity.dart`
-- `lib/domain/repositories/task_repository.dart`
+- `lib/core/network/connectivity_service.dart`
+- `lib/core/sync/sync_engine.dart`
+- `lib/core/sync/conflict_resolver.dart`
+- `lib/core/sync/idempotency_manager.dart`
+- `lib/domain/entities/base_entity.dart`
+- `lib/domain/entities/transaction.dart`
+- `lib/domain/entities/sync_record.dart`
+- `lib/domain/repositories/transaction_repository.dart`
 - `lib/domain/repositories/sync_repository.dart`
-- `lib/domain/usecases/get_local_tasks.dart`
-- `lib/domain/usecases/save_task_local.dart`
-- `lib/domain/usecases/sync_tasks.dart`
+- `lib/domain/usecases/create_transaction.dart`
+- `lib/domain/usecases/get_pending_transactions.dart`
+- `lib/domain/usecases/sync_transactions.dart`
 - `lib/domain/usecases/resolve_conflict.dart`
-- `lib/data/models/task_model.dart`
-- `lib/data/models/sync_status_model.dart`
-- `lib/data/datasources/local/task_local_datasource.dart`
+- `lib/data/models/transaction_model.dart`
+- `lib/data/models/sync_record_model.dart`
 - `lib/data/datasources/local/database_helper.dart`
-- `lib/data/datasources/remote/task_remote_datasource.dart`
-- `lib/data/repositories/task_repository_impl.dart`
+- `lib/data/datasources/local/sync_local_datasource.dart`
+- `lib/data/datasources/remote/transaction_remote_datasource.dart`
+- `lib/data/repositories/transaction_repository_impl.dart`
 - `lib/data/repositories/sync_repository_impl.dart`
-- `lib/presentation/bloc/task/task_event.dart`
-- `lib/presentation/bloc/task/task_state.dart`
-- `lib/presentation/bloc/task/task_bloc.dart`
-- `lib/presentation/bloc/sync/sync_event.dart`
-- `lib/presentation/bloc/sync/sync_state.dart`
-- `lib/presentation/bloc/sync/sync_bloc.dart`
-- `lib/presentation/pages/home_page.dart`
-- `lib/presentation/pages/task_list_page.dart`
-- `lib/presentation/pages/task_detail_page.dart`
-- `lib/presentation/widgets/sync_indicator.dart`
-- `lib/presentation/widgets/offline_banner.dart`
-- `docs/arquitectura_offline_first.md`
-- `docs/diagrama_arquitectura.drawio`
+- `lib/presentation/screens/home_screen.dart`
+- `lib/presentation/screens/transaction_form_screen.dart`
+- `lib/presentation/screens/sync_status_screen.dart`
+- `lib/presentation/widgets/transaction_tile.dart`
+- `lib/presentation/widgets/connectivity_banner.dart`
+- `lib/presentation/widgets/sync_progress_indicator.dart`
+- `lib/presentation/providers/transaction_provider.dart`
+- `lib/presentation/providers/sync_provider.dart`
 
 ### Capas del patron declarado
 
@@ -136,18 +115,20 @@ Cada una tiene que existir como directorio real con al menos un archivo. Codigo 
 - `lib/core/constants`
 - `lib/core/errors`
 - `lib/core/network`
-- `lib/core/utils`
-- `lib/data/datasources/local`
-- `lib/data/datasources/remote`
-- `lib/data/models`
-- `lib/data/repositories`
+- `lib/core/sync`
+- `lib/domain`
 - `lib/domain/entities`
 - `lib/domain/repositories`
 - `lib/domain/usecases`
-- `lib/presentation/bloc`
-- `lib/presentation/pages`
+- `lib/data`
+- `lib/data/datasources/local`
+- `lib/data/datasources/remote`
+- `lib/data/repositories`
+- `lib/data/models`
+- `lib/presentation`
+- `lib/presentation/screens`
 - `lib/presentation/widgets`
-- `docs`
+- `lib/presentation/providers`
 
 ## Verificacion
 
@@ -162,7 +143,7 @@ Ese comando pasando es la definicion de "terminado" para vos.
 - Un solo ecosistema: no declares librerias de otro lenguaje ni mezcles gestores de paquetes.
 - Toda libreria que uses tiene que estar declarada en el manifiesto de dependencias.
 - Todo import declarado tiene que usarse; todo tipo usado tiene que existir o venir de una dependencia declarada.
-- El patron es **clean_architecture_mvvm**: los contratos (interfaces, puertos) los define la capa interna y los implementa la externa, nunca al revés.
+- El patron es **clean_architecture**: los contratos (interfaces, puertos) los define la capa interna y los implementa la externa, nunca al revés.
 - Los archivos que crees llevan implementacion real, no stubs: sin `TODO`, sin cuerpos vacios, sin `// getters y setters`.
 
 ## Contexto del candidato

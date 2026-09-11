@@ -1,261 +1,326 @@
-package field_app.domain.usecases;
-
 import 'package:equatable/equatable.dart';
-import 'package:field_app/core/errors/failures.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/domain/repositories/task_repository.dart';
-
-enum ResolutionStrategy {
-  useLocal,
-  useServer,
-  merge,
-  lastWriteWins,
-}
+import '../../entities/transaction.dart';
+import '../../repositories/transaction_repository.dart';
+import '../../../core/errors/failures.dart';
+import '../../../core/errors/exceptions.dart';
+import '../../../core/constants/app_constants.dart';
 
 class ResolveConflictParams extends Equatable {
-  final String taskId;
-  final ResolutionStrategy strategy;
-  final TaskEntity? mergedData;
+  final String entityId;
+  final ConflictResolutionStrategy strategy;
+  final Map<String, dynamic>? manualResolution;
+  final bool notifyServer;
 
   const ResolveConflictParams({
-    required this.taskId,
+    required this.entityId,
     required this.strategy,
-    this.mergedData,
+    this.manualResolution,
+    this.notifyServer = true,
   });
 
   @override
-  List<Object?> get props => [taskId, strategy, mergedData];
+  List<Object?> get props => [entityId, strategy, manualResolution, notifyServer];
+}
+
+enum ConflictResolutionStrategy {
+  serverWins,
+  clientWins,
+  lastWriteWins,
+  manual,
+  merge,
 }
 
 class ConflictData extends Equatable {
-  final String taskId;
-  final TaskEntity localVersion;
-  final TaskEntity serverVersion;
-  final DateTime localModifiedAt;
-  final DateTime serverModifiedAt;
+  final String entityId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> serverData;
+  final int localVersion;
+  final int serverVersion;
+  final DateTime localUpdatedAt;
+  final DateTime serverUpdatedAt;
   final List<String> conflictingFields;
 
   const ConflictData({
-    required this.taskId,
+    required this.entityId,
+    required this.localData,
+    required this.serverData,
     required this.localVersion,
     required this.serverVersion,
-    required this.localModifiedAt,
-    required this.serverModifiedAt,
+    required this.localUpdatedAt,
+    required this.serverUpdatedAt,
     required this.conflictingFields,
   });
 
-  Duration get timeDifference => localModifiedAt.difference(serverModifiedAt);
-  bool get localIsNewer => localModifiedAt.isAfter(serverModifiedAt);
-  bool get serverIsNewer => serverModifiedAt.isAfter(localModifiedAt);
-
   @override
   List<Object?> get props => [
-        taskId,
+        entityId,
+        localData,
+        serverData,
         localVersion,
         serverVersion,
-        localModifiedAt,
-        serverModifiedAt,
+        localUpdatedAt,
+        serverUpdatedAt,
         conflictingFields,
       ];
 }
 
-class ResolveConflictResult extends Equatable {
+class ConflictResolutionResult extends Equatable {
   final bool success;
-  final TaskEntity? resolvedTask;
+  final Transaction? resolvedTransaction;
   final String? errorMessage;
-  final ResolutionStrategy appliedStrategy;
+  final String resolutionType;
 
-  const ResolveConflictResult({
+  const ConflictResolutionResult({
     required this.success,
-    this.resolvedTask,
+    this.resolvedTransaction,
     this.errorMessage,
-    required this.appliedStrategy,
+    required this.resolutionType,
   });
 
   @override
-  List<Object?> get props => [success, resolvedTask, errorMessage, appliedStrategy];
+  List<Object?> get props => [success, resolvedTransaction, errorMessage, resolutionType];
 }
 
-abstract class ResolveConflict {
-  Future<({ResolveConflictResult result, Failure? failure})> call(ResolveConflictParams params);
-  Future<ConflictData?> getConflictData(String taskId);
-  Future<List<ConflictData>> getAllConflicts();
+abstract class ResolveConflictUseCase {
+  Future<(ConflictData?, Failure?)> getConflictData(String entityId);
+  Future<(List<ConflictData>, Failure?)> getAllConflicts();
+  Future<(ConflictResolutionResult, Failure?)> call(ResolveConflictParams params);
+  Future<(ConflictResolutionResult, Failure?)> autoResolve(String entityId, String strategy);
 }
 
-class ResolveConflictImpl implements ResolveConflict {
-  final TaskRepository taskRepository;
+class ResolveConflictUseCaseImpl implements ResolveConflictUseCase {
+  final TransactionRepository _repository;
+  final int _maxMergeFields;
 
-  ResolveConflictImpl({required this.taskRepository});
+  ResolveConflictUseCaseImpl({
+    required TransactionRepository repository,
+    int maxMergeFields = 10,
+  })  : _repository = repository,
+        _maxMergeFields = maxMergeFields;
 
   @override
-  Future<({ResolveConflictResult result, Failure? failure})> call(ResolveConflictParams params) async {
-    if (params.taskId.isEmpty) {
-      return (
-        result: ResolveConflictResult(
-          success: false,
-          errorMessage: 'Task ID cannot be empty',
-          appliedStrategy: params.strategy,
-        ),
-        failure: const ValidationFailure(
-          message: 'Invalid task ID for conflict resolution',
-          fieldErrors: {'taskId': ['Task ID is required']},
-        ),
-      );
-    }
-
+  Future<(ConflictData?, Failure?)> getConflictData(String entityId) async {
     try {
-      final conflictData = await getConflictData(params.taskId);
-      
-      if (conflictData == null) {
-        return (
-          result: ResolveConflictResult(
-            success: false,
-            errorMessage: 'No conflict found for task ${params.taskId}',
-            appliedStrategy: params.strategy,
-          ),
-          failure: ConflictFailure(
-            entityId: params.taskId,
-            localVersion: null,
-            remoteVersion: null,
-            conflictType: 'not_found',
-          ),
-        );
+      final localTransaction = await _repository.getById(entityId);
+      if (localTransaction == null) {
+        return (null, DatabaseFailure.notFound('transactions', entityId));
       }
 
-      TaskEntity resolvedTask;
-      
-      switch (params.strategy) {
-        case ResolutionStrategy.useLocal:
-          resolvedTask = await _resolveWithLocal(conflictData);
-          break;
-        case ResolutionStrategy.useServer:
-          resolvedTask = await _resolveWithServer(conflictData);
-          break;
-        case ResolutionStrategy.merge:
-          resolvedTask = await _resolveWithMerge(conflictData, params.mergedData);
-          break;
-        case ResolutionStrategy.lastWriteWins:
-          resolvedTask = await _resolveWithLastWriteWins(conflictData);
-          break;
+      final serverTransaction = await _repository.getServerTransactionById(entityId);
+      if (serverTransaction == null) {
+        return (null, const SyncFailure.serverError('Server version not available'));
       }
 
-      await taskRepository.updateTask(resolvedTask);
-      await taskRepository.markTaskAsSynced(resolvedTask.id);
-
-      return (
-        result: ResolveConflictResult(
-          success: true,
-          resolvedTask: resolvedTask,
-          appliedStrategy: params.strategy,
-        ),
-        failure: null,
-      );
+      final conflictData = _buildConflictData(localTransaction, serverTransaction);
+      return (conflictData, null);
+    } on OfflineException catch (e) {
+      return (null, OfflineFailure.database(e.message));
     } catch (e) {
-      return (
-        result: ResolveConflictResult(
-          success: false,
-          errorMessage: 'Failed to resolve conflict: ${e.toString()}',
-          appliedStrategy: params.strategy,
-        ),
-        failure: ConflictFailure(
-          entityId: params.taskId,
-          localVersion: null,
-          remoteVersion: null,
-          conflictType: 'resolution_failed',
-        ),
-      );
+      return (null, DatabaseFailure.transactionFailed(e.toString()));
     }
   }
 
   @override
-  Future<ConflictData?> getConflictData(String taskId) async {
-    final localTask = await taskRepository.getTaskById(taskId);
-    if (localTask == null) return null;
+  Future<(List<ConflictData>, Failure?)> getAllConflicts() async {
+    try {
+      final pendingWithConflicts = await _repository.getPendingWithConflicts();
+      final conflicts = <ConflictData>[];
 
-    if (localTask.syncStatus != 'conflict') return null;
+      for (final localTx in pendingWithConflicts) {
+        final serverTx = await _repository.getServerTransactionById(localTx.id);
+        if (serverTx != null) {
+          conflicts.add(_buildConflictData(localTx, serverTx));
+        }
+      }
 
-    final serverTask = await taskRepository.getServerTaskById(taskId);
-    if (serverTask == null) return null;
+      return (conflicts, null);
+    } catch (e) {
+      return (<ConflictData>[], DatabaseFailure.transactionFailed(e.toString()));
+    }
+  }
 
-    final conflictingFields = _identifyConflictingFields(localTask, serverTask);
-    
+  @override
+  Future<(ConflictResolutionResult, Failure?)> call(ResolveConflictParams params) async {
+    try {
+      final (conflictData, failure) = await getConflictData(params.entityId);
+      if (failure != null || conflictData == null) {
+        return (ConflictResolutionResult(
+          success: false,
+          errorMessage: failure?.message ?? 'Conflict data not found',
+          resolutionType: 'failed',
+        ), failure);
+      }
+
+      final resolution = _determineResolution(params.strategy, conflictData, params.manualResolution);
+      final resolvedTransaction = await _applyResolution(params.entityId, resolution);
+
+      if (params.notifyServer) {
+        try {
+          await _notifyServerOfResolution(params.entityId, resolution);
+        } catch (_) {
+          // Non-critical, resolution already applied locally
+        }
+      }
+
+      return (ConflictResolutionResult(
+        success: true,
+        resolvedTransaction: resolvedTransaction,
+        resolutionType: params.strategy.name,
+      ), null);
+    } on SyncConflictException catch (e) {
+      return (ConflictResolutionResult(
+        success: false,
+        errorMessage: e.message,
+        resolutionType: 'failed',
+      ), ConflictFailure.unresolved(params.entityId));
+    } catch (e) {
+      return (ConflictResolutionResult(
+        success: false,
+        errorMessage: e.toString(),
+        resolutionType: 'failed',
+      ), ConflictFailure.unresolved(params.entityId));
+    }
+  }
+
+  @override
+  Future<(ConflictResolutionResult, Failure?)> autoResolve(
+    String entityId,
+    String strategy,
+  ) async {
+    final strategyEnum = _parseStrategy(strategy);
+    final params = ResolveConflictParams(
+      entityId: entityId,
+      strategy: strategyEnum,
+      notifyServer: true,
+    );
+    return call(params);
+  }
+
+  ConflictData _buildConflictData(Transaction local, Transaction server) {
+    final localData = _transactionToMap(local);
+    final serverData = _transactionToMap(server);
+    final conflictingFields = <String>[];
+
+    for (final key in localData.keys) {
+      if (localData[key] != serverData[key]) {
+        conflictingFields.add(key);
+      }
+    }
+
     return ConflictData(
-      taskId: taskId,
-      localVersion: localTask,
-      serverVersion: serverTask,
-      localModifiedAt: localTask.updatedAt,
-      serverModifiedAt: serverTask.updatedAt,
+      entityId: local.id,
+      localData: localData,
+      serverData: serverData,
+      localVersion: local.version ?? 0,
+      serverVersion: server.version ?? 0,
+      localUpdatedAt: local.updatedAt,
+      serverUpdatedAt: server.updatedAt,
       conflictingFields: conflictingFields,
     );
   }
 
-  @override
-  Future<List<ConflictData>> getAllConflicts() async {
-    final conflictingTasks = await taskRepository.getConflictingTasks();
-    final conflicts = <ConflictData>[];
+  Map<String, dynamic> _transactionToMap(Transaction tx) {
+    return {
+      'id': tx.id,
+      'externalId': tx.externalId,
+      'amount': tx.amount,
+      'currency': tx.currency,
+      'transactionType': tx.transactionType,
+      'description': tx.description,
+      'metadata': tx.metadata,
+      'version': tx.version,
+      'updatedAt': tx.updatedAt.toIso8601String(),
+    };
+  }
 
-    for (final task in conflictingTasks) {
-      final conflictData = await getConflictData(task.id);
-      if (conflictData != null) {
-        conflicts.add(conflictData);
+  Map<String, dynamic> _determineResolution(
+    ConflictResolutionStrategy strategy,
+    ConflictData conflictData,
+    Map<String, dynamic>? manualResolution,
+  ) {
+    switch (strategy) {
+      case ConflictResolutionStrategy.serverWins:
+        return conflictData.serverData;
+      case ConflictResolutionStrategy.clientWins:
+        return conflictData.localData;
+      case ConflictResolutionStrategy.lastWriteWins:
+        if (conflictData.serverUpdatedAt.isAfter(conflictData.localUpdatedAt)) {
+          return conflictData.serverData;
+        }
+        return conflictData.localData;
+      case ConflictResolutionStrategy.manual:
+        if (manualResolution != null) return manualResolution;
+        return conflictData.localData;
+      case ConflictResolutionStrategy.merge:
+        return _mergeData(conflictData);
+    }
+  }
+
+  Map<String, dynamic> _mergeData(ConflictData conflictData) {
+    final merged = <String, dynamic>{};
+    final allKeys = <String>{...conflictData.localData.keys, ...conflictData.serverData.keys};
+
+    for (final key in allKeys) {
+      if (key == 'version') {
+        merged[key] = (conflictData.localVersion > conflictData.serverVersion
+                ? conflictData.localVersion
+                : conflictData.serverVersion) +
+            1;
+      } else if (conflictData.localData[key] == conflictData.serverData[key]) {
+        merged[key] = conflictData.localData[key];
+      } else if (conflictData.conflictingFields.contains(key)) {
+        merged[key] = conflictData.serverData[key] ?? conflictData.localData[key];
+      } else {
+        merged[key] = conflictData.localData[key] ?? conflictData.serverData[key];
       }
     }
 
-    return conflicts;
+    return merged;
   }
 
-  List<String> _identifyConflictingFields(TaskEntity local, TaskEntity server) {
-    final conflictingFields = <String>[];
-
-    if (local.title != server.title) conflictingFields.add('title');
-    if (local.description != server.description) conflictingFields.add('description');
-    if (local.status != server.status) conflictingFields.add('status');
-    if (local.priority != server.priority) conflictingFields.add('priority');
-    if (local.dueDate != server.dueDate) conflictingFields.add('dueDate');
-    if (local.assignedTo != server.assignedTo) conflictingFields.add('assignedTo');
-    if (local.location != server.location) conflictingFields.add('location');
-    if (local.notes != server.notes) conflictingFields.add('notes');
-
-    return conflictingFields;
-  }
-
-  Future<TaskEntity> _resolveWithLocal(ConflictData conflictData) async {
-    return conflictData.localVersion;
-  }
-
-  Future<TaskEntity> _resolveWithServer(ConflictData conflictData) async {
-    return conflictData.serverVersion;
-  }
-
-  Future<TaskEntity> _resolveWithMerge(
-    ConflictData conflictData,
-    TaskEntity? mergedData,
+  Future<Transaction> _applyResolution(
+    String entityId,
+    Map<String, dynamic> resolution,
   ) async {
-    if (mergedData != null) return mergedData;
-
-    final local = conflictData.localVersion;
-    return TaskEntity(
-      id: local.id,
-      title: local.title,
-      description: local.description.isNotEmpty ? local.description : conflictData.serverVersion.description,
-      status: local.status,
-      priority: local.priority,
-      dueDate: local.dueDate ?? conflictData.serverVersion.dueDate,
-      assignedTo: local.assignedTo,
-      location: local.location,
-      notes: local.notes.isNotEmpty ? local.notes : conflictData.serverVersion.notes,
-      createdAt: local.createdAt,
+    final resolved = resolution['version'] as int? ?? 1;
+    final transaction = Transaction(
+      id: entityId,
+      externalId: resolution['externalId'] as String? ?? '',
+      amount: (resolution['amount'] as num?)?.toDouble() ?? 0.0,
+      currency: resolution['currency'] as String? ?? 'USD',
+      transactionType: resolution['transactionType'] as String? ?? 'default',
+      description: resolution['description'] as String? ?? '',
+      metadata: resolution['metadata'] as Map<String, dynamic>?,
+      version: resolved,
+      syncStatus: 'pending',
+      createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
-      syncStatus: 'synced',
-      version: conflictData.serverVersion.version + 1,
     );
+
+    await _repository.resolveConflict(entityId, resolution, 'resolved');
+    return transaction;
   }
 
-  Future<TaskEntity> _resolveWithLastWriteWins(ConflictData conflictData) async {
-    if (conflictData.localIsNewer) {
-      return conflictData.localVersion;
-    } else {
-      return conflictData.serverVersion;
+  Future<void> _notifyServerOfResolution(
+    String entityId,
+    Map<String, dynamic> resolution,
+  ) async {
+    // Placeholder for server notification
+    // In a real implementation, this would call the remote datasource
+  }
+
+  ConflictResolutionStrategy _parseStrategy(String strategy) {
+    switch (strategy) {
+      case 'server':
+        return ConflictResolutionStrategy.serverWins;
+      case 'client':
+        return ConflictResolutionStrategy.clientWins;
+      case 'last_write':
+        return ConflictResolutionStrategy.lastWriteWins;
+      case 'merge':
+        return ConflictResolutionStrategy.merge;
+      default:
+        return ConflictResolutionStrategy.manual;
     }
   }
 }

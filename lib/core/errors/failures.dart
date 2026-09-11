@@ -4,179 +4,149 @@ abstract class Failure extends Equatable {
   final String message;
   final String? code;
   final Map<String, dynamic>? metadata;
-  final DateTime timestamp;
-
+  
   const Failure({
     required this.message,
     this.code,
     this.metadata,
-    DateTime? timestamp,
-  }) : timestamp = timestamp ?? const _DefaultTimestamp();
-
+  });
+  
   @override
-  List<Object?> get props => [message, code, metadata, timestamp];
+  List<Object?> get props => [message, code, metadata];
+}
 
-  String get failureType => runtimeType.toString();
+class OfflineFailure extends Failure {
+  const OfflineFailure({
+    super.message = 'No hay conexión a internet disponible',
+    super.code = 'OFFLINE_001',
+    super.metadata,
+  });
   
-  String get userFriendlyMessage => message;
+  factory OfflineFailure.database(String details) {
+    return OfflineFailure(
+      message: 'Error de base de datos: $details',
+      code: 'OFFLINE_DB_001',
+      metadata: {'details': details},
+    );
+  }
   
-  bool get isRecoverable => this is CacheFailure || this is NetworkFailure;
-  
-  Map<String, dynamic> toMap() {
-    return {
-      'type': failureType,
-      'message': message,
-      'code': code,
-      'metadata': metadata,
-      'timestamp': timestamp.toIso8601String(),
-    };
+  factory OfflineFailure.networkUnavailable() {
+    return const OfflineFailure(
+      message: 'La red no está disponible. Por favor, verifique su conexión.',
+      code: 'OFFLINE_NET_001',
+    );
   }
 }
 
-class _DefaultTimestamp implements DateTime {
-  const _DefaultTimestamp();
-
-  DateTime get _now => DateTime.now();
+class SyncFailure extends Failure {
+  const SyncFailure({
+    super.message = 'Error durante la sincronización de datos',
+    super.code = 'SYNC_001',
+    super.metadata,
+  });
   
-  @override
-  int get year => _now.year;
+  factory SyncFailure.timeout() {
+    return const SyncFailure(
+      message: 'Tiempo de espera agotado durante la sincronización',
+      code: 'SYNC_TIMEOUT_001',
+    );
+  }
   
-  @override
-  int get month => _now.month;
+  factory SyncFailure.serverError(String details) {
+    return SyncFailure(
+      message: 'Error del servidor: $details',
+      code: 'SYNC_SERVER_001',
+      metadata: {'server_details': details},
+    );
+  }
   
-  @override
-  int get day => _now.day;
+  factory SyncFailure.unauthorized() {
+    return const SyncFailure(
+      message: 'No autorizado para sincronizar. Inicie sesión novamente.',
+      code: 'SYNC_AUTH_001',
+    );
+  }
   
-  @override
-  int get hour => _now.hour;
-  
-  @override
-  int get minute => _now.minute;
-  
-  @override
-  int get second => _now.second;
-  
-  @override
-  int get millisecond => _now.millisecond;
-  
-  @override
-  int get microsecond => _now.microsecond;
-  
-  @override
-  int get weekday => _now.weekday;
-  
-  @override
-  bool get isUtc => _now.isUtc;
-  
-  @override
-  String get timeZoneName => _now.timeZoneName;
-  
-  @override
-  Duration get timeZoneOffset => _now.timeZoneOffset;
-  
-  @override
-  int get millisecondsSinceEpoch => _now.millisecondsSinceEpoch;
-  
-  @override
-  int get microsecondsSinceEpoch => _now.microsecondsSinceEpoch;
-  
-  @override
-  DateTime add(Duration duration) => _now.add(duration);
-  
-  @override
-  DateTime subtract(Duration duration) => _now.subtract(duration);
-  
-  @override
-  Duration difference(DateTime other) => _now.difference(other);
-  
-  @override
-  bool isAfter(DateTime other) => _now.isAfter(other);
-  
-  @override
-  bool isBefore(DateTime other) => _now.isBefore(other);
-  
-  @override
-  bool isAtSameMomentAs(DateTime other) => _now.isAtSameMomentAs(other);
-  
-  @override
-  int compareTo(DateTime other) => _now.compareTo(other);
-  
-  @override
-  String toIso8601String() => _now.toIso8601String();
-  
-  @override
-  DateTime toLocal() => _now.toLocal();
-  
-  @override
-  DateTime toUtc() => _now.toUtc();
-  
-  @override
-  String toString() => _now.toString();
+  factory SyncFailure.batchFailed(int failedCount, int totalCount) {
+    return SyncFailure(
+      message: 'Sincronización parcial: $failedCount de $totalCount elementos fallaron',
+      code: 'SYNC_BATCH_001',
+      metadata: {'failed': failedCount, 'total': totalCount},
+    );
+  }
 }
 
-class ServerFailure extends Failure {
-  final int? statusCode;
+class ConflictFailure extends Failure {
+  final String entityId;
+  final String localVersion;
+  final String serverVersion;
   
-  const ServerFailure({
-    required super.message,
-    super.code,
+  const ConflictFailure({
+    required this.message,
+    required this.code,
+    required this.entityId,
+    required this.localVersion,
+    required this.serverVersion,
     super.metadata,
-    super.timestamp,
-    this.statusCode,
   });
-
-  @override
-  List<Object?> get props => [...super.props, statusCode];
+  
+  factory ConflictFailure.detected(String entityId, Map<String, dynamic> localData, Map<String, dynamic> serverData) {
+    return ConflictFailure(
+      message: 'Conflicto detectado en la entidad $entityId',
+      code: 'CONFLICT_001',
+      entityId: entityId,
+      localVersion: localData['version']?.toString() ?? 'unknown',
+      serverVersion: serverData['version']?.toString() ?? 'unknown',
+      metadata: {
+        'local_data': localData,
+        'server_data': serverData,
+      },
+    );
+  }
+  
+  factory ConflictFailure.unresolved(String entityId) {
+    return ConflictFailure(
+      message: 'Conflicto no resuelto para la entidad $entityId',
+      code: 'CONFLICT_UNRESOLVED_001',
+      entityId: entityId,
+      localVersion: 'unknown',
+      serverVersion: 'unknown',
+    );
+  }
   
   @override
-  bool get isRecoverable => statusCode != null && 
-      statusCode! >= 500 && statusCode! < 600;
+  List<Object?> get props => [...super.props, entityId, localVersion, serverVersion];
 }
 
-class CacheFailure extends Failure {
-  final String? cacheKey;
-  
-  const CacheFailure({
-    required super.message,
-    super.code,
+class DatabaseFailure extends Failure {
+  const DatabaseFailure({
+    super.message = 'Error de base de datos local',
+    super.code = 'DB_001',
     super.metadata,
-    super.timestamp,
-    this.cacheKey,
   });
-
-  @override
-  List<Object?> get props => [...super.props, cacheKey];
-}
-
-class NetworkFailure extends Failure {
-  final bool isConnectionError;
-  final bool isTimeout;
   
-  const NetworkFailure({
-    required super.message,
-    super.code,
-    super.metadata,
-    super.timestamp,
-    this.isConnectionError = false,
-    this.isTimeout = false,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    isConnectionError,
-    isTimeout,
-  ];
+  factory DatabaseFailure.notFound(String table, String id) {
+    return DatabaseFailure(
+      message: 'Registro no encontrado en $table: $id',
+      code: 'DB_NOT_FOUND_001',
+      metadata: {'table': table, 'id': id},
+    );
+  }
   
-  @override
-  String get userFriendlyMessage {
-    if (isConnectionError) {
-      return 'No hay conexión a internet. Los datos se guardarán localmente.';
-    }
-    if (isTimeout) {
-      return 'La conexión tardó demasiado. Por favor, intente más tarde.';
-    }
-    return message;
+  factory DatabaseFailure.constraintViolation(String details) {
+    return DatabaseFailure(
+      message: 'Violación de restricción: $details',
+      code: 'DB_CONSTRAINT_001',
+      metadata: {'details': details},
+    );
+  }
+  
+  factory DatabaseFailure.transactionFailed(String details) {
+    return DatabaseFailure(
+      message: 'Transacción fallida: $details',
+      code: 'DB_TRANSACTION_001',
+      metadata: {'details': details},
+    );
   }
 }
 
@@ -185,90 +155,32 @@ class ValidationFailure extends Failure {
   
   const ValidationFailure({
     required super.message,
-    super.code,
+    required this.code,
+    required this.fieldErrors,
     super.metadata,
-    super.timestamp,
-    this.fieldErrors = const {},
   });
-
+  
+  factory ValidationFailure.invalidAmount(String currency, double amount) {
+    return ValidationFailure(
+      message: 'Monto inválido para la moneda $currency',
+      code: 'VALIDATION_AMOUNT_001',
+      fieldErrors: {
+        'amount': ['El monto debe ser mayor a 0 y menor al máximo permitido para $currency'],
+      },
+      metadata: {'currency': currency, 'amount': amount},
+    );
+  }
+  
+  factory ValidationFailure.requiredFields(List<String> fields) {
+    return ValidationFailure(
+      message: 'Campos requeridos faltantes: ${fields.join(', ')}',
+      code: 'VALIDATION_REQUIRED_001',
+      fieldErrors: {
+        for (final field in fields) field: ['Este campo es requerido'],
+      },
+    );
+  }
+  
   @override
   List<Object?> get props => [...super.props, fieldErrors];
-  
-  String getFieldError(String fieldName) {
-    return fieldErrors[fieldName]?.join(', ') ?? '';
-  }
-}
-
-class SyncFailure extends Failure {
-  final String? entityId;
-  final String? operation;
-  final int retryCount;
-  
-  const SyncFailure({
-    required super.message,
-    super.code,
-    super.metadata,
-    super.timestamp,
-    this.entityId,
-    this.operation,
-    this.retryCount = 0,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    entityId,
-    operation,
-    retryCount,
-  ];
-  
-  @override
-  bool get isRecoverable => retryCount < 3;
-}
-
-class ConflictFailure extends Failure {
-  final String entityId;
-  final dynamic localVersion;
-  final dynamic remoteVersion;
-  final String conflictType;
-  
-  const ConflictFailure({
-    required super.message,
-    required this.entityId,
-    required this.localVersion,
-    required this.remoteVersion,
-    required this.conflictType,
-    super.code,
-    super.metadata,
-    super.timestamp,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    entityId,
-    localVersion,
-    remoteVersion,
-    conflictType,
-  ];
-  
-  @override
-  String get userFriendlyMessage {
-    return 'Conflicto detectado en los datos. Por favor, revise las diferencias.';
-  }
-}
-
-class PermissionFailure extends Failure {
-  final String permission;
-  
-  const PermissionFailure({
-    required super.message,
-    required this.permission,
-    super.code,
-    super.metadata,
-    super.timestamp,
-  });
-
-  @override
-  List<Object?> get props => [...super.props, permission];
 }

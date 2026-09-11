@@ -1,226 +1,210 @@
 class AppException implements Exception {
   final String message;
   final String? code;
-  final dynamic originalException;
-  final StackTrace? stackTrace;
-  final DateTime timestamp;
-
-  AppException({
+  final dynamic originalError;
+  
+  const AppException({
     required this.message,
     this.code,
-    this.originalException,
-    StackTrace? stackTrace,
-    DateTime? timestamp,
-  })  : timestamp = timestamp ?? DateTime.now(),
-        stackTrace = stackTrace ?? StackTrace.current;
-
+    this.originalError,
+  });
+  
   @override
   String toString() => 'AppException: $message (code: $code)';
+}
+
+class OfflineException extends AppException {
+  const OfflineException({
+    super.message = 'Operación no disponible sin conexión',
+    super.code = 'OFFLINE_EX_001',
+    super.originalError,
+  });
   
-  Map<String, dynamic> toMap() {
+  factory OfflineException.noConnectivity() {
+    return const OfflineException(
+      message: 'No hay conexión a internet. La operación se guardará localmente.',
+      code: 'OFFLINE_EX_CONNECTIVITY_001',
+    );
+  }
+  
+  factory OfflineException.database(String operation) {
+    return OfflineException(
+      message: 'Error de base de datos: $operation',
+      code: 'OFFLINE_EX_DB_001',
+    );
+  }
+}
+
+class SyncConflictException extends AppException {
+  final String entityId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> serverData;
+  final String conflictStrategy;
+  
+  const SyncConflictException({
+    required super.message,
+    required this.code,
+    required this.entityId,
+    required this.localData,
+    required this.serverData,
+    required this.conflictStrategy,
+    super.originalError,
+  });
+  
+  factory SyncConflictException.detected({
+    required String entityId,
+    required Map<String, dynamic> localData,
+    required Map<String, dynamic> serverData,
+  }) {
+    return SyncConflictException(
+      message: 'Conflicto detectado al sincronizar $entityId',
+      code: 'SYNC_CONFLICT_EX_001',
+      entityId: entityId,
+      localData: localData,
+      serverData: serverData,
+      conflictStrategy: 'pending',
+    );
+  }
+  
+  factory SyncConflictException.unresolved({
+    required String entityId,
+    required Map<String, dynamic> localData,
+    required Map<String, dynamic> serverData,
+  }) {
+    return SyncConflictException(
+      message: 'Conflicto no resuelto para $entityId. Requiere intervención manual.',
+      code: 'SYNC_CONFLICT_EX_UNRESOLVED_001',
+      entityId: entityId,
+      localData: localData,
+      serverData: serverData,
+      conflictStrategy: 'manual_required',
+    );
+  }
+  
+  Map<String, dynamic> toConflictData() {
     return {
-      'type': runtimeType.toString(),
-      'message': message,
-      'code': code,
-      'timestamp': timestamp.toIso8601String(),
+      'entity_id': entityId,
+      'local_data': localData,
+      'server_data': serverData,
+      'strategy': conflictStrategy,
+      'detected_at': DateTime.now().toIso8601String(),
     };
   }
 }
 
-class ServerException extends AppException {
-  final int? statusCode;
-  final String? endpoint;
+class IdempotencyException extends AppException {
+  final String operationHash;
+  final String? existingRecordId;
   
-  ServerException({
+  const IdempotencyException({
     required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.statusCode,
-    this.endpoint,
+    required this.code,
+    required this.operationHash,
+    this.existingRecordId,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ServerException: $message (status: $statusCode, endpoint: $endpoint)';
   
-  bool get isClientError => statusCode != null && statusCode! >= 400 && statusCode! < 500;
-  bool get isServerError => statusCode != null && statusCode! >= 500;
-  bool get isNotFound => statusCode == 404;
-  bool get isUnauthorized => statusCode == 401;
-  bool get isForbidden => statusCode == 403;
-}
-
-class CacheException extends AppException {
-  final String? cacheKey;
-  final String operation;
-  
-  CacheException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.cacheKey,
-    this.operation = 'read',
-  });
-
-  @override
-  String toString() => 'CacheException: $message (key: $cacheKey, operation: $operation)';
-}
-
-class NetworkException extends AppException {
-  final String url;
-  final bool isConnectionError;
-  final bool isTimeout;
-  final bool isSslError;
-  
-  NetworkException({
-    required super.message,
-    required this.url,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.isConnectionError = false,
-    this.isTimeout = false,
-    this.isSslError = false,
-  });
-
-  @override
-  String toString() => 'NetworkException: $message (url: $url, connection: $isConnectionError, timeout: $isTimeout)';
-  
-  String get userMessage {
-    if (isConnectionError) {
-      return 'No se pudo conectar al servidor. Verifique su conexión a internet.';
-    }
-    if (isTimeout) {
-      return 'La solicitud tardó demasiado. Por favor, intente de nuevo.';
-    }
-    if (isSslError) {
-      return 'Error de seguridad en la conexión. Por favor, contacte al administrador.';
-    }
-    return message;
+  factory IdempotencyException.duplicateOperation({
+    required String operationHash,
+    required String existingId,
+  }) {
+    return IdempotencyException(
+      message: 'Operación duplicada detectada. El registro existente es: $existingId',
+      code: 'IDEMPOTENCY_EX_DUPLICATE_001',
+      operationHash: operationHash,
+      existingRecordId: existingId,
+    );
   }
-}
-
-class DatabaseException extends AppException {
-  final String? sql;
-  final Map<String, dynamic>? queryParameters;
   
-  DatabaseException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.sql,
-    this.queryParameters,
-  });
-
-  @override
-  String toString() => 'DatabaseException: $message (sql: $sql)';
-  
-  bool get isConstraintViolation => code == 'constraint' || code == 'UNIQUE constraint failed';
-  bool get isNotFound => code == 'NOT FOUND';
+  factory IdempotencyException.hashMismatch({
+    required String operationHash,
+    required String expectedHash,
+  }) {
+    return IdempotencyException(
+      message: 'El hash de operación no coincide. Expected: $expectedHash, Got: $operationHash',
+      code: 'IDEMPOTENCY_EX_HASH_001',
+      operationHash: operationHash,
+    );
+  }
 }
 
 class ValidationException extends AppException {
   final Map<String, List<String>> fieldErrors;
   
-  ValidationException({
+  const ValidationException({
     required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.fieldErrors = const {},
+    required super.code,
+    required this.fieldErrors,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ValidationException: $message (fields: ${fieldErrors.keys.join(', ')})';
   
-  String getFieldError(String fieldName) {
-    return fieldErrors[fieldName]?.join(', ') ?? '';
+  factory ValidationException.invalidAmount({
+    required String currency,
+    required double amount,
+    required double maxAmount,
+  }) {
+    return ValidationException(
+      message: 'Monto $amount $currency excede el máximo permitido: $maxAmount',
+      code: 'VALIDATION_EX_AMOUNT_001',
+      fieldErrors: {
+        'amount': ['El monto debe estar entre 0 y $maxAmount para $currency'],
+      },
+    );
   }
   
-  bool hasFieldError(String fieldName) {
-    return fieldErrors.containsKey(fieldName) && fieldErrors[fieldName]!.isNotEmpty;
-  }
-}
-
-class SyncException extends AppException {
-  final String? entityId;
-  final String operation;
-  final int retryCount;
-  final DateTime? nextRetryAt;
-  
-  SyncException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.entityId,
-    this.operation = 'sync',
-    this.retryCount = 0,
-    this.nextRetryAt,
-  });
-
-  @override
-  String toString() => 'SyncException: $message (entity: $entityId, operation: $operation, retry: $retryCount)';
-  
-  bool get canRetry => retryCount < 3;
-  
-  Duration? get timeUntilRetry {
-    if (nextRetryAt == null) return null;
-    return nextRetryAt!.difference(DateTime.now());
+  factory ValidationException.invalidType({
+    required String type,
+    required List<String> validTypes,
+  }) {
+    return ValidationException(
+      message: 'Tipo de transacción inválido: $type. Tipos válidos: ${validTypes.join(', ')}',
+      code: 'VALIDATION_EX_TYPE_001',
+      fieldErrors: {
+        'transaction_type': ['Debe ser uno de: ${validTypes.join(', ')}'],
+      },
+    );
   }
 }
 
-class ConflictException extends AppException {
-  final String entityId;
-  final dynamic localData;
-  final dynamic remoteData;
-  final String conflictType;
+class NetworkException extends AppException {
+  final int? statusCode;
   
-  ConflictException({
+  const NetworkException({
     required super.message,
-    required this.entityId,
-    required this.localData,
-    required this.remoteData,
-    required this.conflictType,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
+    required super.code,
+    this.statusCode,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ConflictException: $message (entity: $entityId, type: $conflictType)';
   
-  Map<String, dynamic> getConflictDetails() {
-    return {
-      'entityId': entityId,
-      'localData': localData,
-      'remoteData': remoteData,
-      'conflictType': conflictType,
-    };
+  factory NetworkException.timeout() {
+    return const NetworkException(
+      message: 'Tiempo de espera agotado',
+      code: 'NETWORK_EX_TIMEOUT_001',
+      statusCode: 408,
+    );
   }
-}
-
-class PermissionException extends AppException {
-  final String permission;
   
-  PermissionException({
-    required super.message,
-    required this.permission,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-  });
-
-  @override
-  String toString() => 'PermissionException: $message (permission: $permission)';
+  factory NetworkException.serverError(int code, String details) {
+    return NetworkException(
+      message: 'Error del servidor: $details',
+      code: 'NETWORK_EX_SERVER_001',
+      statusCode: code,
+    );
+  }
+  
+  factory NetworkException.unauthorized() {
+    return const NetworkException(
+      message: 'No autorizado. Por favor, inicie sesión nuevamente.',
+      code: 'NETWORK_EX_AUTH_001',
+      statusCode: 401,
+    );
+  }
+  
+  factory NetworkException.notFound(String endpoint) {
+    return NetworkException(
+      message: 'Recurso no encontrado: $endpoint',
+      code: 'NETWORK_EX_NOT_FOUND_001',
+      statusCode: 404,
+    );
+  }
 }

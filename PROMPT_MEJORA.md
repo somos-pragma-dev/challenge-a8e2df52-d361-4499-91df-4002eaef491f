@@ -26,26 +26,16 @@ Sin esto no compila ni arranca. Es andamiaje, no toca nada de lo pedagogico:
 
 Creálos con implementacion real, en la capa que les corresponde:
 
-- `lib/presentation/widgets/task_card.dart`
+- `lib/data/datasources/local/transaction_local_datasource.dart`
 
 ### Referencias colgando en el codigo que si esta
 
 Cada una rompe la compilacion:
 
-- `lib/domain/usecases/sync_tasks.dart` — `SyncRepository.recordSyncOperation`: Se invoca `recordSyncOperation` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.syncTask`: Se invoca `syncTask` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.markTaskAsConflict`: Se invoca `markTaskAsConflict` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/sync_tasks.dart` — `TaskRepository.resolveConflict`: Se invoca `resolveConflict` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.updateTask`: Se invoca `updateTask` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.getServerTaskById`: Se invoca `getServerTaskById` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/domain/usecases/resolve_conflict.dart` — `TaskRepository.getConflictingTasks`: Se invoca `getConflictingTasks` sobre `TaskRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.cacheTasks`: Se invoca `cacheTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasks`: Se invoca `getTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.cacheTask`: Se invoca `cacheTask` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getPendingTasks`: Se invoca `getPendingTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.searchTasks`: Se invoca `searchTasks` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasksByStatus`: Se invoca `getTasksByStatus` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
-- `lib/data/repositories/task_repository_impl.dart` — `TaskLocalDataSource.getTasksByPriority`: Se invoca `getTasksByPriority` sobre `TaskLocalDataSource`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- `lib/domain/usecases/resolve_conflict.dart` — `TransactionRepository.getById`: Se invoca `getById` sobre `TransactionRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- `lib/data/datasources/remote/transaction_remote_datasource.dart` — `TransactionModel.toServerMap`: Se invoca `toServerMap` sobre `TransactionModel`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getSyncHistory`: Se invoca `getSyncHistory` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
+- `lib/presentation/providers/sync_provider.dart` — `SyncRepository.getPendingOperationsCount`: Se invoca `getPendingOperationsCount` sobre `SyncRepository`, pero esa clase no declara ese metodo. Agregalo con su implementacion real, o usa uno de los que si declara.
 
 ## Como saber que terminaste
 
@@ -72,16 +62,16 @@ Liderar la app de campo offline-first
 
 ### Reto
 - Tema: Arquitectura offline-first en Flutter
-- Seniority: junior-l3
+- Seniority: senior-l2
 - Tipo: practical
-- Título: Implementación de una arquitectura offline-first en una aplicación de campo
-- Tiempo estimado: 2 semanas
+- Título: Implementación de una app de campo offline-first
+- Tiempo estimado: 40 horas
 
 ### Fases (trabajo del HUMANO — PROHIBIDO completarlas)
 No implementes estos entregables. Dejalos como hueco pedagógico. El asistente solo materializa el proyecto arrancable para que el participante pueda trabajar.
-- Fase 1: Diseño de la arquitectura offline-first — objetivo: Definir la estructura de la aplicación que permita el funcionamiento sin conexión y la sincronización de datos al recuperar la conexión. — entregable (NO resolver): Diagrama de la arquitectura propuesta y documento de diseño detallado.
-- Fase 2: Implementación del almacenamiento local — objetivo: Implementar el almacenamiento local de datos para permitir el funcionamiento de la aplicación sin conexión. — entregable (NO resolver): Código fuente que implementa el almacenamiento local de datos.
-- Fase 3: Implementación de la sincronización de datos — objetivo: Implementar la sincronización de datos entre el almacenamiento local y el servidor cuando la conexión se restablezca. — entregable (NO resolver): Código fuente que implementa la sincronización de datos.
+- Fase 1: Diseño del modelo de datos y persistencia local — objetivo: Definir el modelo de datos y la estrategia de persistencia local para la aplicación. — entregable (NO resolver): Modelo de datos y estrategia de persistencia local documentados.
+- Fase 2: Implementación de la lógica de negocio y widgets — objetivo: Implementar la lógica de negocio y los widgets necesarios para la interacción del usuario. — entregable (NO resolver): Widgets y lógica de negocio implementados y funcionales.
+- Fase 3: Sincronización de datos y manejo de conflictos — objetivo: Implementar la sincronización de datos y el manejo de conflictos cuando la aplicación vuelve a tener conectividad. — entregable (NO resolver): Lógica de sincronización de datos y manejo de conflictos implementados.
 
 Eres un asistente experto en análisis, corrección y generación de archivos de cualquier tipo:
 código fuente, documentación, hojas de cálculo, documentos Word, configuraciones, entre otros.
@@ -219,134 +209,133 @@ INPUT
 Aquí está la cadena con los archivos:
 
 // === ARCHIVO: pubspec.yaml ===
-name: field_app
-description: A logistics field application with offline-first architecture
+name: offline_field_app
+description: A field application with offline-first architecture for transaction management
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
   sdk: ^3.6.0
-  flutter: '>=3.27.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^9.1.0
-  sqflite: ^2.4.2
-  path_provider: ^2.1.5
-  connectivity_plus: ^6.1.4
-  dio: ^5.8.0+1
-  get_it: ^8.0.3
-  equatable: ^2.0.7
-  uuid: ^4.5.1
-  cupertino_icons: ^1.0.8
+  
+  sqflite: 2.4.1
+  path: 1.9.0
+  dio: 5.7.0
+  connectivity_plus: 6.1.0
+  provider: 6.1.2
+  uuid: 4.5.1
+  crypto: 3.0.6
+  equatable: 2.0.7
+  get_it: 8.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^10.0.0
-  mocktail: ^1.0.4
-  flutter_lints: ^5.0.0
+  mockito: 5.4.4
+  build_runner: 2.4.13
 
 flutter:
   uses-material-design: true
 
 // === ARCHIVO: lib/main.dart ===
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:get_it/get_it.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/core/network/network_info.dart';
-import 'package:field_app/core/errors/failures.dart';
-import 'package:field_app/core/errors/exceptions.dart';
-import 'package:field_app/data/datasources/local/task_local_datasource.dart';
-import 'package:field_app/data/datasources/local/database_helper.dart';
-import 'package:field_app/data/datasources/remote/task_remote_datasource.dart';
-import 'package:field_app/data/repositories/task_repository_impl.dart';
-import 'package:field_app/data/repositories/sync_repository_impl.dart';
-import 'package:field_app/domain/repositories/task_repository.dart';
-import 'package:field_app/domain/repositories/sync_repository.dart';
-import 'package:field_app/domain/usecases/get_local_tasks.dart';
-import 'package:field_app/domain/usecases/save_task_local.dart';
-import 'package:field_app/domain/usecases/sync_tasks.dart';
-import 'package:field_app/domain/usecases/resolve_conflict.dart';
-import 'package:field_app/presentation/bloc/task/task_bloc.dart';
-import 'package:field_app/presentation/bloc/task/task_event.dart';
-import 'package:field_app/presentation/bloc/sync/sync_bloc.dart';
-import 'package:field_app/presentation/bloc/sync/sync_event.dart';
-import 'package:field_app/presentation/pages/home_page.dart';
-
-final GetIt sl = GetIt.instance;
-
-Future<void> initializeDependencies() async {
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
-  
-  final databaseHelper = DatabaseHelper();
-  await databaseHelper.database;
-  sl.registerLazySingleton<DatabaseHelper>(() => databaseHelper);
-  
-  sl.registerLazySingleton<TaskLocalDataSource>(
-    () => TaskLocalDataSourceImpl(databaseHelper: sl()),
-  );
-  
-  sl.registerLazySingleton<TaskRemoteDataSource>(
-    () => TaskRemoteDataSourceImpl(dio: sl()),
-  );
-  
-  sl.registerLazySingleton<TaskRepository>(
-    () => TaskRepositoryImpl(
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
-  
-  sl.registerLazySingleton<SyncRepository>(
-    () => SyncRepositoryImpl(
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
-  
-  sl.registerLazySingleton(() => GetLocalTasks(sl()));
-  sl.registerLazySingleton(() => SaveTaskLocal(sl()));
-  sl.registerLazySingleton(() => SyncTasks(sl()));
-  sl.registerLazySingleton(() => ResolveConflict(sl()));
-  
-  sl.registerFactory(() => TaskBloc(
-    getLocalTasks: sl(),
-    saveTaskLocal: sl(),
-    resolveConflict: sl(),
-  ));
-  
-  sl.registerFactory(() => SyncBloc(
-    syncTasks: sl(),
-    networkInfo: sl(),
-  ));
-}
+import 'package:offline_field_app/core/constants/app_constants.dart';
+import 'package:offline_field_app/core/network/network_info.dart';
+import 'package:offline_field_app/data/datasources/local/database_helper.dart';
+import 'package:offline_field_app/data/datasources/local/transaction_local_datasource.dart';
+import 'package:offline_field_app/data/datasources/local/sync_local_datasource.dart';
+import 'package:offline_field_app/data/repositories/transaction_repository_impl.dart';
+import 'package:offline_field_app/data/repositories/sync_repository_impl.dart';
+import 'package:offline_field_app/domain/repositories/transaction_repository.dart';
+import 'package:offline_field_app/domain/repositories/sync_repository.dart';
+import 'package:offline_field_app/domain/usecases/create_transaction.dart';
+import 'package:offline_field_app/domain/usecases/get_pending_transactions.dart';
+import 'package:offline_field_app/domain/usecases/sync_transactions.dart';
+import 'package:offline_field_app/domain/usecases/resolve_conflict.dart';
+import 'package:offline_field_app/presentation/providers/transaction_provider.dart';
+import 'package:offline_field_app/presentation/providers/sync_provider.dart';
+import 'package:offline_field_app/presentation/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await initializeDependencies();
+  final databaseHelper = DatabaseHelper();
+  await databaseHelper.database;
   
-  runApp(const FieldApp());
+  runApp(const OfflineFieldApp());
 }
 
-class FieldApp extends StatelessWidget {
-  const FieldApp({super.key});
+class OfflineFieldApp extends StatelessWidget {
+  const OfflineFieldApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider<TaskBloc>(
-          create: (context) => sl<TaskBloc>()..add(LoadTasksEvent()),
+        Provider<DatabaseHelper>(
+          create: (_) => DatabaseHelper(),
         ),
-        BlocProvider<SyncBloc>(
-          create: (context) => sl<SyncBloc>()..add(StartNetworkMonitoring()),
+        Provider<TransactionLocalDataSource>(
+          create: (context) => TransactionLocalDataSourceImpl(
+            databaseHelper: context.read<DatabaseHelper>(),
+          ),
+        ),
+        Provider<SyncLocalDataSource>(
+          create: (context) => SyncLocalDataSourceImpl(
+            databaseHelper: context.read<DatabaseHelper>(),
+          ),
+        ),
+        Provider<TransactionRepository>(
+          create: (context) => TransactionRepositoryImpl(
+            localDataSource: context.read<TransactionLocalDataSource>(),
+            syncLocalDataSource: context.read<SyncLocalDataSource>(),
+          ),
+        ),
+        Provider<SyncRepository>(
+          create: (context) => SyncRepositoryImpl(
+            localDataSource: context.read<SyncLocalDataSource>(),
+          ),
+        ),
+        Provider<CreateTransaction>(
+          create: (context) => CreateTransaction(
+            repository: context.read<TransactionRepository>(),
+          ),
+        ),
+        Provider<GetPendingTransactions>(
+          create: (context) => GetPendingTransactions(
+            repository: context.read<TransactionRepository>(),
+          ),
+        ),
+        Provider<SyncTransactions>(
+          create: (context) => SyncTransactions(
+            transactionRepository: context.read<TransactionRepository>(),
+            syncRepository: context.read<SyncRepository>(),
+          ),
+        ),
+        Provider<ResolveConflict>(
+          create: (context) => ResolveConflict(
+            syncRepository: context.read<SyncRepository>(),
+          ),
+        ),
+        StreamProvider<NetworkStatus>(
+          create: (context) => NetworkInfoImpl().onConnectivityChanged,
+          initialData: NetworkStatus.unknown,
+        ),
+        ChangeNotifierProvider<TransactionProvider>(
+          create: (context) => TransactionProvider(
+            createTransaction: context.read<CreateTransaction>(),
+            getPendingTransactions: context.read<GetPendingTransactions>(),
+          ),
+        ),
+        ChangeNotifierProvider<SyncProvider>(
+          create: (context) => SyncProvider(
+            syncTransactions: context.read<SyncTransactions>(),
+            resolveConflict: context.read<ResolveConflict>(),
+          ),
         ),
       ],
       child: MaterialApp(
@@ -358,160 +347,126 @@ class FieldApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
           useMaterial3: true,
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            elevation: 0,
-          ),
-          cardTheme: CardThemeData(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            filled: true,
-          ),
         ),
-        home: const HomePage(),
+        home: const HomeScreen(),
       ),
     );
   }
 }
 
 // === ARCHIVO: lib/core/constants/app_constants.dart ===
-import 'package:flutter/material.dart';
-
 class AppConstants {
-  static const String appName = 'Field App';
-  static const String appVersion = '1.0.0';
+  static const String appName = 'Field Operations';
+  static const int primaryColor = 0xFF1E88E5;
+  static const int errorColor = 0xFFD32F2F;
+  static const int successColor = 0xFF388E3C;
+  static const int warningColor = 0xFFF57C00;
   
-  static const Color primaryColor = Color(0xFF1565C0);
-  static const Color secondaryColor = Color(0xFF43A047);
-  static const Color errorColor = Color(0xFFD32F2F);
-  static const Color warningColor = Color(0xFFFFA000);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
-  
-  static const String baseUrl = 'https://api.fieldapp.example.com';
+  static const String baseUrl = 'https://api.fieldoperations.example.com';
   static const String apiVersion = 'v1';
   static const int connectionTimeout = 30000;
   static const int receiveTimeout = 30000;
   
-  static const int maxRetryAttempts = 3;
-  static const int retryDelayMilliseconds = 1000;
-  static const int syncIntervalMinutes = 5;
-  static const int conflictResolutionTimeoutSeconds = 30;
-  
-  static const String databaseName = 'field_app.db';
+  static const String databaseName = 'field_operations.db';
   static const int databaseVersion = 1;
   
-  static const int taskTableId = 1;
-  static const String taskTableName = 'tasks';
-  static const String syncStatusTableName = 'sync_status';
+  static const String transactionsTable = 'transactions';
+  static const String syncRecordsTable = 'sync_records';
+  static const String pendingOperationsTable = 'pending_operations';
   
-  static const int maxOfflineTasks = 1000;
-  static const int batchSyncSize = 50;
+  static const int schemaVersion = 1;
+  static const int minSchemaVersion = 1;
   
-  static const Duration networkCheckInterval = Duration(seconds: 10);
-  static const Duration syncDebounceDelay = Duration(seconds: 2);
+  static const int maxRetryAttempts = 3;
+  static const int retryDelaySeconds = 5;
+  static const int syncBatchSize = 50;
   
   static const String syncStatusPending = 'pending';
-  static const String syncStatusSynced = 'synced';
+  static const String syncStatusInProgress = 'in_progress';
+  static const String syncStatusCompleted = 'completed';
   static const String syncStatusFailed = 'failed';
   static const String syncStatusConflict = 'conflict';
   
-  static const String taskPriorityLow = 'low';
-  static const String taskPriorityMedium = 'medium';
-  static const String taskPriorityHigh = 'high';
+  static const String conflictStrategyLastWriteWins = 'last_write_wins';
+  static const String conflictStrategyServerWins = 'server_wins';
+  static const String conflictStrategyClientWins = 'client_wins';
+  static const String conflictStrategyManual = 'manual';
   
-  static const String taskStatusPending = 'pending';
-  static const String taskStatusInProgress = 'in_progress';
-  static const String taskStatusCompleted = 'completed';
-  static const String taskStatusCancelled = 'cancelled';
+  static const int defaultPageSize = 20;
+  static const int maxPageSize = 100;
   
-  static const String conflictResolutionStrategyServer = 'server';
-  static const String conflictResolutionStrategyClient = 'client';
-  static const String conflictResolutionStrategyManual = 'manual';
-  static const String conflictResolutionStrategyLastWriteWins = 'last_write_wins';
-  
-  static const List<String> validTaskPriorities = [
-    taskPriorityLow,
-    taskPriorityMedium,
-    taskPriorityHigh,
+  static const List<String> supportedTransactionTypes = [
+    'sale',
+    'return',
+    'exchange',
+    'refund',
+    'adjustment',
   ];
   
-  static const List<String> validTaskStatuses = [
-    taskStatusPending,
-    taskStatusInProgress,
-    taskStatusCompleted,
-    taskStatusCancelled,
+  static const List<String> supportedCurrencies = [
+    'USD',
+    'EUR',
+    'GBP',
+    'MXN',
+    'COP',
   ];
   
-  static const int maxTitleLength = 200;
-  static const int maxDescriptionLength = 2000;
-  
-  static const String locale = 'es_ES';
-  static const String timezone = 'America/Bogota';
-  
-  static const bool enableOfflineMode = true;
-  static const bool enableAutoSync = true;
-  static const bool enableConflictDetection = true;
-  static const bool enableDetailedLogs = true;
-  
-  static const Map<String, dynamic> defaultHeaders = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-App-Version': appVersion,
-    'X-Platform': 'android',
-    'X-Locale': locale,
+  static const Map<String, int> maxAmountsByCurrency = {
+    'USD': 10000,
+    'EUR': 10000,
+    'GBP': 8000,
+    'MXN': 200000,
+    'COP': 40000000,
   };
+  
+  static const Map<String, String> currencySymbols = {
+    'USD': '\$',
+    'EUR': '€',
+    'GBP': '£',
+    'MXN': '\$',
+    'COP': '\$',
+  };
+  
+  static String getApiUrl(String endpoint) {
+    return '$baseUrl/$apiVersion/$endpoint';
+  }
+  
+  static String formatAmount(double amount, String currency) {
+    final symbol = currencySymbols[currency] ?? currency;
+    return '$symbol${amount.toStringAsFixed(2)}';
+  }
+  
+  static bool isValidAmount(double amount, String currency) {
+    final maxAmount = maxAmountsByCurrency[currency];
+    if (maxAmount == null) return false;
+    return amount > 0 && amount <= maxAmount;
+  }
+  
+  static bool isValidTransactionType(String type) {
+    return supportedTransactionTypes.contains(type);
+  }
+  
+  static bool isValidCurrency(String currency) {
+    return supportedCurrencies.contains(currency);
+  }
 }
 
-class DatabaseConstants {
-  static const String tasksTable = '''
-    CREATE TABLE tasks (
-      id TEXT PRIMARY KEY,
-      title TEXT NOT NULL,
-      description TEXT,
-      priority TEXT NOT NULL,
-      status TEXT NOT NULL,
-      due_date INTEGER,
-      assigned_to TEXT,
-      location_lat REAL,
-      location_lng REAL,
-      created_at INTEGER NOT NULL,
-      updated_at INTEGER NOT NULL,
-      synced_at INTEGER,
-      sync_status TEXT NOT NULL,
-      version INTEGER NOT NULL DEFAULT 1,
-      is_deleted INTEGER NOT NULL DEFAULT 0,
-      metadata TEXT
-    )
-  ''';
-  
-  static const String syncStatusTable = '''
-    CREATE TABLE sync_status (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      entity_type TEXT NOT NULL,
-      entity_id TEXT NOT NULL,
-      operation TEXT NOT NULL,
-      status TEXT NOT NULL,
-      created_at INTEGER NOT NULL,
-      updated_at INTEGER NOT NULL,
-      error_message TEXT,
-      retry_count INTEGER NOT NULL DEFAULT 0
-    )
-  ''';
-  
-  static const String createTasksIndex = '''
-    CREATE INDEX idx_tasks_sync_status ON tasks(sync_status)
-  ''';
-  
-  static const String createSyncStatusIndex = '''
-    CREATE INDEX idx_sync_status_entity ON sync_status(entity_type, entity_id)
-  ''';
+class DatabaseColumns {
+  static const String id = 'id';
+  static const String uuid = 'uuid';
+  static const String externalId = 'external_id';
+  static const String amount = 'amount';
+  static const String currency = 'currency';
+  static const String transactionType = 'transaction_type';
+  static const String description = 'description';
+  static const String metadata = 'metadata';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+  static const String version = 'version';
+  static const String syncStatus = 'sync_status';
+  static const String hash = 'hash';
+  static const String operationType = 'operation_type';
+  static const String conflictData = 'conflict_data';
 }
 
 // === ARCHIVO: lib/core/errors/failures.dart ===
@@ -521,179 +476,149 @@ abstract class Failure extends Equatable {
   final String message;
   final String? code;
   final Map<String, dynamic>? metadata;
-  final DateTime timestamp;
-
+  
   const Failure({
     required this.message,
     this.code,
     this.metadata,
-    DateTime? timestamp,
-  }) : timestamp = timestamp ?? const _DefaultTimestamp();
-
+  });
+  
   @override
-  List<Object?> get props => [message, code, metadata, timestamp];
+  List<Object?> get props => [message, code, metadata];
+}
 
-  String get failureType => runtimeType.toString();
+class OfflineFailure extends Failure {
+  const OfflineFailure({
+    super.message = 'No hay conexión a internet disponible',
+    super.code = 'OFFLINE_001',
+    super.metadata,
+  });
   
-  String get userFriendlyMessage => message;
+  factory OfflineFailure.database(String details) {
+    return OfflineFailure(
+      message: 'Error de base de datos: $details',
+      code: 'OFFLINE_DB_001',
+      metadata: {'details': details},
+    );
+  }
   
-  bool get isRecoverable => this is CacheFailure || this is NetworkFailure;
-  
-  Map<String, dynamic> toMap() {
-    return {
-      'type': failureType,
-      'message': message,
-      'code': code,
-      'metadata': metadata,
-      'timestamp': timestamp.toIso8601String(),
-    };
+  factory OfflineFailure.networkUnavailable() {
+    return const OfflineFailure(
+      message: 'La red no está disponible. Por favor, verifique su conexión.',
+      code: 'OFFLINE_NET_001',
+    );
   }
 }
 
-class _DefaultTimestamp implements DateTime {
-  const _DefaultTimestamp();
-
-  DateTime get _now => DateTime.now();
+class SyncFailure extends Failure {
+  const SyncFailure({
+    super.message = 'Error durante la sincronización de datos',
+    super.code = 'SYNC_001',
+    super.metadata,
+  });
   
-  @override
-  int get year => _now.year;
+  factory SyncFailure.timeout() {
+    return const SyncFailure(
+      message: 'Tiempo de espera agotado durante la sincronización',
+      code: 'SYNC_TIMEOUT_001',
+    );
+  }
   
-  @override
-  int get month => _now.month;
+  factory SyncFailure.serverError(String details) {
+    return SyncFailure(
+      message: 'Error del servidor: $details',
+      code: 'SYNC_SERVER_001',
+      metadata: {'server_details': details},
+    );
+  }
   
-  @override
-  int get day => _now.day;
+  factory SyncFailure.unauthorized() {
+    return const SyncFailure(
+      message: 'No autorizado para sincronizar. Inicie sesión novamente.',
+      code: 'SYNC_AUTH_001',
+    );
+  }
   
-  @override
-  int get hour => _now.hour;
-  
-  @override
-  int get minute => _now.minute;
-  
-  @override
-  int get second => _now.second;
-  
-  @override
-  int get millisecond => _now.millisecond;
-  
-  @override
-  int get microsecond => _now.microsecond;
-  
-  @override
-  int get weekday => _now.weekday;
-  
-  @override
-  bool get isUtc => _now.isUtc;
-  
-  @override
-  String get timeZoneName => _now.timeZoneName;
-  
-  @override
-  Duration get timeZoneOffset => _now.timeZoneOffset;
-  
-  @override
-  int get millisecondsSinceEpoch => _now.millisecondsSinceEpoch;
-  
-  @override
-  int get microsecondsSinceEpoch => _now.microsecondsSinceEpoch;
-  
-  @override
-  DateTime add(Duration duration) => _now.add(duration);
-  
-  @override
-  DateTime subtract(Duration duration) => _now.subtract(duration);
-  
-  @override
-  Duration difference(DateTime other) => _now.difference(other);
-  
-  @override
-  bool isAfter(DateTime other) => _now.isAfter(other);
-  
-  @override
-  bool isBefore(DateTime other) => _now.isBefore(other);
-  
-  @override
-  bool isAtSameMomentAs(DateTime other) => _now.isAtSameMomentAs(other);
-  
-  @override
-  int compareTo(DateTime other) => _now.compareTo(other);
-  
-  @override
-  String toIso8601String() => _now.toIso8601String();
-  
-  @override
-  DateTime toLocal() => _now.toLocal();
-  
-  @override
-  DateTime toUtc() => _now.toUtc();
-  
-  @override
-  String toString() => _now.toString();
+  factory SyncFailure.batchFailed(int failedCount, int totalCount) {
+    return SyncFailure(
+      message: 'Sincronización parcial: $failedCount de $totalCount elementos fallaron',
+      code: 'SYNC_BATCH_001',
+      metadata: {'failed': failedCount, 'total': totalCount},
+    );
+  }
 }
 
-class ServerFailure extends Failure {
-  final int? statusCode;
+class ConflictFailure extends Failure {
+  final String entityId;
+  final String localVersion;
+  final String serverVersion;
   
-  const ServerFailure({
-    required super.message,
-    super.code,
+  const ConflictFailure({
+    required this.message,
+    required this.code,
+    required this.entityId,
+    required this.localVersion,
+    required this.serverVersion,
     super.metadata,
-    super.timestamp,
-    this.statusCode,
   });
-
-  @override
-  List<Object?> get props => [...super.props, statusCode];
+  
+  factory ConflictFailure.detected(String entityId, Map<String, dynamic> localData, Map<String, dynamic> serverData) {
+    return ConflictFailure(
+      message: 'Conflicto detectado en la entidad $entityId',
+      code: 'CONFLICT_001',
+      entityId: entityId,
+      localVersion: localData['version']?.toString() ?? 'unknown',
+      serverVersion: serverData['version']?.toString() ?? 'unknown',
+      metadata: {
+        'local_data': localData,
+        'server_data': serverData,
+      },
+    );
+  }
+  
+  factory ConflictFailure.unresolved(String entityId) {
+    return ConflictFailure(
+      message: 'Conflicto no resuelto para la entidad $entityId',
+      code: 'CONFLICT_UNRESOLVED_001',
+      entityId: entityId,
+      localVersion: 'unknown',
+      serverVersion: 'unknown',
+    );
+  }
   
   @override
-  bool get isRecoverable => statusCode != null && 
-      statusCode! >= 500 && statusCode! < 600;
+  List<Object?> get props => [...super.props, entityId, localVersion, serverVersion];
 }
 
-class CacheFailure extends Failure {
-  final String? cacheKey;
-  
-  const CacheFailure({
-    required super.message,
-    super.code,
+class DatabaseFailure extends Failure {
+  const DatabaseFailure({
+    super.message = 'Error de base de datos local',
+    super.code = 'DB_001',
     super.metadata,
-    super.timestamp,
-    this.cacheKey,
   });
-
-  @override
-  List<Object?> get props => [...super.props, cacheKey];
-}
-
-class NetworkFailure extends Failure {
-  final bool isConnectionError;
-  final bool isTimeout;
   
-  const NetworkFailure({
-    required super.message,
-    super.code,
-    super.metadata,
-    super.timestamp,
-    this.isConnectionError = false,
-    this.isTimeout = false,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    isConnectionError,
-    isTimeout,
-  ];
+  factory DatabaseFailure.notFound(String table, String id) {
+    return DatabaseFailure(
+      message: 'Registro no encontrado en $table: $id',
+      code: 'DB_NOT_FOUND_001',
+      metadata: {'table': table, 'id': id},
+    );
+  }
   
-  @override
-  String get userFriendlyMessage {
-    if (isConnectionError) {
-      return 'No hay conexión a internet. Los datos se guardarán localmente.';
-    }
-    if (isTimeout) {
-      return 'La conexión tardó demasiado. Por favor, intente más tarde.';
-    }
-    return message;
+  factory DatabaseFailure.constraintViolation(String details) {
+    return DatabaseFailure(
+      message: 'Violación de restricción: $details',
+      code: 'DB_CONSTRAINT_001',
+      metadata: {'details': details},
+    );
+  }
+  
+  factory DatabaseFailure.transactionFailed(String details) {
+    return DatabaseFailure(
+      message: 'Transacción fallida: $details',
+      code: 'DB_TRANSACTION_001',
+      metadata: {'details': details},
+    );
   }
 }
 
@@ -702,1192 +627,2835 @@ class ValidationFailure extends Failure {
   
   const ValidationFailure({
     required super.message,
-    super.code,
+    required this.code,
+    required this.fieldErrors,
     super.metadata,
-    super.timestamp,
-    this.fieldErrors = const {},
   });
-
+  
+  factory ValidationFailure.invalidAmount(String currency, double amount) {
+    return ValidationFailure(
+      message: 'Monto inválido para la moneda $currency',
+      code: 'VALIDATION_AMOUNT_001',
+      fieldErrors: {
+        'amount': ['El monto debe ser mayor a 0 y menor al máximo permitido para $currency'],
+      },
+      metadata: {'currency': currency, 'amount': amount},
+    );
+  }
+  
+  factory ValidationFailure.requiredFields(List<String> fields) {
+    return ValidationFailure(
+      message: 'Campos requeridos faltantes: ${fields.join(', ')}',
+      code: 'VALIDATION_REQUIRED_001',
+      fieldErrors: {
+        for (final field in fields) field: ['Este campo es requerido'],
+      },
+    );
+  }
+  
   @override
   List<Object?> get props => [...super.props, fieldErrors];
-  
-  String getFieldError(String fieldName) {
-    return fieldErrors[fieldName]?.join(', ') ?? '';
-  }
-}
-
-class SyncFailure extends Failure {
-  final String? entityId;
-  final String? operation;
-  final int retryCount;
-  
-  const SyncFailure({
-    required super.message,
-    super.code,
-    super.metadata,
-    super.timestamp,
-    this.entityId,
-    this.operation,
-    this.retryCount = 0,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    entityId,
-    operation,
-    retryCount,
-  ];
-  
-  @override
-  bool get isRecoverable => retryCount < 3;
-}
-
-class ConflictFailure extends Failure {
-  final String entityId;
-  final dynamic localVersion;
-  final dynamic remoteVersion;
-  final String conflictType;
-  
-  const ConflictFailure({
-    required super.message,
-    required this.entityId,
-    required this.localVersion,
-    required this.remoteVersion,
-    required this.conflictType,
-    super.code,
-    super.metadata,
-    super.timestamp,
-  });
-
-  @override
-  List<Object?> get props => [
-    ...super.props,
-    entityId,
-    localVersion,
-    remoteVersion,
-    conflictType,
-  ];
-  
-  @override
-  String get userFriendlyMessage {
-    return 'Conflicto detectado en los datos. Por favor, revise las diferencias.';
-  }
-}
-
-class PermissionFailure extends Failure {
-  final String permission;
-  
-  const PermissionFailure({
-    required super.message,
-    required this.permission,
-    super.code,
-    super.metadata,
-    super.timestamp,
-  });
-
-  @override
-  List<Object?> get props => [...super.props, permission];
 }
 
 // === ARCHIVO: lib/core/errors/exceptions.dart ===
 class AppException implements Exception {
   final String message;
   final String? code;
-  final dynamic originalException;
-  final StackTrace? stackTrace;
-  final DateTime timestamp;
-
-  AppException({
+  final dynamic originalError;
+  
+  const AppException({
     required this.message,
     this.code,
-    this.originalException,
-    StackTrace? stackTrace,
-    DateTime? timestamp,
-  })  : timestamp = timestamp ?? DateTime.now(),
-        stackTrace = stackTrace ?? StackTrace.current;
-
+    this.originalError,
+  });
+  
   @override
   String toString() => 'AppException: $message (code: $code)';
+}
+
+class OfflineException extends AppException {
+  const OfflineException({
+    super.message = 'Operación no disponible sin conexión',
+    super.code = 'OFFLINE_EX_001',
+    super.originalError,
+  });
   
-  Map<String, dynamic> toMap() {
+  factory OfflineException.noConnectivity() {
+    return const OfflineException(
+      message: 'No hay conexión a internet. La operación se guardará localmente.',
+      code: 'OFFLINE_EX_CONNECTIVITY_001',
+    );
+  }
+  
+  factory OfflineException.database(String operation) {
+    return OfflineException(
+      message: 'Error de base de datos: $operation',
+      code: 'OFFLINE_EX_DB_001',
+    );
+  }
+}
+
+class SyncConflictException extends AppException {
+  final String entityId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> serverData;
+  final String conflictStrategy;
+  
+  const SyncConflictException({
+    required super.message,
+    required this.code,
+    required this.entityId,
+    required this.localData,
+    required this.serverData,
+    required this.conflictStrategy,
+    super.originalError,
+  });
+  
+  factory SyncConflictException.detected({
+    required String entityId,
+    required Map<String, dynamic> localData,
+    required Map<String, dynamic> serverData,
+  }) {
+    return SyncConflictException(
+      message: 'Conflicto detectado al sincronizar $entityId',
+      code: 'SYNC_CONFLICT_EX_001',
+      entityId: entityId,
+      localData: localData,
+      serverData: serverData,
+      conflictStrategy: 'pending',
+    );
+  }
+  
+  factory SyncConflictException.unresolved({
+    required String entityId,
+    required Map<String, dynamic> localData,
+    required Map<String, dynamic> serverData,
+  }) {
+    return SyncConflictException(
+      message: 'Conflicto no resuelto para $entityId. Requiere intervención manual.',
+      code: 'SYNC_CONFLICT_EX_UNRESOLVED_001',
+      entityId: entityId,
+      localData: localData,
+      serverData: serverData,
+      conflictStrategy: 'manual_required',
+    );
+  }
+  
+  Map<String, dynamic> toConflictData() {
     return {
-      'type': runtimeType.toString(),
-      'message': message,
-      'code': code,
-      'timestamp': timestamp.toIso8601String(),
+      'entity_id': entityId,
+      'local_data': localData,
+      'server_data': serverData,
+      'strategy': conflictStrategy,
+      'detected_at': DateTime.now().toIso8601String(),
     };
   }
 }
 
-class ServerException extends AppException {
-  final int? statusCode;
-  final String? endpoint;
+class IdempotencyException extends AppException {
+  final String operationHash;
+  final String? existingRecordId;
   
-  ServerException({
+  const IdempotencyException({
     required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.statusCode,
-    this.endpoint,
+    required this.code,
+    required this.operationHash,
+    this.existingRecordId,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ServerException: $message (status: $statusCode, endpoint: $endpoint)';
   
-  bool get isClientError => statusCode != null && statusCode! >= 400 && statusCode! < 500;
-  bool get isServerError => statusCode != null && statusCode! >= 500;
-  bool get isNotFound => statusCode == 404;
-  bool get isUnauthorized => statusCode == 401;
-  bool get isForbidden => statusCode == 403;
-}
-
-class CacheException extends AppException {
-  final String? cacheKey;
-  final String operation;
-  
-  CacheException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.cacheKey,
-    this.operation = 'read',
-  });
-
-  @override
-  String toString() => 'CacheException: $message (key: $cacheKey, operation: $operation)';
-}
-
-class NetworkException extends AppException {
-  final String url;
-  final bool isConnectionError;
-  final bool isTimeout;
-  final bool isSslError;
-  
-  NetworkException({
-    required super.message,
-    required this.url,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.isConnectionError = false,
-    this.isTimeout = false,
-    this.isSslError = false,
-  });
-
-  @override
-  String toString() => 'NetworkException: $message (url: $url, connection: $isConnectionError, timeout: $isTimeout)';
-  
-  String get userMessage {
-    if (isConnectionError) {
-      return 'No se pudo conectar al servidor. Verifique su conexión a internet.';
-    }
-    if (isTimeout) {
-      return 'La solicitud tardó demasiado. Por favor, intente de nuevo.';
-    }
-    if (isSslError) {
-      return 'Error de seguridad en la conexión. Por favor, contacte al administrador.';
-    }
-    return message;
+  factory IdempotencyException.duplicateOperation({
+    required String operationHash,
+    required String existingId,
+  }) {
+    return IdempotencyException(
+      message: 'Operación duplicada detectada. El registro existente es: $existingId',
+      code: 'IDEMPOTENCY_EX_DUPLICATE_001',
+      operationHash: operationHash,
+      existingRecordId: existingId,
+    );
   }
-}
-
-class DatabaseException extends AppException {
-  final String? sql;
-  final Map<String, dynamic>? queryParameters;
   
-  DatabaseException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.sql,
-    this.queryParameters,
-  });
-
-  @override
-  String toString() => 'DatabaseException: $message (sql: $sql)';
-  
-  bool get isConstraintViolation => code == 'constraint' || code == 'UNIQUE constraint failed';
-  bool get isNotFound => code == 'NOT FOUND';
+  factory IdempotencyException.hashMismatch({
+    required String operationHash,
+    required String expectedHash,
+  }) {
+    return IdempotencyException(
+      message: 'El hash de operación no coincide. Expected: $expectedHash, Got: $operationHash',
+      code: 'IDEMPOTENCY_EX_HASH_001',
+      operationHash: operationHash,
+    );
+  }
 }
 
 class ValidationException extends AppException {
   final Map<String, List<String>> fieldErrors;
   
-  ValidationException({
+  const ValidationException({
     required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.fieldErrors = const {},
+    required super.code,
+    required this.fieldErrors,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ValidationException: $message (fields: ${fieldErrors.keys.join(', ')})';
   
-  String getFieldError(String fieldName) {
-    return fieldErrors[fieldName]?.join(', ') ?? '';
+  factory ValidationException.invalidAmount({
+    required String currency,
+    required double amount,
+    required double maxAmount,
+  }) {
+    return ValidationException(
+      message: 'Monto $amount $currency excede el máximo permitido: $maxAmount',
+      code: 'VALIDATION_EX_AMOUNT_001',
+      fieldErrors: {
+        'amount': ['El monto debe estar entre 0 y $maxAmount para $currency'],
+      },
+    );
   }
   
-  bool hasFieldError(String fieldName) {
-    return fieldErrors.containsKey(fieldName) && fieldErrors[fieldName]!.isNotEmpty;
-  }
-}
-
-class SyncException extends AppException {
-  final String? entityId;
-  final String operation;
-  final int retryCount;
-  final DateTime? nextRetryAt;
-  
-  SyncException({
-    required super.message,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-    this.entityId,
-    this.operation = 'sync',
-    this.retryCount = 0,
-    this.nextRetryAt,
-  });
-
-  @override
-  String toString() => 'SyncException: $message (entity: $entityId, operation: $operation, retry: $retryCount)';
-  
-  bool get canRetry => retryCount < 3;
-  
-  Duration? get timeUntilRetry {
-    if (nextRetryAt == null) return null;
-    return nextRetryAt!.difference(DateTime.now());
+  factory ValidationException.invalidType({
+    required String type,
+    required List<String> validTypes,
+  }) {
+    return ValidationException(
+      message: 'Tipo de transacción inválido: $type. Tipos válidos: ${validTypes.join(', ')}',
+      code: 'VALIDATION_EX_TYPE_001',
+      fieldErrors: {
+        'transaction_type': ['Debe ser uno de: ${validTypes.join(', ')}'],
+      },
+    );
   }
 }
 
-class ConflictException extends AppException {
-  final String entityId;
-  final dynamic localData;
-  final dynamic remoteData;
-  final String conflictType;
+class NetworkException extends AppException {
+  final int? statusCode;
   
-  ConflictException({
+  const NetworkException({
     required super.message,
-    required this.entityId,
-    required this.localData,
-    required this.remoteData,
-    required this.conflictType,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
+    required super.code,
+    this.statusCode,
+    super.originalError,
   });
-
-  @override
-  String toString() => 'ConflictException: $message (entity: $entityId, type: $conflictType)';
   
-  Map<String, dynamic> getConflictDetails() {
-    return {
-      'entityId': entityId,
-      'localData': localData,
-      'remoteData': remoteData,
-      'conflictType': conflictType,
-    };
+  factory NetworkException.timeout() {
+    return const NetworkException(
+      message: 'Tiempo de espera agotado',
+      code: 'NETWORK_EX_TIMEOUT_001',
+      statusCode: 408,
+    );
   }
-}
-
-class PermissionException extends AppException {
-  final String permission;
   
-  PermissionException({
-    required super.message,
-    required this.permission,
-    super.code,
-    super.originalException,
-    super.stackTrace,
-    super.timestamp,
-  });
-
-  @override
-  String toString() => 'PermissionException: $message (permission: $permission)';
+  factory NetworkException.serverError(int code, String details) {
+    return NetworkException(
+      message: 'Error del servidor: $details',
+      code: 'NETWORK_EX_SERVER_001',
+      statusCode: code,
+    );
+  }
+  
+  factory NetworkException.unauthorized() {
+    return const NetworkException(
+      message: 'No autorizado. Por favor, inicie sesión nuevamente.',
+      code: 'NETWORK_EX_AUTH_001',
+      statusCode: 401,
+    );
+  }
+  
+  factory NetworkException.notFound(String endpoint) {
+    return NetworkException(
+      message: 'Recurso no encontrado: $endpoint',
+      code: 'NETWORK_EX_NOT_FOUND_001',
+      statusCode: 404,
+    );
+  }
 }
 
 // === ARCHIVO: lib/core/network/network_info.dart ===
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get_it/get_it.dart';
+import 'package:offline_field_app/core/errors/exceptions.dart';
+
+enum NetworkStatus {
+  online,
+  offline,
+  unknown,
+}
 
 abstract class NetworkInfo {
   Future<bool> get isConnected;
-  Stream<bool> get onConnectivityChanged;
-  Future<ConnectivityResult> get connectivityResult;
-  Future<List<ConnectivityResult>> get connectivityResults;
+  Stream<NetworkStatus> get onConnectivityChanged;
+  Future<void> checkConnectivity();
+}
+
+abstract class ConnectivityService {
+  Future<bool> get isConnected;
+  Stream<List<ConnectivityResult>> get onConnectivityChanged;
+  Future<List<ConnectivityResult>> checkConnectivity();
 }
 
 class NetworkInfoImpl implements NetworkInfo {
-  final Connectivity _connectivity;
-  final StreamController<bool> _connectivityStreamController;
-  bool _lastKnownState = false;
+  final ConnectivityService _connectivityService;
+  final StreamController<NetworkStatus> _connectivityController = StreamController<NetworkStatus>.broadcast();
   
-  NetworkInfoImpl({Connectivity? connectivity})
-      : _connectivity = connectivity ?? Connectivity(),
-        _connectivityStreamController = StreamController<bool>.broadcast() {
-    _initConnectivityListener();
-  }
-
-  void _initConnectivityListener() {
-    _connectivity.onConnectivityChanged.listen((results) {
-      final isConnected = _checkConnectivity(results);
-      if (isConnected != _lastKnownState) {
-        _lastKnownState = isConnected;
-        _connectivityStreamController.add(isConnected);
-      }
-    });
-  }
-
-  bool _checkConnectivity(List<ConnectivityResult> results) {
-    if (results.isEmpty || results.contains(ConnectivityResult.none)) {
-      return false;
+  NetworkInfoImpl({ConnectivityService? connectivityService})
+      : _connectivityService = connectivityService ?? GetIt.instance<ConnectivityService>();
+  
+  @override
+  Future<bool> get isConnected async {
+    try {
+      final result = await _connectivityService.checkConnectivity();
+      return _isConnectedFromResult(result);
+    } catch (e) {
+      throw OfflineException(
+        message: 'Error al verificar conectividad: $e',
+        code: 'NETWORK_INFO_CHECK_001',
+        originalError: e,
+      );
     }
-    return results.any((result) => result != ConnectivityResult.none);
   }
+  
+  @override
+  Stream<NetworkStatus> get onConnectivityChanged {
+    _connectivityService.onConnectivityChanged.listen((results) {
+      final status = _mapConnectivityResult(results);
+      _connectivityController.add(status);
+    });
+    return _connectivityController.stream;
+  }
+  
+  @override
+  Future<void> checkConnectivity() async {
+    final result = await _connectivityService.checkConnectivity();
+    final status = _mapConnectivityResult(result);
+    _connectivityController.add(status);
+  }
+  
+  bool _isConnectedFromResult(List<ConnectivityResult> results) {
+    return results.any((result) =>
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.ethernet);
+  }
+  
+  NetworkStatus _mapConnectivityResult(List<ConnectivityResult> results) {
+    if (results.isEmpty || results.contains(ConnectivityResult.none)) {
+      return NetworkStatus.offline;
+    }
+    if (_isConnectedFromResult(results)) {
+      return NetworkStatus.online;
+    }
+    return NetworkStatus.unknown;
+  }
+  
+  void dispose() {
+    _connectivityController.close();
+  }
+}
+
+class ConnectivityServiceImpl implements ConnectivityService {
+  final Connectivity _connectivity;
+  
+  ConnectivityServiceImpl({Connectivity? connectivity})
+      : _connectivity = connectivity ?? Connectivity();
+  
+  @override
+  Future<bool> get isConnected async {
+    final result = await _connectivity.checkConnectivity();
+    return _isConnectedFromResult(result);
+  }
+  
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged {
+    return _connectivity.onConnectivityChanged;
+  }
+  
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() async {
+    return await _connectivity.checkConnectivity();
+  }
+  
+  bool _isConnectedFromResult(List<ConnectivityResult> results) {
+    return results.any((result) =>
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.ethernet);
+  }
+}
+
+
+// === ARCHIVO: lib/core/network/connectivity_service.dart ===
+package offline_field_app.core.network;
+
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:equatable/equatable.dart';
+
+enum ConnectionStatus {
+  connected,
+  disconnected,
+  connecting,
+}
+
+class ConnectionState extends Equatable {
+  final ConnectionStatus status;
+  final List<ConnectivityResult> availableTechnologies;
+  final DateTime timestamp;
+  final bool wasOffline;
+
+  const ConnectionState({
+    required this.status,
+    required this.availableTechnologies,
+    required this.timestamp,
+    this.wasOffline = false,
+  });
+
+  factory ConnectionState.initial() => ConnectionState(
+        status: ConnectionStatus.disconnected,
+        availableTechnologies: [],
+        timestamp: DateTime.now(),
+      );
+
+  factory ConnectionState.fromConnectivityResult(
+    List<ConnectivityResult> results,
+    bool wasOffline,
+  ) {
+    final hasConnection = results.isNotEmpty &&
+        !results.every((r) => r == ConnectivityResult.none);
+
+    ConnectionStatus status;
+    if (hasConnection) {
+      status = ConnectionStatus.connected;
+    } else {
+      status = ConnectionStatus.disconnected;
+    }
+
+    return ConnectionState(
+      status: status,
+      availableTechnologies: results,
+      timestamp: DateTime.now(),
+      wasOffline: wasOffline,
+    );
+  }
+
+  bool get isConnected => status == ConnectionStatus.connected;
+  bool get isDisconnected => status == ConnectionStatus.disconnected;
+  bool get isConnecting => status == ConnectionStatus.connecting;
+
+  String get technologyDescription {
+    if (availableTechnologies.isEmpty) return 'None';
+    return availableTechnologies
+        .map((r) => r.name)
+        .join(', ');
+  }
+
+  @override
+  List<Object?> get props => [status, availableTechnologies, timestamp, wasOffline];
+}
+
+abstract class ReactiveConnectivityService {
+  Stream<ConnectionState> get connectionStateStream;
+  Future<ConnectionState> get currentState;
+  Stream<bool> get isConnectedStream;
+  Future<bool> get isConnected;
+  Future<void> checkConnection();
+  void dispose();
+}
+
+class ReactiveConnectivityServiceImpl implements ReactiveConnectivityService {
+  final Connectivity _connectivity;
+  final StreamController<ConnectionState> _stateController;
+  final StreamController<bool> _connectedController;
+  ConnectionState _currentState;
+  bool _isDisposed = false;
+
+  ReactiveConnectivityServiceImpl({Connectivity? connectivity})
+      : _connectivity = connectivity ?? Connectivity(),
+        _stateController = StreamController<ConnectionState>.broadcast(),
+        _connectedController = StreamController<bool>.broadcast(),
+        _currentState = ConnectionState.initial() {
+    _initializeListener();
+  }
+
+  void _initializeListener() {
+    _connectivity.onConnectivityChanged.listen(
+      _handleConnectivityChange,
+      onError: (error) {
+        _emitErrorState(error);
+      },
+    );
+  }
+
+  Future<void> _handleConnectivityChange(List<ConnectivityResult> results) async {
+    if (_isDisposed) return;
+
+    final previousState = _currentState;
+    final wasOffline = previousState.isDisconnected;
+    
+    _currentState = ConnectionState.fromConnectivityResult(
+      results,
+      wasOffline,
+    );
+
+    if (!_stateController.isClosed) {
+      _stateController.add(_currentState);
+    }
+
+    if (!_connectedController.isClosed) {
+      _connectedController.add(_currentState.isConnected);
+    }
+  }
+
+  void _emitErrorState(dynamic error) {
+    if (_isDisposed) return;
+    
+    _currentState = ConnectionState(
+      status: ConnectionStatus.disconnected,
+      availableTechnologies: [],
+      timestamp: DateTime.now(),
+      wasOffline: true,
+    );
+
+    if (!_stateController.isClosed) {
+      _stateController.add(_currentState);
+    }
+    if (!_connectedController.isClosed) {
+      _connectedController.add(false);
+    }
+  }
+
+  @override
+  Stream<ConnectionState> get connectionStateStream => _stateController.stream;
+
+  @override
+  Future<ConnectionState> get currentState async {
+    if (_isDisposed) return ConnectionState.initial();
+    
+    final results = await _connectivity.checkConnectivity();
+    final wasOffline = _currentState.isDisconnected;
+    return ConnectionState.fromConnectivityResult(results, wasOffline);
+  }
+
+  @override
+  Stream<bool> get isConnectedStream => _connectedController.stream;
 
   @override
   Future<bool> get isConnected async {
+    if (_isDisposed) return false;
+    
     final results = await _connectivity.checkConnectivity();
-    return _checkConnectivity(results);
+    return results.isNotEmpty &&
+        !results.every((r) => r == ConnectivityResult.none);
   }
 
   @override
-  Stream<bool> get onConnectivityChanged => _connectivityStreamController.stream;
-
-  @override
-  Future<ConnectivityResult> get connectivityResult async {
-    final results = await _connectivity.checkConnectivity();
-    if (results.isEmpty || results.contains(ConnectivityResult.none)) {
-      return ConnectivityResult.none;
-    }
-    return results.first;
-  }
-
-  @override
-  Future<List<ConnectivityResult>> get connectivityResults async {
-    final results = await _connectivity.checkConnectivity();
-    return results;
-  }
-
-  Future<NetworkType> getNetworkType() async {
-    final result = await connectivityResult;
-    switch (result) {
-      case ConnectivityResult.wifi:
-        return NetworkType.wifi;
-      case ConnectivityResult.mobile:
-        return NetworkType.mobile;
-      case ConnectivityResult.ethernet:
-        return NetworkType.ethernet;
-      case ConnectivityResult.bluetooth:
-        return NetworkType.bluetooth;
-      case ConnectivityResult.vpn:
-        return NetworkType.vpn;
-      case ConnectivityResult.other:
-        return NetworkType.other;
-      case ConnectivityResult.none:
-      default:
-        return NetworkType.none;
+  Future<void> checkConnection() async {
+    if (_isDisposed) return;
+    
+    try {
+      final results = await _connectivity.checkConnectivity();
+      await _handleConnectivityChange(results);
+    } catch (e) {
+      _emitErrorState(e);
     }
   }
 
-  bool isWifiConnected(List<ConnectivityResult> results) {
-    return results.contains(ConnectivityResult.wifi);
-  }
-
-  bool isMobileDataConnected(List<ConnectivityResult> results) {
-    return results.contains(ConnectivityResult.mobile);
-  }
-
+  @override
   void dispose() {
-    _connectivityStreamController.close();
+    _isDisposed = true;
+    if (!_stateController.isClosed) {
+      _stateController.close();
+    }
+    if (!_connectedController.isClosed) {
+      _connectedController.close();
+    }
   }
 }
 
-enum NetworkType {
-  wifi,
-  mobile,
-  ethernet,
-  bluetooth,
-  vpn,
-  other,
-  none,
-}
-
-extension NetworkTypeExtension on NetworkType {
-  String get displayName {
-    switch (this) {
-      case NetworkType.wifi:
-        return 'WiFi';
-      case NetworkType.mobile:
-        return 'Datos Móviles';
-      case NetworkType.ethernet:
-        return 'Ethernet';
-      case NetworkType.bluetooth:
-        return 'Bluetooth';
-      case NetworkType.vpn:
-        return 'VPN';
-      case NetworkType.other:
-        return 'Otra';
-      case NetworkType.none:
-        return 'Sin conexión';
-    }
-  }
-
-  bool get isAvailable => this != NetworkType.none;
-  bool get isHighSpeed => this == NetworkType.wifi || this == NetworkType.ethernet;
-}
-
-
-// === ARCHIVO: lib/core/utils/date_utils.dart ===
-library;
-
-import 'package:flutter/foundation.dart';
-import 'package:uuid/uuid.dart';
-
-class DateTimeUtils {
-  static const String iso8601Format = 'yyyy-MM-ddTHH:mm:ss.SSSZ';
-  static const String dateOnlyFormat = 'yyyy-MM-dd';
-  static const String timeOnlyFormat = 'HH:mm:ss';
-  static const String displayFormat = 'dd/MM/yyyy HH:mm';
-  static const String syncTimestampFormat = 'yyyy-MM-dd HH:mm:ss';
-
-  static String nowUtc() {
-    return DateTime.now().toUtc().toIso8601String();
-  }
-
-  static String nowLocal() {
-    return DateTime.now().toIso8601String();
-  }
-
-  static DateTime parseIso8601(String? dateString) {
-    if (dateString == null || dateString.isEmpty) {
-      return DateTime.now();
-    }
-    try {
-      return DateTime.parse(dateString);
-    } catch (e) {
-      return DateTime.now();
-    }
-  }
-
-  static DateTime parseIso8601Utc(String? dateString) {
-    if (dateString == null || dateString.isEmpty) {
-      return DateTime.now().toUtc();
-    }
-    try {
-      final parsed = DateTime.parse(dateString);
-      return parsed.toUtc();
-    } catch (e) {
-      return DateTime.now().toUtc();
-    }
-  }
-
-  static String formatForSync(DateTime dateTime) {
-    return '${dateTime.toUtc().year}-'
-        '${_twoDigits(dateTime.toUtc().month)}-${'
-        '${_twoDigits(dateTime.toUtc().day)} ${'
-        '${_twoDigits(dateTime.toUtc().hour)}:${'
-        '${_twoDigits(dateTime.toUtc().minute)}:${'
-        '${_twoDigits(dateTime.toUtc().second)}';
-  }
-
-  static String formatForDisplay(DateTime dateTime) {
-    return '${_twoDigits(dateTime.day)}/${'
-        '${_twoDigits(dateTime.month)}/${'
-        '${dateTime.year} ${'
-        '${_twoDigits(dateTime.hour)}:${'
-        '${_twoDigits(dateTime.minute)}';
-  }
-
-  static String formatDateOnly(DateTime dateTime) {
-    return '${dateTime.year}-${_twoDigits(dateTime.month)}-${_twoDigits(dateTime.day)}';
-  }
-
-  static String formatTimeOnly(DateTime dateTime) {
-    return '${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}:${_twoDigits(dateTime.second)}';
-  }
-
-  static String formatWithTimezone(DateTime dateTime) {
-    final utc = dateTime.toUtc();
-    final offset = dateTime.timeZoneOffset;
-    final sign = offset.isNegative ? '-' : '+';
-    final hours = offset.inHours.abs();
-    final minutes = (offset.inMinutes.abs() % 60);
-    return '${utc.toIso8601String()}${sign}${_twoDigits(hours)}:${_twoDigits(minutes)}';
-  }
-
-  static String _twoDigits(int n) {
-    return n.toString().padLeft(2, '0');
-  }
-
-  static bool isToday(DateTime date) {
-    final now = DateTime.now();
-    return date.year == now.year && date.month == now.month && date.day == now.day;
-  }
-
-  static bool isYesterday(DateTime date) {
-    final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    return date.year == yesterday.year && 
-           date.month == yesterday.month && 
-           date.day == yesterday.day;
-  }
-
-  static bool isTomorrow(DateTime date) {
-    final tomorrow = DateTime.now().add(const Duration(days: 1));
-    return date.year == tomorrow.year && 
-           date.month == tomorrow.month && 
-           date.day == tomorrow.day;
-  }
-
-  static bool isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && 
-           date1.month == date2.month && 
-           date1.day == date2.day;
-  }
-
-  static bool isSameHour(DateTime date1, DateTime date2) {
-    return isSameDay(date1, date2) && date1.hour == date2.hour;
-  }
-
-  static bool isExpired(DateTime date, Duration maxAge) {
-    final now = DateTime.now();
-    return now.difference(date) > maxAge;
-  }
-
-  static bool isExpiredUtc(DateTime utcDate, Duration maxAge) {
-    final now = DateTime.now().toUtc();
-    return now.difference(utcDate) > maxAge;
-  }
-
-  static Duration timeSince(DateTime date) {
-    return DateTime.now().difference(date);
-  }
-
-  static Duration timeSinceUtc(DateTime utcDate) {
-    return DateTime.now().toUtc().difference(utcDate);
-  }
-
-  static String timeAgo(DateTime date) {
-    final duration = timeSince(date);
-    return _formatDuration(duration);
-  }
-
-  static String timeAgoUtc(DateTime utcDate) {
-    final duration = timeSinceUtc(utcDate);
-    return _formatDuration(duration);
-  }
-
-  static String _formatDuration(Duration duration) {
-    if (duration.inDays > 365) {
-      final years = (duration.inDays / 365).floor();
-      return '$years año${years > 1 ? 's' : ''}';
-    } else if (duration.inDays > 30) {
-      final months = (duration.inDays / 30).floor();
-      return '$months mes${months > 1 ? 'es' : ''}';
-    } else if (duration.inDays > 0) {
-      return '${duration.inDays} día${duration.inDays > 1 ? 's' : ''}';
-    } else if (duration.inHours > 0) {
-      return '${duration.inHours} hora${duration.inHours > 1 ? 's' : ''}';
-    } else if (duration.inMinutes > 0) {
-      return '${duration.inMinutes} minuto${duration.inMinutes > 1 ? 's' : ''}';
-    } else {
-      return 'menos de un minuto';
-    }
-  }
-
-  static DateTime startOfDay(DateTime date) {
-    return DateTime(date.year, date.month, date.day);
-  }
-
-  static DateTime endOfDay(DateTime date) {
-    return DateTime(date.year, date.month, date.day, 23, 59, 59, 999);
-  }
-
-  static DateTime startOfWeek(DateTime date) {
-    final daysFromMonday = date.weekday - 1;
-    return startOfDay(date.subtract(Duration(days: daysFromMonday)));
-  }
-
-  static DateTime endOfWeek(DateTime date) {
-    final daysUntilSunday = 7 - date.weekday;
-    return endOfDay(date.add(Duration(days: daysUntilSunday)));
-  }
-
-  static DateTime startOfMonth(DateTime date) {
-    return DateTime(date.year, date.month, 1);
-  }
-
-  static DateTime endOfMonth(DateTime date) {
-    return DateTime(date.year, date.month + 1, 0, 23, 59, 59, 999);
-  }
-
-  static int daysBetween(DateTime from, DateTime to) {
-    final fromDate = DateTime(from.year, from.month, from.day);
-    final toDate = DateTime(to.year, to.month, to.day);
-    return toDate.difference(fromDate).inDays;
-  }
-
-  static bool isWithinRange(DateTime date, DateTime start, DateTime end) {
-    return !date.isBefore(start) && !date.isAfter(end);
-  }
-
-  static bool isValidDateString(String? dateString) {
-    if (dateString == null || dateString.isEmpty) {
-      return false;
-    }
-    try {
-      DateTime.parse(dateString);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  static DateTime addBusinessDays(DateTime date, int days) {
-    var result = date;
-    var remaining = days;
-    while (remaining > 0) {
-      result = result.add(const Duration(days: 1));
-      if (result.weekday != DateTime.saturday && 
-          result.weekday != DateTime.sunday) {
-        remaining--;
-      }
-    }
-    return result;
-  }
-
-  static int businessDaysBetween(DateTime from, DateTime to) {
-    var count = 0;
-    var current = DateTime(from.year, from.month, from.day);
-    final end = DateTime(to.year, to.month, to.day);
-    while (current.isBefore(end)) {
-      current = current.add(const Duration(days: 1));
-      if (current.weekday != DateTime.saturday && 
-          current.weekday != DateTime.sunday) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  static DateTime fromTimestampMillis(int millis) {
-    return DateTime.fromMillisecondsSinceEpoch(millis);
-  }
-
-  static DateTime fromTimestampMicros(int micros) {
-    return DateTime.fromMicrosecondsSinceEpoch(micros);
-  }
-
-  static int toTimestampMillis(DateTime date) {
-    return date.millisecondsSinceEpoch;
-  }
-
-  static int toTimestampMicros(DateTime date) {
-    return date.microsecondsSinceEpoch;
-  }
-
-  static String generateSyncTimestamp() {
-    return formatForSync(DateTime.now().toUtc());
-  }
-
-  static String generateVersionId() {
-    const uuid = Uuid();
-    return uuid.v4();
-  }
-
-  static DateTime minDate(List<DateTime> dates) {
-    if (dates.isEmpty) {
-      return DateTime.now();
-    }
-    return dates.reduce((a, b) => a.isBefore(b) ? a : b);
-  }
-
-  static DateTime maxDate(List<DateTime> dates) {
-    if (dates.isEmpty) {
-      return DateTime.now();
-    }
-    return dates.reduce((a, b) => a.isAfter(b) ? a : b);
-  }
-
-  static bool isDateInFuture(DateTime date) {
-    return date.isAfter(DateTime.now());
-  }
-
-  static bool isDateInPast(DateTime date) {
-    return date.isBefore(DateTime.now());
-  }
-
-  static bool isUtcDateInFuture(DateTime utcDate) {
-    return utcDate.isAfter(DateTime.now().toUtc());
-  }
-
-  static bool isUtcDateInPast(DateTime utcDate) {
-    return utcDate.isBefore(DateTime.now().toUtc());
-  }
-
-  static DateTime convertToLocal(DateTime utcDate) {
-    return utcDate.toLocal();
-  }
-
-  static DateTime convertToUtc(DateTime localDate) {
-    return localDate.toUtc();
-  }
-
-  static String formatRelative(DateTime date) {
-    if (isToday(date)) {
-      return 'Hoy, ${formatTimeOnly(date)}';
-    } else if (isYesterday(date)) {
-      return 'Ayer, ${formatTimeOnly(date)}';
-    } else if (isTomorrow(date)) {
-      return 'Mañana, ${formatTimeOnly(date)}';
-    } else {
-      return formatForDisplay(date);
-    }
-  }
-
-  static Duration parseDuration(String? durationString) {
-    if (durationString == null || durationString.isEmpty) {
-      return Duration.zero;
-    }
-    try {
-      final parts = durationString.split(':');
-      if (parts.length == 3) {
-        return Duration(
-          hours: int.parse(parts[0]),
-          minutes: int.parse(parts[1]),
-          seconds: int.parse(parts[2]),
-        );
-      } else if (parts.length == 2) {
-        return Duration(
-          minutes: int.parse(parts[0]),
-          seconds: int.parse(parts[1]),
-        );
-      }
-      return Duration.zero;
-    } catch (e) {
-      return Duration.zero;
-    }
-  }
-
-  static String durationToString(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
-    return '${_twoDigits(hours)}:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
-  }
-
-  static DateTime nextSyncTime(DateTime lastSync, Duration interval) {
-    return lastSync.add(interval);
-  }
-
-  static bool shouldSync(DateTime? lastSync, Duration interval) {
-    if (lastSync == null) {
-      return true;
-    }
-    return DateTime.now().isAfter(lastSync.add(interval));
-  }
-
-  static int calculateRetryDelay(int attempt, {int baseDelayMs = 1000, int maxDelayMs = 30000}) {
-    final delay = baseDelayMs * (1 << (attempt - 1));
-    return delay > maxDelayMs ? maxDelayMs : delay;
-  }
-
-  static DateTime calculateNextRetry(int attempt, {int baseDelayMs = 1000}) {
-    final delayMs = calculateRetryDelay(attempt, baseDelayMs: baseDelayMs);
-    return DateTime.now().add(Duration(milliseconds: delayMs));
-  }
-
-  static bool isWithinSyncWindow(DateTime syncTime, Duration window) {
-    final now = DateTime.now();
-    final windowStart = syncTime.subtract(window);
-    final windowEnd = syncTime.add(window);
-    return now.isAfter(windowStart) && now.isBefore(windowEnd);
-  }
-
-  static Map<String, dynamic> dateToMap(DateTime date) {
-    return {
-      'iso8601': date.toIso8601String(),
-      'millis': date.millisecondsSinceEpoch,
-      'utc': date.toUtc().toIso8601String(),
-      'local': date.toLocal().toIso8601String(),
-      'year': date.year,
-      'month': date.month,
-      'day': date.day,
-      'hour': date.hour,
-      'minute': date.minute,
-      'second': date.second,
-      'weekday': date.weekday,
-      'isUtc': date.isUtc,
-    };
-  }
-
-  static DateTime dateFromMap(Map<String, dynamic> map) {
-    if (map.containsKey('millis')) {
-      return DateTime.fromMillisecondsSinceEpoch(map['millis'] as int);
-    } else if (map.containsKey('iso8601')) {
-      return DateTime.parse(map['iso8601'] as String);
-    }
-    return DateTime.now();
+class ConnectivityServiceFactory {
+  static ReactiveConnectivityService create() {
+    return ReactiveConnectivityServiceImpl();
   }
 }
 
-// === ARCHIVO: lib/domain/entities/task_entity.dart ===
-package field_app.domain.entities;
+// === ARCHIVO: lib/core/sync/sync_engine.dart ===
+package offline_field_app.core.sync;
 
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 
-class TaskEntity extends Equatable {
-  final String id;
-  final String title;
-  final String description;
-  final String priority;
-  final String status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String? assignedTo;
-  final DateTime? dueDate;
-  final String syncStatus;
-  final int version;
-  final Map<String, dynamic>? metadata;
-
-  const TaskEntity({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.priority,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-    this.assignedTo,
-    this.dueDate,
-    required this.syncStatus,
-    required this.version,
-    this.metadata,
-  });
-
-  bool get isPendingSync => syncStatus == 'pending';
-  bool get isSynced => syncStatus == 'synced';
-  bool get hasFailed => syncStatus == 'failed';
-  bool get hasConflict => syncStatus == 'conflict';
-  bool get isCompleted => status == 'completed';
-  bool get isCancelled => status == 'cancelled';
-  bool get isInProgress => status == 'in_progress';
-  bool get isPending => status == 'pending';
-
-  bool get isHighPriority => priority == 'high';
-  bool get isMediumPriority => priority == 'medium';
-  bool get isLowPriority => priority == 'low';
-
-  bool get isOverdue {
-    if (dueDate == null) return false;
-    return DateTime.now().isAfter(dueDate!) && !isCompleted && !isCancelled;
-  }
-
-  TaskEntity copyWith({
-    String? id,
-    String? title,
-    String? description,
-    String? priority,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? assignedTo,
-    DateTime? dueDate,
-    String? syncStatus,
-    int? version,
-    Map<String, dynamic>? metadata,
-  }) {
-    return TaskEntity(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      priority: priority ?? this.priority,
-      status: status ?? this.status,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      assignedTo: assignedTo ?? this.assignedTo,
-      dueDate: dueDate ?? this.dueDate,
-      syncStatus: syncStatus ?? this.syncStatus,
-      version: version ?? this.version,
-      metadata: metadata ?? this.metadata,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        priority,
-        status,
-        createdAt,
-        updatedAt,
-        assignedTo,
-        dueDate,
-        syncStatus,
-        version,
-        metadata,
-      ];
-
-  @override
-  bool get stringify => true;
+enum SyncStrategy {
+  optimistic,
+  pessimistic,
 }
 
-// === ARCHIVO: lib/domain/entities/sync_status_entity.dart ===
-package field_app.domain.entities;
+enum SyncOperationStatus {
+  pending,
+  inProgress,
+  completed,
+  failed,
+  conflict,
+}
 
-import 'package:equatable/equatable.dart';
-
-class SyncStatusEntity extends Equatable {
+class SyncOperation extends Equatable {
   final String id;
-  final String entityId;
   final String entityType;
-  final String status;
-  final DateTime? lastSyncAttempt;
-  final DateTime? lastSuccessfulSync;
+  final String entityId;
+  final String operationType;
+  final Map<String, dynamic> payload;
+  final SyncOperationStatus status;
+  final DateTime createdAt;
+  final DateTime? executedAt;
   final int retryCount;
   final String? errorMessage;
-  final String? errorCode;
-  final Map<String, dynamic>? conflictDetails;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final int priority;
 
-  const SyncStatusEntity({
+  const SyncOperation({
     required this.id,
-    required this.entityId,
     required this.entityType,
+    required this.entityId,
+    required this.operationType,
+    required this.payload,
     required this.status,
-    this.lastSyncAttempt,
-    this.lastSuccessfulSync,
-    required this.retryCount,
-    this.errorMessage,
-    this.errorCode,
-    this.conflictDetails,
     required this.createdAt,
-    required this.updatedAt,
+    this.executedAt,
+    this.retryCount = 0,
+    this.errorMessage,
+    this.priority = 0,
   });
 
-  bool get isPending => status == 'pending';
-  bool get isSynced => status == 'synced';
-  bool get isFailed => status == 'failed';
-  bool get hasConflict => status == 'conflict';
-  bool get canRetry => retryCount < 3 && (isFailed || isPending);
-  bool get isRecoverable => errorCode != 'FATAL';
-
-  Duration? get timeSinceLastAttempt {
-    if (lastSyncAttempt == null) return null;
-    return DateTime.now().difference(lastSyncAttempt!);
-  }
-
-  Duration? get timeSinceLastSuccess {
-    if (lastSuccessfulSync == null) return null;
-    return DateTime.now().difference(lastSuccessfulSync!);
-  }
-
-  SyncStatusEntity copyWith({
+  SyncOperation copyWith({
     String? id,
-    String? entityId,
     String? entityType,
-    String? status,
-    DateTime? lastSyncAttempt,
-    DateTime? lastSuccessfulSync,
+    String? entityId,
+    String? operationType,
+    Map<String, dynamic>? payload,
+    SyncOperationStatus? status,
+    DateTime? createdAt,
+    DateTime? executedAt,
     int? retryCount,
     String? errorMessage,
-    String? errorCode,
-    Map<String, dynamic>? conflictDetails,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    int? priority,
   }) {
-    return SyncStatusEntity(
+    return SyncOperation(
       id: id ?? this.id,
-      entityId: entityId ?? this.entityId,
       entityType: entityType ?? this.entityType,
+      entityId: entityId ?? this.entityId,
+      operationType: operationType ?? this.operationType,
+      payload: payload ?? this.payload,
       status: status ?? this.status,
-      lastSyncAttempt: lastSyncAttempt ?? this.lastSyncAttempt,
-      lastSuccessfulSync: lastSuccessfulSync ?? this.lastSuccessfulSync,
+      createdAt: createdAt ?? this.createdAt,
+      executedAt: executedAt ?? this.executedAt,
       retryCount: retryCount ?? this.retryCount,
       errorMessage: errorMessage ?? this.errorMessage,
-      errorCode: errorCode ?? this.errorCode,
-      conflictDetails: conflictDetails ?? this.conflictDetails,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      priority: priority ?? this.priority,
     );
   }
 
   @override
   List<Object?> get props => [
         id,
-        entityId,
         entityType,
+        entityId,
+        operationType,
+        payload,
         status,
-        lastSyncAttempt,
-        lastSuccessfulSync,
-        retryCount,
-        errorMessage,
-        errorCode,
-        conflictDetails,
         createdAt,
-        updatedAt,
-      ];
-
-  @override
-  bool get stringify => true;
-}
-
-// === ARCHIVO: lib/domain/repositories/task_repository.dart ===
-package field_app.domain.repositories;
-
-import '../entities/task_entity.dart';
-
-abstract class TaskRepository {
-  Future<List<TaskEntity>> getTasks();
-  Future<TaskEntity?> getTaskById(String id);
-  Future<List<TaskEntity>> getTasksByStatus(String status);
-  Future<List<TaskEntity>> getTasksByPriority(String priority);
-  Future<List<TaskEntity>> getPendingSyncTasks();
-  Future<TaskEntity> saveTask(TaskEntity task);
-  Future<void> deleteTask(String id);
-  Future<void> deleteAllTasks();
-  Future<int> getTaskCount();
-  Future<int> getPendingSyncCount();
-  Future<List<TaskEntity>> searchTasks(String query);
-  Future<void> updateTaskSyncStatus(String id, String syncStatus);
-  Future<void> incrementTaskVersion(String id);
-  Future<List<TaskEntity>> getTasksDueSoon(Duration within);
-  Future<List<TaskEntity>> getOverdueTasks();
-  Future<void> batchSaveTasks(List<TaskEntity> tasks);
-  Stream<List<TaskEntity>> watchTasks();
-  Stream<TaskEntity?> watchTask(String id);
-}
-
-
-// === ARCHIVO: lib/domain/repositories/sync_repository.dart ===
-import 'package:equatable/equatable.dart';
-import '../../core/errors/failures.dart';
-
-abstract class SyncRepository extends Equatable {
-  const SyncRepository();
-
-  Future<Either<Failure, void>> syncPendingTasks();
-
-  Future<Either<Failure, SyncResult>> syncAllData();
-
-  Future<Either<Failure, ConflictResolutionResult>> resolveConflict(
-    String entityId,
-    String entityType,
-    ConflictResolutionStrategy strategy,
-  );
-
-  Future<Either<Failure, List<SyncStatusSummary>>>> getSyncStatusSummary();
-
-  Future<Either<Failure, void>> retryFailedSync(String entityId);
-
-  Future<Either<Failure, void>> cancelSync(String syncId);
-
-  Stream<SyncProgress> get syncProgressStream;
-}
-
-class SyncResult extends Equatable {
-  final int totalSynced;
-  final int totalFailed;
-  final int totalConflicts;
-  final Duration syncDuration;
-  final List<String> syncedEntityIds;
-  final List<SyncErrorDetails> failedEntities;
-  final List<ConflictDetails> conflicts;
-
-  const SyncResult({
-    required this.totalSynced,
-    required this.totalFailed,
-    required this.totalConflicts,
-    required this.syncDuration,
-    required this.syncedEntityIds,
-    required this.failedEntities,
-    required this.conflicts,
-  });
-
-  bool get hasErrors => totalFailed > 0;
-  bool get hasConflicts => totalConflicts > 0;
-  bool get isFullySuccessful => totalFailed == 0 && totalConflicts == 0;
-
-  @override
-  List<Object?> get props => [
-        totalSynced,
-        totalFailed,
-        totalConflicts,
-        syncDuration,
-        syncedEntityIds,
-        failedEntities,
-        conflicts,
-      ];
-}
-
-class SyncErrorDetails extends Equatable {
-  final String entityId;
-  final String entityType;
-  final String errorMessage;
-  final int retryCount;
-  final DateTime lastAttempt;
-
-  const SyncErrorDetails({
-    required this.entityId,
-    required this.entityType,
-    required this.errorMessage,
-    required this.retryCount,
-    required this.lastAttempt,
-  });
-
-  @override
-  List<Object?> get props => [
-        entityId,
-        entityType,
-        errorMessage,
+        executedAt,
         retryCount,
-        lastAttempt,
+        errorMessage,
+        priority,
       ];
 }
 
-class ConflictDetails extends Equatable {
+class SyncQueue extends Equatable {
+  final List<SyncOperation> operations;
+  final int maxSize;
+
+  const SyncQueue({
+    required this.operations,
+    this.maxSize = 1000,
+  });
+
+  factory SyncQueue.empty({int maxSize = 1000}) => SyncQueue(
+        operations: const [],
+        maxSize: maxSize,
+      );
+
+  bool get isEmpty => operations.isEmpty;
+  bool get isNotEmpty => operations.isNotEmpty;
+  int get length => operations.length;
+
+  SyncQueue addOperation(SyncOperation operation) {
+    if (operations.length >= maxSize) {
+      throw StateError('Sync queue is full');
+    }
+    final updatedOps = [...operations, operation];
+    updatedOps.sort((a, b) => b.priority.compareTo(a.priority));
+    return SyncQueue(operations: updatedOps, maxSize: maxSize);
+  }
+
+  SyncQueue removeOperation(String operationId) {
+    return SyncQueue(
+      operations: operations.where((op) => op.id != operationId).toList(),
+      maxSize: maxSize,
+    );
+  }
+
+  SyncQueue updateOperation(SyncOperation operation) {
+    return SyncQueue(
+      operations: operations
+          .map((op) => op.id == operation.id ? operation : op)
+          .toList(),
+      maxSize: maxSize,
+    );
+  }
+
+  SyncOperation? getNextOperation() {
+    final pending = operations
+        .where((op) => op.status == SyncOperationStatus.pending)
+        .toList();
+    if (pending.isEmpty) return null;
+    return pending.first;
+  }
+
+  @override
+  List<Object?> get props => [operations, maxSize];
+}
+
+abstract class SyncEngine {
+  Stream<SyncEngineState> get stateStream;
+  SyncEngineState get currentState;
+  Future<void> startSync();
+  Future<void> stopSync();
+  Future<void> enqueueOperation(SyncOperation operation);
+  Future<void> processQueue();
+  void setStrategy(SyncStrategy strategy);
+  void dispose();
+}
+
+class SyncEngineState extends Equatable {
+  final bool isRunning;
+  final bool isPaused;
+  final SyncStrategy strategy;
+  final SyncQueue queue;
+  final int processedCount;
+  final int failedCount;
+  final int conflictCount;
+  final DateTime? lastSyncAt;
+  final String? currentOperationId;
+  final String? errorMessage;
+
+  const SyncEngineState({
+    required this.isRunning,
+    required this.isPaused,
+    required this.strategy,
+    required this.queue,
+    required this.processedCount,
+    required this.failedCount,
+    required this.conflictCount,
+    this.lastSyncAt,
+    this.currentOperationId,
+    this.errorMessage,
+  });
+
+  factory SyncEngineState.initial() => SyncEngineState(
+        isRunning: false,
+        isPaused: false,
+        strategy: SyncStrategy.optimistic,
+        queue: SyncQueue.empty(),
+        processedCount: 0,
+        failedCount: 0,
+        conflictCount: 0,
+      );
+
+  double get successRate {
+    final total = processedCount + failedCount;
+    if (total == 0) return 0.0;
+    return processedCount / total;
+  }
+
+  @override
+  List<Object?> get props => [
+        isRunning,
+        isPaused,
+        strategy,
+        queue,
+        processedCount,
+        failedCount,
+        conflictCount,
+        lastSyncAt,
+        currentOperationId,
+        errorMessage,
+      ];
+}
+
+class SyncEngineImpl implements SyncEngine {
+  final SyncStrategy _defaultStrategy;
+  final int maxRetries;
+  final Duration retryDelay;
+  final Duration batchInterval;
+
+  SyncEngineState _state;
+  final StreamController<SyncEngineState> _stateController;
+  Timer? _syncTimer;
+  Timer? _retryTimer;
+  bool _isDisposed = false;
+
+  final Future<Map<String, dynamic> Function(SyncOperation)> _operationExecutor;
+  final Future<Map<String, dynamic>?> Function(SyncOperation) _conflictHandler;
+  final Future<void> Function(SyncOperation) _onOperationSuccess;
+  final Future<void> Function(SyncOperation, String) _onOperationFailure;
+
+  SyncEngineImpl({
+    SyncStrategy defaultStrategy = SyncStrategy.optimistic,
+    this.maxRetries = 3,
+    this.retryDelay = const Duration(seconds: 5),
+    this.batchInterval = const Duration(seconds: 30),
+    required Future<Map<String, dynamic> Function(SyncOperation)> operationExecutor,
+    required Future<Map<String, dynamic>?> Function(SyncOperation) conflictHandler,
+    Future<void> Function(SyncOperation)? onOperationSuccess,
+    Future<void> Function(SyncOperation, String)? onOperationFailure,
+  })  : _defaultStrategy = defaultStrategy,
+        _operationExecutor = operationExecutor,
+        _conflictHandler = conflictHandler,
+        _onOperationSuccess = onOperationSuccess ?? (_) async {},
+        _onOperationFailure = onOperationFailure ?? (_, __) async {},
+        _state = SyncEngineState.initial(),
+        _stateController = StreamController<SyncEngineState>.broadcast() {
+    _state = _state.copyWith(strategy: defaultStrategy);
+  }
+
+  @override
+  Stream<SyncEngineState> get stateStream => _stateController.stream;
+
+  @override
+  SyncEngineState get currentState => _state;
+
+  void _emitState(SyncEngineState newState) {
+    if (_isDisposed || _stateController.isClosed) return;
+    _state = newState;
+    _stateController.add(_state);
+  }
+
+  @override
+  Future<void> startSync() async {
+    if (_state.isRunning || _isDisposed) return;
+
+    _emitState(_state.copyWith(
+      isRunning: true,
+      isPaused: false,
+      errorMessage: null,
+    ));
+
+    _syncTimer = Timer.periodic(batchInterval, (_) {
+      if (!_state.isPaused && _state.queue.isNotEmpty) {
+        processQueue();
+      }
+    });
+
+    await processQueue();
+  }
+
+  @override
+  Future<void> stopSync() async {
+    _syncTimer?.cancel();
+    _retryTimer?.cancel();
+
+    if (_isDisposed) return;
+
+    _emitState(_state.copyWith(
+      isRunning: false,
+      isPaused: true,
+    ));
+  }
+
+  @override
+  Future<void> enqueueOperation(SyncOperation operation) async {
+    if (_isDisposed) return;
+
+    final updatedQueue = _state.queue.addOperation(operation);
+    _emitState(_state.copyWith(queue: updatedQueue));
+
+    if (_state.isRunning && !_state.isPaused) {
+      await processQueue();
+    }
+  }
+
+  @override
+  Future<void> processQueue() async {
+    if (_isDisposed || !_state.isRunning || _state.isPaused) return;
+
+    while (_state.queue.isNotEmpty) {
+      final operation = _state.queue.getNextOperation();
+      if (operation == null) break;
+
+      _emitState(_state.copyWith(currentOperationId: operation.id));
+
+      try {
+        await _executeOperation(operation);
+      } catch (e) {
+        await _handleOperationError(operation, e.toString());
+      }
+
+      if (_isDisposed) break;
+    }
+
+    _emitState(_state.copyWith(currentOperationId: null));
+  }
+
+  Future<void> _executeOperation(SyncOperation operation) async {
+    final inProgressOp = operation.copyWith(
+      status: SyncOperationStatus.inProgress,
+      executedAt: DateTime.now(),
+    );
+
+    var queue = _state.queue.updateOperation(inProgressOp);
+    _emitState(_state.copyWith(queue: queue));
+
+    try {
+      final result = await _operationExecutor(operation);
+
+      if (result.containsKey('conflict')) {
+        await _handleConflict(operation, result);
+        return;
+      }
+
+      queue = _state.queue.removeOperation(operation.id);
+      _emitState(_state.copyWith(
+        queue: queue,
+        processedCount: _state.processedCount + 1,
+        lastSyncAt: DateTime.now(),
+      ));
+
+      await _onOperationSuccess(operation);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> _handleConflict(
+    SyncOperation operation,
+    Map<String, dynamic> result,
+  ) async {
+    final conflictData = result['conflict'] as Map<String, dynamic>;
+    final resolution = await _conflictHandler(operation);
+
+    if (resolution != null) {
+      final resolvedOp = operation.copyWith(
+        payload: {...operation.payload, ...resolution},
+        status: SyncOperationStatus.pending,
+        retryCount: 0,
+      );
+      final queue = _state.queue.updateOperation(resolvedOp);
+      _emitState(_state.copyWith(queue: queue));
+    } else {
+      final conflictOp = operation.copyWith(
+        status: SyncOperationStatus.conflict,
+        errorMessage: 'Conflict detected and not resolved',
+      );
+      final queue = _state.queue.updateOperation(conflictOp);
+      _emitState(_state.copyWith(
+        queue: queue,
+        conflictCount: _state.conflictCount + 1,
+      ));
+    }
+  }
+
+  Future<void> _handleOperationError(
+    SyncOperation operation,
+    String error,
+  ) async {
+    if (operation.retryCount < maxRetries) {
+      final retryOp = operation.copyWith(
+        status: SyncOperationStatus.pending,
+        retryCount: operation.retryCount + 1,
+        errorMessage: error,
+      );
+      final queue = _state.queue.updateOperation(retryOp);
+      _emitState(_state.copyWith(queue: queue));
+
+      _retryTimer = Timer(retryDelay, () {
+        if (_state.isRunning && !_state.isPaused) {
+          processQueue();
+        }
+      });
+    } else {
+      final failedOp = operation.copyWith(
+        status: SyncOperationStatus.failed,
+        errorMessage: error,
+      );
+      final queue = _state.queue.updateOperation(failedOp);
+      _emitState(_state.copyWith(
+        queue: queue,
+        failedCount: _state.failedCount + 1,
+        errorMessage: error,
+      ));
+
+      await _onOperationFailure(operation, error);
+    }
+  }
+
+  @override
+  void setStrategy(SyncStrategy strategy) {
+    if (_isDisposed) return;
+    _emitState(_state.copyWith(strategy: strategy));
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    _syncTimer?.cancel();
+    _retryTimer?.cancel();
+    if (!_stateController.isClosed) {
+      _stateController.close();
+    }
+  }
+}
+
+// === ARCHIVO: lib/core/sync/conflict_resolver.dart ===
+package offline_field_app.core.sync;
+
+import 'dart:convert';
+import 'package:equatable/equatable.dart';
+
+enum ConflictResolutionStrategy {
+  lastWriteWins,
+  serverWins,
+  clientWins,
+  merge,
+  manual,
+}
+
+class ConflictData extends Equatable {
   final String entityId;
   final String entityType;
   final Map<String, dynamic> localData;
-  final Map<String, dynamic> remoteData;
-  final DateTime localModifiedAt;
-  final DateTime remoteModifiedAt;
-  final List<String> conflictingFields;
+  final Map<String, dynamic> serverData;
+  final DateTime localTimestamp;
+  final DateTime serverTimestamp;
+  final int localVersion;
+  final int serverVersion;
 
-  const ConflictDetails({
+  const ConflictData({
     required this.entityId,
     required this.entityType,
     required this.localData,
-    required this.remoteData,
-    required this.localModifiedAt,
-    required this.remoteModifiedAt,
-    required this.conflictingFields,
+    required this.serverData,
+    required this.localTimestamp,
+    required this.serverTimestamp,
+    required this.localVersion,
+    required this.serverVersion,
   });
+
+  bool get localIsNewer => localTimestamp.isAfter(serverTimestamp);
+  bool get serverIsNewer => serverTimestamp.isAfter(localTimestamp);
+
+  Duration get timestampDiff => localTimestamp.difference(serverTimestamp).abs();
+
+  List<String> get conflictingFields {
+    final fields = <String>{};
+    for (final key in localData.keys) {
+      if (serverData.containsKey(key)) {
+        final localVal = localData[key];
+        final serverVal = serverData[key];
+        if (localVal != serverVal) {
+          fields.add(key);
+        }
+      }
+    }
+    return fields.toList();
+  }
 
   @override
   List<Object?> get props => [
         entityId,
         entityType,
         localData,
-        remoteData,
-        localModifiedAt,
-        remoteModifiedAt,
-        conflictingFields,
+        serverData,
+        localTimestamp,
+        serverTimestamp,
+        localVersion,
+        serverVersion,
       ];
+}
+
+abstract class ConflictResolver {
+  Future<ConflictResolution?> resolve(ConflictData conflict);
+  void setStrategy(ConflictResolutionStrategy strategy);
+  ConflictResolutionStrategy get currentStrategy;
+}
+
+class ConflictResolution extends Equatable {
+  final String entityId;
+  final Map<String, dynamic> resolvedData;
+  final ConflictResolutionStrategy appliedStrategy;
+  final String? resolutionNote;
+  final bool requiresManualReview;
+
+  const ConflictResolution({
+    required this.entityId,
+    required this.resolvedData,
+    required this.appliedStrategy,
+    this.resolutionNote,
+    this.requiresManualReview = false,
+  });
+
+  @override
+  List<Object?> get props => [
+        entityId,
+        resolvedData,
+        appliedStrategy,
+        resolutionNote,
+        requiresManualReview,
+      ];
+}
+
+class ConflictResolverImpl implements ConflictResolver {
+  ConflictResolutionStrategy _currentStrategy;
+  final Map<String, ConflictResolution Function(ConflictData)> _customResolvers;
+  final Future<ConflictResolution?> Function(ConflictData)? manualResolver;
+
+  ConflictResolverImpl({
+    ConflictResolutionStrategy defaultStrategy = ConflictResolutionStrategy.lastWriteWins,
+    Map<String, ConflictResolution Function(ConflictData)>? customResolvers,
+    this.manualResolver,
+  })  : _currentStrategy = defaultStrategy,
+        _customResolvers = customResolvers ?? {};
+
+  @override
+  ConflictResolutionStrategy get currentStrategy => _currentStrategy;
+
+  @override
+  void setStrategy(ConflictResolutionStrategy strategy) {
+    _currentStrategy = strategy;
+  }
+
+  @override
+  Future<ConflictResolution?> resolve(ConflictData conflict) async {
+    if (_customResolvers.containsKey(conflict.entityType)) {
+      return _customResolvers[conflict.entityType]!(conflict);
+    }
+
+    switch (_currentStrategy) {
+      case ConflictResolutionStrategy.lastWriteWins:
+        return _resolveLastWriteWins(conflict);
+      case ConflictResolutionStrategy.serverWins:
+        return _resolveServerWins(conflict);
+      case ConflictResolutionStrategy.clientWins:
+        return _resolveClientWins(conflict);
+      case ConflictResolutionStrategy.merge:
+        return _resolveMerge(conflict);
+      case ConflictResolutionStrategy.manual:
+        return _resolveManual(conflict);
+    }
+  }
+
+  ConflictResolution _resolveLastWriteWins(ConflictData conflict) {
+    final winner = conflict.localIsNewer ? conflict.localData : conflict.serverData;
+    final timestamp = conflict.localIsNewer ? conflict.localTimestamp : conflict.serverTimestamp;
+
+    return ConflictResolution(
+      entityId: conflict.entityId,
+      resolvedData: Map<String, dynamic>.from(winner),
+      appliedStrategy: ConflictResolutionStrategy.lastWriteWins,
+      resolutionNote: 'Winner determined by timestamp: ${timestamp.toIso8601String()}',
+    );
+  }
+
+  ConflictResolution _resolveServerWins(ConflictData conflict) {
+    return ConflictResolution(
+      entityId: conflict.entityId,
+      resolvedData: Map<String, dynamic>.from(conflict.serverData),
+      appliedStrategy: ConflictResolutionStrategy.serverWins,
+      resolutionNote: 'Server version always wins',
+    );
+  }
+
+  ConflictResolution _resolveClientWins(ConflictData conflict) {
+    return ConflictResolution(
+      entityId: conflict.entityId,
+      resolvedData: Map<String, dynamic>.from(conflict.localData),
+      appliedStrategy: ConflictResolutionStrategy.clientWins,
+      resolutionNote: 'Client version always wins',
+    );
+  }
+
+  ConflictResolution _resolveMerge(ConflictData conflict) {
+    final merged = <String, dynamic>{};
+    final allKeys = {...conflict.localData.keys, ...conflict.serverData.keys};
+
+    for (final key in allKeys) {
+      final localValue = conflict.localData[key];
+      final serverValue = conflict.serverData[key];
+
+      if (localValue == null) {
+        merged[key] = serverValue;
+      } else if (serverValue == null) {
+        merged[key] = localValue;
+      } else if (localValue == serverValue) {
+        merged[key] = localValue;
+      } else if (localValue is Map && serverValue is Map) {
+        merged[key] = _deepMerge(localValue, serverValue);
+      } else if (localValue is List && serverValue is List) {
+        merged[key] = {...localValue, ...serverValue}.toList();
+      } else {
+        merged[key] = conflict.localIsNewer ? localValue : serverValue;
+      }
+    }
+
+    merged['version'] = conflict.localVersion > conflict.serverVersion
+        ? conflict.localVersion
+        : conflict.serverVersion;
+    merged['updatedAt'] = DateTime.now().toIso8601String();
+
+    return ConflictResolution(
+      entityId: conflict.entityId,
+      resolvedData: merged,
+      appliedStrategy: ConflictResolutionStrategy.merge,
+      resolutionNote: 'Fields merged: ${conflict.conflictingFields.join(', ')}',
+    );
+  }
+
+  Map<String, dynamic> _deepMerge(
+    Map<String, dynamic> local,
+    Map<String, dynamic> server,
+  ) {
+    final merged = <String, dynamic>{};
+    final allKeys = {...local.keys, ...server.keys};
+
+    for (final key in allKeys) {
+      final localValue = local[key];
+      final serverValue = server[key];
+
+      if (localValue == null) {
+        merged[key] = serverValue;
+      } else if (serverValue == null) {
+        merged[key] = localValue;
+      } else if (localValue is Map && serverValue is Map) {
+        merged[key] = _deepMerge(localValue, serverValue);
+      } else if (localValue is List && serverValue is List) {
+        merged[key] = [...localValue, ...serverValue];
+      } else {
+        merged[key] = localValue;
+      }
+    }
+
+    return merged;
+  }
+
+  Future<ConflictResolution?> _resolveManual(ConflictData conflict) async {
+    if (manualResolver != null) {
+      return manualResolver!(conflict);
+    }
+
+    return ConflictResolution(
+      entityId: conflict.entityId,
+      resolvedData: conflict.localData,
+      appliedStrategy: ConflictResolutionStrategy.manual,
+      resolutionNote: 'Manual resolution required',
+      requiresManualReview: true,
+    );
+  }
+}
+
+class ConflictResolverFactory {
+  static ConflictResolver create({
+    ConflictResolutionStrategy strategy = ConflictResolutionStrategy.lastWriteWins,
+    Future<ConflictResolution?> Function(ConflictData)? manualResolver,
+  }) {
+    return ConflictResolverImpl(
+      defaultStrategy: strategy,
+      manualResolver: manualResolver,
+    );
+  }
+}
+
+
+// === ARCHIVO: lib/core/sync/idempotency_manager.dart ===
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'package:equatable/equatable.dart';
+import '../errors/exceptions.dart';
+
+enum IdempotencyStatus {
+  pending,
+  processing,
+  completed,
+  failed,
+  duplicate,
+}
+
+class IdempotencyRecord extends Equatable {
+  final String operationHash;
+  final String? existingRecordId;
+  final IdempotencyStatus status;
+  final DateTime createdAt;
+  final DateTime? completedAt;
+  final Map<String, dynamic>? resultData;
+  final String? errorMessage;
+
+  const IdempotencyRecord({
+    required this.operationHash,
+    this.existingRecordId,
+    required this.status,
+    required this.createdAt,
+    this.completedAt,
+    this.resultData,
+    this.errorMessage,
+  });
+
+  IdempotencyRecord copyWith({
+    String? operationHash,
+    String? existingRecordId,
+    IdempotencyStatus? status,
+    DateTime? createdAt,
+    DateTime? completedAt,
+    Map<String, dynamic>? resultData,
+    String? errorMessage,
+  }) {
+    return IdempotencyRecord(
+      operationHash: operationHash ?? this.operationHash,
+      existingRecordId: existingRecordId ?? this.existingRecordId,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      completedAt: completedAt ?? this.completedAt,
+      resultData: resultData ?? this.resultData,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'operationHash': operationHash,
+      'existingRecordId': existingRecordId,
+      'status': status.name,
+      'createdAt': createdAt.toIso8601String(),
+      'completedAt': completedAt?.toIso8601String(),
+      'resultData': resultData != null ? jsonEncode(resultData) : null,
+      'errorMessage': errorMessage,
+    };
+  }
+
+  factory IdempotencyRecord.fromMap(Map<String, dynamic> map) {
+    return IdempotencyRecord(
+      operationHash: map['operationHash'] as String,
+      existingRecordId: map['existingRecordId'] as String?,
+      status: IdempotencyStatus.values.firstWhere(
+        (e) => e.name == map['status'],
+        orElse: () => IdempotencyStatus.pending,
+      ),
+      createdAt: DateTime.parse(map['createdAt'] as String),
+      completedAt: map['completedAt'] != null
+          ? DateTime.parse(map['completedAt'] as String)
+          : null,
+      resultData: map['resultData'] != null
+          ? jsonDecode(map['resultData'] as String) as Map<String, dynamic>
+          : null,
+      errorMessage: map['errorMessage'] as String?,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        operationHash,
+        existingRecordId,
+        status,
+        createdAt,
+        completedAt,
+        resultData,
+        errorMessage,
+      ];
+}
+
+abstract class IdempotencyManager {
+  Future<String> generateOperationHash(String operationType, Map<String, dynamic> payload);
+  Future<bool> isOperationProcessed(String operationHash);
+  Future<IdempotencyRecord?> getRecord(String operationHash);
+  Future<void> markAsProcessing(String operationHash);
+  Future<void> markAsCompleted(String operationHash, String recordId, Map<String, dynamic>? resultData);
+  Future<void> markAsFailed(String operationHash, String errorMessage);
+  Future<void> markAsDuplicate(String operationHash, String existingRecordId);
+  Future<void> cleanupOldRecords(Duration maxAge);
+}
+
+class IdempotencyManagerImpl implements IdempotencyManager {
+  final Map<String, IdempotencyRecord> _memoryCache = {};
+  final Duration defaultMaxAge;
+  final int maxCacheSize;
+
+  IdempotencyManagerImpl({
+    this.defaultMaxAge = const Duration(days: 7),
+    this.maxCacheSize = 1000,
+  });
+
+  @override
+  Future<String> generateOperationHash(
+    String operationType,
+    Map<String, dynamic> payload,
+  ) async {
+    final normalizedPayload = _normalizePayload(payload);
+    final payloadString = jsonEncode(normalizedPayload);
+    final hashInput = '$operationType:$payloadString';
+    final hashBytes = utf8.encode(hashInput);
+    final digest = sha256.convert(hashBytes);
+    return digest.toString();
+  }
+
+  Map<String, dynamic> _normalizePayload(Map<String, dynamic> payload) {
+    final normalized = Map<String, dynamic>.from(payload);
+    normalized.remove('id');
+    normalized.remove('createdAt');
+    normalized.remove('updatedAt');
+    normalized.remove('syncStatus');
+    normalized.remove('version');
+    final sortedKeys = normalized.keys.toList()..sort();
+    final result = <String, dynamic>{};
+    for (final key in sortedKeys) {
+      final value = normalized[key];
+      if (value is Map<String, dynamic>) {
+        result[key] = _normalizePayload(value);
+      } else if (value is List) {
+        result[key] = value.map((e) => e is Map<String, dynamic> ? _normalizePayload(e) : e).toList();
+      } else {
+        result[key] = value;
+      }
+    }
+    return result;
+  }
+
+  @override
+  Future<bool> isOperationProcessed(String operationHash) async {
+    final record = _memoryCache[operationHash];
+    if (record != null) {
+      return record.status == IdempotencyStatus.completed ||
+          record.status == IdempotencyStatus.duplicate;
+    }
+    return false;
+  }
+
+  @override
+  Future<IdempotencyRecord?> getRecord(String operationHash) async {
+    return _memoryCache[operationHash];
+  }
+
+  @override
+  Future<void> markAsProcessing(String operationHash) async {
+    _enforceCacheLimit();
+    final record = IdempotencyRecord(
+      operationHash: operationHash,
+      status: IdempotencyStatus.processing,
+      createdAt: DateTime.now(),
+    );
+    _memoryCache[operationHash] = record;
+  }
+
+  @override
+  Future<void> markAsCompleted(
+    String operationHash,
+    String recordId,
+    Map<String, dynamic>? resultData,
+  ) async {
+    final existing = _memoryCache[operationHash];
+    if (existing == null) {
+      throw IdempotencyException(
+        'Cannot mark non-existent operation as completed',
+        operationHash: operationHash,
+      );
+    }
+    _memoryCache[operationHash] = existing.copyWith(
+      status: IdempotencyStatus.completed,
+      completedAt: DateTime.now(),
+      existingRecordId: recordId,
+      resultData: resultData,
+    );
+  }
+
+  @override
+  Future<void> markAsFailed(String operationHash, String errorMessage) async {
+    final existing = _memoryCache[operationHash];
+    if (existing == null) {
+      throw IdempotencyException(
+        'Cannot mark non-existent operation as failed',
+        operationHash: operationHash,
+      );
+    }
+    _memoryCache[operationHash] = existing.copyWith(
+      status: IdempotencyStatus.failed,
+      completedAt: DateTime.now(),
+      errorMessage: errorMessage,
+    );
+  }
+
+  @override
+  Future<void> markAsDuplicate(
+    String operationHash,
+    String existingRecordId,
+  ) async {
+    _enforceCacheLimit();
+    final record = IdempotencyRecord(
+      operationHash: operationHash,
+      existingRecordId: existingRecordId,
+      status: IdempotencyStatus.duplicate,
+      createdAt: DateTime.now(),
+      completedAt: DateTime.now(),
+    );
+    _memoryCache[operationHash] = record;
+  }
+
+  @override
+  Future<void> cleanupOldRecords(Duration maxAge) async {
+    final cutoff = DateTime.now().subtract(maxAge);
+    final keysToRemove = <String>[];
+    for (final entry in _memoryCache.entries) {
+      if (entry.value.createdAt.isBefore(cutoff) &&
+          (entry.value.status == IdempotencyStatus.completed ||
+              entry.value.status == IdempotencyStatus.duplicate ||
+              entry.value.status == IdempotencyStatus.failed)) {
+        keysToRemove.add(entry.key);
+      }
+    }
+    for (final key in keysToRemove) {
+      _memoryCache.remove(key);
+    }
+  }
+
+  void _enforceCacheLimit() {
+    if (_memoryCache.length >= maxCacheSize) {
+      final sortedEntries = _memoryCache.entries.toList()
+        ..sort((a, b) => a.value.createdAt.compareTo(b.value.createdAt));
+      final toRemove = sortedEntries.take(_memoryCache.length - maxCacheSize + 100);
+      for (final entry in toRemove) {
+        _memoryCache.remove(entry.key);
+      }
+    }
+  }
+
+  Map<String, IdempotencyRecord> getAllRecords() => Map.unmodifiable(_memoryCache);
+
+  int get recordCount => _memoryCache.length;
+
+  void clearCache() {
+    _memoryCache.clear();
+  }
+}
+
+class HashCollisionException implements Exception {
+  final String hash1;
+  final String hash2;
+  final String message;
+
+  HashCollisionException({
+    required this.hash1,
+    required this.hash2,
+    required this.message,
+  });
+
+  @override
+  String toString() => 'HashCollisionException: $message (hash1: $hash1, hash2: $hash2)';
+}
+
+
+// === ARCHIVO: lib/domain/entities/base_entity.dart ===
+package lib.domain.entities;
+
+import 'package:equatable/equatable.dart';
+
+abstract class BaseEntity extends Equatable {
+  final String id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final int version;
+
+  const BaseEntity({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.version,
+  });
+
+  BaseEntity copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? version,
+  });
+
+  Map<String, dynamic> toMap();
+
+  @override
+  List<Object?> get props => [id, createdAt, updatedAt, version];
+
+  @override
+  bool get stringify => true;
+}
+
+class BaseEntityImpl implements BaseEntity {
+  @override
+  final String id;
+
+  @override
+  final DateTime createdAt;
+
+  @override
+  final DateTime updatedAt;
+
+  @override
+  final int version;
+
+  const BaseEntityImpl({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.version,
+  });
+
+  @override
+  BaseEntityImpl copyWith({
+    String? id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? version,
+  }) {
+    return BaseEntityImpl(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      version: version ?? this.version,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+      'version': version,
+    };
+  }
+
+  factory BaseEntityImpl.fromMap(Map<String, dynamic> map) {
+    return BaseEntityImpl(
+      id: map['id'] as String,
+      createdAt: DateTime.parse(map['createdAt'] as String),
+      updatedAt: DateTime.parse(map['updatedAt'] as String),
+      version: map['version'] as int,
+    );
+  }
+
+  @override
+  List<Object?> get props => [id, createdAt, updatedAt, version];
+
+  @override
+  bool get stringify => true;
+}
+
+// === ARCHIVO: lib/domain/entities/transaction.dart ===
+package lib.domain.entities;
+
+import 'package:equatable/equatable.dart';
+import 'base_entity.dart';
+
+enum TransactionStatus {
+  pending,
+  inProgress,
+  completed,
+  failed,
+  conflict,
+}
+
+enum TransactionType {
+  payment,
+  refund,
+  transfer,
+  deposit,
+  withdrawal,
+}
+
+class Transaction extends BaseEntity {
+  final String localId;
+  final String? remoteId;
+  final Map<String, dynamic> payload;
+  final TransactionStatus status;
+  final DateTime? syncedAt;
+  final TransactionType type;
+  final double amount;
+  final String currency;
+  final String? description;
+  final String? hash;
+
+  const Transaction({
+    required super.id,
+    required this.localId,
+    this.remoteId,
+    required this.payload,
+    required this.status,
+    required super.createdAt,
+    required super.updatedAt,
+    required super.version,
+    this.syncedAt,
+    required this.type,
+    required this.amount,
+    required this.currency,
+    this.description,
+    this.hash,
+  });
+
+  Transaction copyWith({
+    String? id,
+    String? localId,
+    String? remoteId,
+    Map<String, dynamic>? payload,
+    TransactionStatus? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? version,
+    DateTime? syncedAt,
+    TransactionType? type,
+    double? amount,
+    String? currency,
+    String? description,
+    String? hash,
+  }) {
+    return Transaction(
+      id: id ?? this.id,
+      localId: localId ?? this.localId,
+      remoteId: remoteId ?? this.remoteId,
+      payload: payload ?? this.payload,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      version: version ?? this.version,
+      syncedAt: syncedAt ?? this.syncedAt,
+      type: type ?? this.type,
+      amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
+      description: description ?? this.description,
+      hash: hash ?? this.hash,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      ...super.toMap(),
+      'localId': localId,
+      'remoteId': remoteId,
+      'payload': payload,
+      'status': status.name,
+      'syncedAt': syncedAt?.toIso8601String(),
+      'type': type.name,
+      'amount': amount,
+      'currency': currency,
+      'description': description,
+      'hash': hash,
+    };
+  }
+
+  factory Transaction.fromMap(Map<String, dynamic> map) {
+    return Transaction(
+      id: map['id'] as String,
+      localId: map['localId'] as String,
+      remoteId: map['remoteId'] as String?,
+      payload: map['payload'] as Map<String, dynamic>,
+      status: TransactionStatus.values.firstWhere(
+        (e) => e.name == map['status'],
+        orElse: () => TransactionStatus.pending,
+      ),
+      createdAt: DateTime.parse(map['createdAt'] as String),
+      updatedAt: DateTime.parse(map['updatedAt'] as String),
+      version: map['version'] as int,
+      syncedAt: map['syncedAt'] != null
+          ? DateTime.parse(map['syncedAt'] as String)
+          : null,
+      type: TransactionType.values.firstWhere(
+        (e) => e.name == map['type'],
+        orElse: () => TransactionType.payment,
+      ),
+      amount: (map['amount'] as num).toDouble(),
+      currency: map['currency'] as String,
+      description: map['description'] as String?,
+      hash: map['hash'] as String?,
+    );
+  }
+
+  bool get isSynced => remoteId != null && syncedAt != null;
+
+  bool get isPending =>
+      status == TransactionStatus.pending ||
+      status == TransactionStatus.inProgress;
+
+  bool get hasConflict => status == TransactionStatus.conflict;
+
+  String generateHash() {
+    final content = '$localId${type.name}$amount$currency$createdAt';
+    return content.hashCode.toString();
+  }
+
+  @override
+  List<Object?> get props => [
+        ...super.props,
+        localId,
+        remoteId,
+        payload,
+        status,
+        syncedAt,
+        type,
+        amount,
+        currency,
+        description,
+        hash,
+      ];
+
+  @override
+  bool get stringify => true;
+}
+
+// === ARCHIVO: lib/domain/entities/sync_record.dart ===
+package lib.domain.entities;
+
+import 'package:equatable/equatable.dart';
+
+enum SyncOperationType {
+  create,
+  update,
+  delete,
+}
+
+enum SyncEntityType {
+  transaction,
+  user,
+  config,
+  settings,
+}
+
+class SyncRecord extends Equatable {
+  final String id;
+  final SyncOperationType operationType;
+  final SyncEntityType entityType;
+  final String entityId;
+  final String payloadHash;
+  final DateTime timestamp;
+  final bool synced;
+  final int retryCount;
+  final String? errorMessage;
+  final DateTime? lastAttemptAt;
+
+  const SyncRecord({
+    required this.id,
+    required this.operationType,
+    required this.entityType,
+    required this.entityId,
+    required this.payloadHash,
+    required this.timestamp,
+    required this.synced,
+    this.retryCount = 0,
+    this.errorMessage,
+    this.lastAttemptAt,
+  });
+
+  SyncRecord copyWith({
+    String? id,
+    SyncOperationType? operationType,
+    SyncEntityType? entityType,
+    String? entityId,
+    String? payloadHash,
+    DateTime? timestamp,
+    bool? synced,
+    int? retryCount,
+    String? errorMessage,
+    DateTime? lastAttemptAt,
+  }) {
+    return SyncRecord(
+      id: id ?? this.id,
+      operationType: operationType ?? this.operationType,
+      entityType: entityType ?? this.entityType,
+      entityId: entityId ?? this.entityId,
+      payloadHash: payloadHash ?? this.payloadHash,
+      timestamp: timestamp ?? this.timestamp,
+      synced: synced ?? this.synced,
+      retryCount: retryCount ?? this.retryCount,
+      errorMessage: errorMessage ?? this.errorMessage,
+      lastAttemptAt: lastAttemptAt ?? this.lastAttemptAt,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'operationType': operationType.name,
+      'entityType': entityType.name,
+      'entityId': entityId,
+      'payloadHash': payloadHash,
+      'timestamp': timestamp.toIso8601String(),
+      'synced': synced ? 1 : 0,
+      'retryCount': retryCount,
+      'errorMessage': errorMessage,
+      'lastAttemptAt': lastAttemptAt?.toIso8601String(),
+    };
+  }
+
+  factory SyncRecord.fromMap(Map<String, dynamic> map) {
+    return SyncRecord(
+      id: map['id'] as String,
+      operationType: SyncOperationType.values.firstWhere(
+        (e) => e.name == map['operationType'],
+        orElse: () => SyncOperationType.create,
+      ),
+      entityType: SyncEntityType.values.firstWhere(
+        (e) => e.name == map['entityType'],
+        orElse: () => SyncEntityType.transaction,
+      ),
+      entityId: map['entityId'] as String,
+      payloadHash: map['payloadHash'] as String,
+      timestamp: DateTime.parse(map['timestamp'] as String),
+      synced: (map['synced'] as int) == 1,
+      retryCount: map['retryCount'] as int? ?? 0,
+      errorMessage: map['errorMessage'] as String?,
+      lastAttemptAt: map['lastAttemptAt'] != null
+          ? DateTime.parse(map['lastAttemptAt'] as String)
+          : null,
+    );
+  }
+
+  bool get canRetry => retryCount < 3 && !synced;
+
+  bool get isStale =>
+      !synced &&
+      DateTime.now().difference(timestamp).inHours > 24;
+
+  SyncRecord incrementRetry({String? error}) {
+    return copyWith(
+      retryCount: retryCount + 1,
+      lastAttemptAt: DateTime.now(),
+      errorMessage: error,
+    );
+  }
+
+  SyncRecord markAsSynced() {
+    return copyWith(
+      synced: true,
+      lastAttemptAt: DateTime.now(),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        id,
+        operationType,
+        entityType,
+        entityId,
+        payloadHash,
+        timestamp,
+        synced,
+        retryCount,
+        errorMessage,
+        lastAttemptAt,
+      ];
+
+  @override
+  bool get stringify => true;
+}
+
+
+// === ARCHIVO: lib/domain/repositories/transaction_repository.dart ===
+library;
+
+import 'package:equatable/equatable.dart';
+import '../../core/errors/failures.dart';
+import '../entities/transaction.dart';
+
+abstract class TransactionRepository {
+  Future<Transaction> createTransaction(Transaction transaction);
+  Future<Transaction> updateTransaction(Transaction transaction);
+  Future<void> deleteTransaction(String id);
+  Future<Transaction?> getTransactionById(String id);
+  Future<Transaction?> getTransactionByExternalId(String externalId);
+  Future<Transaction?> getTransactionByHash(String operationHash);
+  Future<List<Transaction>> getAllTransactions();
+  Future<List<Transaction>> getTransactionsBySyncStatus(String syncStatus);
+  Future<List<Transaction>> getTransactionsByType(String transactionType);
+  Future<List<Transaction>> getTransactionsByDateRange(DateTime startDate, DateTime endDate);
+  Future<List<Transaction>> getPendingTransactions();
+  Future<int> getTransactionCount();
+  Future<int> getTransactionCountBySyncStatus(String syncStatus);
+  Future<void> updateSyncStatus(String id, String syncStatus, {String? externalId});
+  Future<void> updateSyncStatusBatch(List<String> ids, String syncStatus, {String? externalId});
+  Stream<List<Transaction>> watchAllTransactions();
+  Stream<List<Transaction>> watchTransactionsBySyncStatus(String syncStatus);
+  Future<void> markAsSynced(String id, String externalId, int version);
+  Future<void> markAsFailed(String id, String errorDetails);
+  Future<List<Transaction>> getUnsyncedTransactions();
+  Future<Map<String, dynamic>> exportTransactions(String startDate, String endDate);
+  Future<void> importTransactions(Map<String, dynamic> data);
+  Future<Transaction?> findByIdempotencyKey(String idempotencyKey);
+  Future<void> incrementVersion(String id);
+}
+
+class TransactionFilter extends Equatable {
+  final String? syncStatus;
+  final String? transactionType;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final double? minAmount;
+  final double? maxAmount;
+  final String? currency;
+  final bool? isDeleted;
+
+  const TransactionFilter({
+    this.syncStatus,
+    this.transactionType,
+    this.startDate,
+    this.endDate,
+    this.minAmount,
+    this.maxAmount,
+    this.currency,
+    this.isDeleted,
+  });
+
+  @override
+  List<Object?> get props => [
+        syncStatus,
+        transactionType,
+        startDate,
+        endDate,
+        minAmount,
+        maxAmount,
+        currency,
+        isDeleted,
+      ];
+
+  TransactionFilter copyWith({
+    String? syncStatus,
+    String? transactionType,
+    DateTime? startDate,
+    DateTime? endDate,
+    double? minAmount,
+    double? maxAmount,
+    String? currency,
+    bool? isDeleted,
+  }) {
+    return TransactionFilter(
+      syncStatus: syncStatus ?? this.syncStatus,
+      transactionType: transactionType ?? this.transactionType,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      minAmount: minAmount ?? this.minAmount,
+      maxAmount: maxAmount ?? this.maxAmount,
+      currency: currency ?? this.currency,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+}
+
+class TransactionResult extends Equatable {
+  final Transaction transaction;
+  final bool isNew;
+  final bool wasSynced;
+
+  const TransactionResult({
+    required this.transaction,
+    required this.isNew,
+    required this.wasSynced,
+  });
+
+  @override
+  List<Object?> get props => [transaction, isNew, wasSynced];
+}
+
+// === ARCHIVO: lib/domain/repositories/sync_repository.dart ===
+library;
+
+import 'package:equatable/equatable.dart';
+import '../../core/errors/failures.dart';
+import '../entities/sync_record.dart';
+
+abstract class SyncRepository {
+  Future<SyncRecord> createSyncRecord(SyncRecord record);
+  Future<SyncRecord> updateSyncRecord(SyncRecord record);
+  Future<void> deleteSyncRecord(String id);
+  Future<SyncRecord?> getSyncRecordById(String id);
+  Future<List<SyncRecord>> getAllSyncRecords();
+  Future<List<SyncRecord>> getSyncRecordsByStatus(String status);
+  Future<List<SyncRecord>> getPendingSyncRecords();
+  Future<List<SyncRecord>> getFailedSyncRecords();
+  Future<List<SyncRecord>> getCompletedSyncRecords();
+  Future<void> markAsPending(String id);
+  Future<void> markAsInProgress(String id);
+  Future<void> markAsCompleted(String id, {String? serverResponse});
+  Future<void> markAsFailed(String id, String errorDetails);
+  Future<void> markAsConflict(String id, String conflictData);
+  Future<int> getPendingCount();
+  Future<int> getFailedCount();
+  Future<int> getCompletedCount();
+  Future<void> clearCompletedRecords({DateTime? olderThan});
+  Future<void> clearFailedRecords({int keepLastN});
+  Future<void> retryFailedRecords();
+  Future<void> cancelPendingSync();
+  Stream<List<SyncRecord>> watchSyncRecords();
+  Stream<List<SyncRecord>> watchPendingSyncRecords();
+  Future<Map<String, dynamic>> getSyncStatistics();
+  Future<void> updateRetryCount(String id);
+  Future<int> getRetryCount(String id);
+  Future<void> scheduleSync(String entityType, String entityId, String operationType);
+  Future<List<SyncRecord>> getSyncRecordsForEntity(String entityType, String entityId);
+  Future<void> removeSyncRecordsForEntity(String entityType, String entityId);
+  Future<void> updateConflictResolution(String id, String resolution, String resolvedData);
+  Future<SyncRecord?> getLatestSyncRecordForEntity(String entityType, String entityId);
+  Future<List<SyncRecord>> getSyncRecordsByOperationType(String operationType);
+  Future<void> bulkUpdateStatus(List<String> ids, String status);
+  Future<List<SyncRecord>> getConflictedRecords();
+  Future<void> resolveConflict(String id, String resolution, String resolvedData);
+  Future<void> cancelSync(String id);
+  Future<void> pauseSync(String id);
+  Future<void> resumeSync(String id);
+  Future<void> prioritizeSync(String id);
+  Future<void> deprioritizeSync(String id);
+}
+
+class SyncBatchResult extends Equatable {
+  final int totalRequested;
+  final int successfullySynced;
+  final int failed;
+  final int pending;
+  final Duration elapsedTime;
+  final List<String> failedIds;
+  final List<String> pendingIds;
+
+  const SyncBatchResult({
+    required this.totalRequested,
+    required this.successfullySynced,
+    required this.failed,
+    required this.pending,
+    required this.elapsedTime,
+    required this.failedIds,
+    required this.pendingIds,
+  });
+
+  bool get isFullySuccessful => failed == 0 && pending == 0;
+  bool get hasFailures => failed > 0;
+  bool get hasPending => pending > 0;
+  double get successRate => totalRequested > 0 ? successfullySynced / totalRequested : 0.0;
+
+  @override
+  List<Object?> get props => [
+        totalRequested,
+        successfullySynced,
+        failed,
+        pending,
+        elapsedTime,
+        failedIds,
+        pendingIds,
+      ];
+}
+
+class SyncConfiguration extends Equatable {
+  final int maxRetries;
+  final int retryDelaySeconds;
+  final int batchSize;
+  final bool autoSync;
+  final bool syncOnWifiOnly;
+  final bool syncOnCharging;
+  final String conflictStrategy;
+  final Duration syncInterval;
+  final Duration maxSyncDuration;
+
+  const SyncConfiguration({
+    this.maxRetries = 3,
+    this.retryDelaySeconds = 30,
+    this.batchSize = 50,
+    this.autoSync = true,
+    this.syncOnWifiOnly = false,
+    this.syncOnCharging = false,
+    this.conflictStrategy = 'last_write_wins',
+    this.syncInterval = const Duration(minutes: 15),
+    this.maxSyncDuration = const Duration(minutes: 5),
+  });
+
+  @override
+  List<Object?> get props => [
+        maxRetries,
+        retryDelaySeconds,
+        batchSize,
+        autoSync,
+        syncOnWifiOnly,
+        syncOnCharging,
+        conflictStrategy,
+        syncInterval,
+        maxSyncDuration,
+      ];
+
+  SyncConfiguration copyWith({
+    int? maxRetries,
+    int? retryDelaySeconds,
+    int? batchSize,
+    bool? autoSync,
+    bool? syncOnWifiOnly,
+    bool? syncOnCharging,
+    String? conflictStrategy,
+    Duration? syncInterval,
+    Duration? maxSyncDuration,
+  }) {
+    return SyncConfiguration(
+      maxRetries: maxRetries ?? this.maxRetries,
+      retryDelaySeconds: retryDelaySeconds ?? this.retryDelaySeconds,
+      batchSize: batchSize ?? this.batchSize,
+      autoSync: autoSync ?? this.autoSync,
+      syncOnWifiOnly: syncOnWifiOnly ?? this.syncOnWifiOnly,
+      syncOnCharging: syncOnCharging ?? this.syncOnCharging,
+      conflictStrategy: conflictStrategy ?? this.conflictStrategy,
+      syncInterval: syncInterval ?? this.syncInterval,
+      maxSyncDuration: maxSyncDuration ?? this.maxSyncDuration,
+    );
+  }
+}
+
+// === ARCHIVO: lib/domain/usecases/create_transaction.dart ===
+library;
+
+import 'package:crypto/crypto.dart';
+import 'package:uuid/uuid.dart';
+import '../../core/errors/exceptions.dart';
+import '../../core/errors/failures.dart';
+import '../entities/transaction.dart';
+import '../repositories/transaction_repository.dart';
+
+class CreateTransaction {
+  final TransactionRepository _repository;
+  final Uuid _uuid;
+
+  static const List<String> validTransactionTypes = [
+    'payment',
+    'refund',
+    'transfer',
+    'deposit',
+    'withdrawal',
+    'adjustment',
+  ];
+
+  static const List<String> validCurrencies = [
+    'USD',
+    'EUR',
+    'GBP',
+    'JPY',
+    'CAD',
+    'AUD',
+    'CHF',
+    'MXN',
+  ];
+
+  static const double minAmount = 0.01;
+  static const double maxAmount = 999999999.99;
+
+  CreateTransaction(this._repository) : _uuid = const Uuid();
+
+  Future<Transaction> execute(CreateTransactionParams params) async {
+    await _validateInput(params);
+    final operationHash = _generateOperationHash(params);
+    await _checkIdempotency(operationHash, params.idempotencyKey);
+    final transaction = _buildTransaction(params, operationHash);
+    return await _repository.createTransaction(transaction);
+  }
+
+  Future<void> _validateInput(CreateTransactionParams params) async {
+    final validationErrors = <String, List<String>>{};
+
+    if (params.amount < minAmount || params.amount > maxAmount) {
+      validationErrors['amount'] = [
+        'Amount must be between $minAmount and $maxAmount',
+      ];
+    }
+
+    if (!validTransactionTypes.contains(params.transactionType)) {
+      validationErrors['transactionType'] = [
+        'Invalid transaction type: ${params.transactionType}. Valid types: ${validTransactionTypes.join(", ")}',
+      ];
+    }
+
+    if (!validCurrencies.contains(params.currency)) {
+      validationErrors['currency'] = [
+        'Invalid currency: ${params.currency}. Valid currencies: ${validCurrencies.join(", ")}',
+      ];
+    }
+
+    if (params.description != null && params.description!.length > 500) {
+      validationErrors['description'] = [
+        'Description cannot exceed 500 characters',
+      ];
+    }
+
+    if (params.metadata != null) {
+      final metadataSize = params.metadata.toString().length;
+      if (metadataSize > 10000) {
+        validationErrors['metadata'] = [
+          'Metadata cannot exceed 10000 characters',
+        ];
+      }
+    }
+
+    if (validationErrors.isNotEmpty) {
+      throw ValidationException(
+        'Validation failed for transaction creation',
+        fieldErrors: validationErrors,
+      );
+    }
+  }
+
+  String _generateOperationHash(CreateTransactionParams params) {
+    final hashInput = '${params.transactionType}:'
+        '${params.amount}:'
+        '${params.currency}:'
+        '${params.description ?? ""}:'
+        '${params.createdAt.toIso8601String()}';
+    final bytes = hashInput.codeUnits;
+    final digest = md5.convert(bytes);
+    return digest.toString();
+  }
+
+  Future<void> _checkIdempotency(
+    String operationHash,
+    String? idempotencyKey,
+  ) async {
+    if (idempotencyKey != null) {
+      final existingByKey = await _repository.findByIdempotencyKey(idempotencyKey);
+      if (existingByKey != null) {
+        throw IdempotencyException.duplicateOperation(
+          operationHash,
+          existingRecordId: existingByKey.id,
+        );
+      }
+    }
+
+    final existingByHash = await _repository.getTransactionByHash(operationHash);
+    if (existingByHash != null) {
+      throw IdempotencyException.duplicateOperation(
+        operationHash,
+        existingRecordId: existingByHash.id,
+      );
+    }
+  }
+
+  Transaction _buildTransaction(
+    CreateTransactionParams params,
+    String operationHash,
+  ) {
+    final now = params.createdAt ?? DateTime.now();
+    return Transaction(
+      id: params.id ?? _uuid.v4(),
+      externalId: null,
+      amount: params.amount,
+      currency: params.currency,
+      transactionType: params.transactionType,
+      description: params.description,
+      metadata: params.metadata,
+      createdAt: now,
+      updatedAt: now,
+      version: 1,
+      syncStatus: 'pending',
+      hash: operationHash,
+    );
+  }
+
+  Future<Transaction> executeWithValidation(CreateTransactionParams params) async {
+    try {
+      return await execute(params);
+    } on ValidationException catch (e) {
+      throw ValidationFailure(
+        'Transaction validation failed: ${e.message}',
+        fieldErrors: e.fieldErrors,
+      );
+    } on IdempotencyException catch (e) {
+      throw ConflictFailure.detected(
+        e.existingRecordId ?? 'unknown',
+        {'hash': e.operationHash},
+        {'idempotencyKey': params.idempotencyKey},
+      );
+    } catch (e) {
+      throw DatabaseFailure.transactionFailed('Failed to create transaction: $e');
+    }
+  }
+}
+
+class CreateTransactionParams {
+  final String? id;
+  final double amount;
+  final String currency;
+  final String transactionType;
+  final String? description;
+  final Map<String, dynamic>? metadata;
+  final String? idempotencyKey;
+  final DateTime? createdAt;
+
+  const CreateTransactionParams({
+    this.id,
+    required this.amount,
+    required this.currency,
+    required this.transactionType,
+    this.description,
+    this.metadata,
+    this.idempotencyKey,
+    this.createdAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'amount': amount,
+      'currency': currency,
+      'transactionType': transactionType,
+      'description': description,
+      'metadata': metadata,
+      'idempotencyKey': idempotencyKey,
+      'createdAt': createdAt?.toIso8601String(),
+    };
+  }
+
+  factory CreateTransactionParams.fromMap(Map<String, dynamic> map) {
+    return CreateTransactionParams(
+      id: map['id'] as String?,
+      amount: (map['amount'] as num).toDouble(),
+      currency: map['currency'] as String,
+      transactionType: map['transactionType'] as String,
+      description: map['description'] as String?,
+      metadata: map['metadata'] as Map<String, dynamic>?,
+      idempotencyKey: map['idempotencyKey'] as String?,
+      createdAt: map['createdAt'] != null
+          ? DateTime.parse(map['createdAt'] as String)
+          : null,
+    );
+  }
+}
+
+
+// === ARCHIVO: lib/domain/usecases/get_pending_transactions.dart ===
+import 'package:equatable/equatable.dart';
+import '../../entities/transaction.dart';
+import '../../repositories/transaction_repository.dart';
+import '../../../core/errors/failures.dart';
+import '../../../core/errors/exceptions.dart';
+
+class GetPendingTransactionsParams extends Equatable {
+  final int? limit;
+  final int? offset;
+  final String? transactionType;
+  final DateTime? fromDate;
+  final DateTime? toDate;
+
+  const GetPendingTransactionsParams({
+    this.limit,
+    this.offset,
+    this.transactionType,
+    this.fromDate,
+    this.toDate,
+  });
+
+  @override
+  List<Object?> get props => [limit, offset, transactionType, fromDate, toDate];
+}
+
+class PendingTransactionInfo extends Equatable {
+  final Transaction transaction;
+  final int retryCount;
+  final DateTime? lastAttempt;
+  final String? lastError;
+  final DateTime createdAt;
+
+  const PendingTransactionInfo({
+    required this.transaction,
+    required this.retryCount,
+    this.lastAttempt,
+    this.lastError,
+    required this.createdAt,
+  });
+
+  @override
+  List<Object?> get props => [transaction, retryCount, lastAttempt, lastError, createdAt];
+}
+
+abstract class GetPendingTransactionsUseCase {
+  Future<(List<PendingTransactionInfo>, Failure?)> call(GetPendingTransactionsParams params);
+  Future<int> getTotalPendingCount();
+  Future<Map<String, int>> getPendingCountByType();
+}
+
+class GetPendingTransactionsUseCaseImpl implements GetPendingTransactionsUseCase {
+  final TransactionRepository _repository;
+  final int _defaultPageSize;
+  final int _maxPageSize;
+
+  GetPendingTransactionsUseCaseImpl({
+    required TransactionRepository repository,
+    int defaultPageSize = 20,
+    int maxPageSize = 100,
+  })  : _repository = repository,
+        _defaultPageSize = defaultPageSize,
+        _maxPageSize = maxPageSize;
+
+  @override
+  Future<(List<PendingTransactionInfo>, Failure?)> call(GetPendingTransactionsParams params) async {
+    try {
+      final effectiveLimit = _resolveLimit(params.limit);
+      final effectiveOffset = params.offset ?? 0;
+
+      final pendingTransactions = await _repository.getPendingTransactions(
+        limit: effectiveLimit,
+        offset: effectiveOffset,
+        transactionType: params.transactionType,
+        fromDate: params.fromDate,
+        toDate: params.toDate,
+      );
+
+      final result = <PendingTransactionInfo>[];
+      for (final transaction in pendingTransactions) {
+        final syncRecords = await _repository.getSyncRecordsForEntity(transaction.id);
+        final latestRecord = syncRecords.isNotEmpty ? syncRecords.first : null;
+
+        result.add(PendingTransactionInfo(
+          transaction: transaction,
+          retryCount: latestRecord?.retryCount ?? 0,
+          lastAttempt: latestRecord?.lastAttempt,
+          lastError: latestRecord?.errorMessage,
+          createdAt: transaction.createdAt,
+        ));
+      }
+
+      return (result, null);
+    } on OfflineException catch (e) {
+      return ( <PendingTransactionInfo>[], OfflineFailure.database(e.message));
+    } catch (e) {
+      return ( <PendingTransactionInfo>[], DatabaseFailure.transactionFailed(e.toString()));
+    }
+  }
+
+  @override
+  Future<int> getTotalPendingCount() async {
+    try {
+      return await _repository.getPendingCount();
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  @override
+  Future<Map<String, int>> getPendingCountByType() async {
+    try {
+      final allPending = await _repository.getPendingTransactions(limit: 1000);
+      final counts = <String, int>{};
+      for (final tx in allPending) {
+        counts[tx.transactionType] = (counts[tx.transactionType] ?? 0) + 1;
+      }
+      return counts;
+    } catch (e) {
+      return {};
+    }
+  }
+
+  int _resolveLimit(int? requestedLimit) {
+    if (requestedLimit == null || requestedLimit <= 0) {
+      return _defaultPageSize;
+    }
+    return requestedLimit > _maxPageSize ? _maxPageSize : requestedLimit;
+  }
+}
+
+// === ARCHIVO: lib/domain/usecases/sync_transactions.dart ===
+import 'package:equatable/equatable.dart';
+import '../../entities/transaction.dart';
+import '../../entities/sync_record.dart';
+import '../../repositories/transaction_repository.dart';
+import '../../repositories/sync_repository.dart';
+import '../../../core/errors/failures.dart';
+import '../../../core/errors/exceptions.dart';
+import '../../../core/network/network_info.dart';
+import '../../../core/constants/app_constants.dart';
+
+class SyncTransactionsParams extends Equatable {
+  final bool forceFullSync;
+  final int? batchSize;
+  final String? conflictStrategy;
+  final bool enableRetry;
+
+  const SyncTransactionsParams({
+    this.forceFullSync = false,
+    this.batchSize,
+    this.conflictStrategy,
+    this.enableRetry = true,
+  });
+
+  @override
+  List<Object?> get props => [forceFullSync, batchSize, conflictStrategy, enableRetry];
+}
+
+class SyncResult extends Equatable {
+  final int uploaded;
+  final int downloaded;
+  final int conflicts;
+  final int failed;
+  final Duration duration;
+  final List<String> errorMessages;
+
+  const SyncResult({
+    required this.uploaded,
+    required this.downloaded,
+    required this.conflicts,
+    required this.failed,
+    required this.duration,
+    this.errorMessages = const [],
+  });
+
+  bool get hasErrors => failed > 0 || conflicts > 0;
+  bool get isPartialSuccess => (uploaded + downloaded) > 0 && hasErrors;
+  bool get isFullSuccess => uploaded > 0 && failed == 0 && conflicts == 0;
+
+  @override
+  List<Object?> get props => [uploaded, downloaded, conflicts, failed, duration, errorMessages];
+}
+
+abstract class SyncTransactionsUseCase {
+  Future<(SyncResult?, Failure?)> call(SyncTransactionsParams params);
+  Future<void> cancelSync();
+  Future<SyncStatus> getCurrentSyncStatus();
+}
+
+enum SyncStatus { idle, inProgress, failed, completed }
+
+class SyncTransactionsUseCaseImpl implements SyncTransactionsUseCase {
+  final TransactionRepository _transactionRepository;
+  final SyncRepository _syncRepository;
+  final NetworkInfo _networkInfo;
+  final int _maxRetryAttempts;
+  final int _retryDelaySeconds;
+  final int _defaultBatchSize;
+  bool _isCancelled = false;
+
+  SyncTransactionsUseCaseImpl({
+    required TransactionRepository transactionRepository,
+    required SyncRepository syncRepository,
+    required NetworkInfo networkInfo,
+    int maxRetryAttempts = 3,
+    int retryDelaySeconds = 5,
+    int defaultBatchSize = 50,
+  })  : _transactionRepository = transactionRepository,
+        _syncRepository = syncRepository,
+        _networkInfo = networkInfo,
+        _maxRetryAttempts = maxRetryAttempts,
+        _retryDelaySeconds = retryDelaySeconds,
+        _defaultBatchSize = defaultBatchSize;
+
+  @override
+  Future<(SyncResult?, Failure?)> call(SyncTransactionsParams params) async {
+    _isCancelled = false;
+    final startTime = DateTime.now();
+
+    final isConnected = await _networkInfo.isConnected;
+    if (!isConnected) {
+      return (null, const OfflineFailure.networkUnavailable());
+    }
+
+    try {
+      final batchSize = params.batchSize ?? _defaultBatchSize;
+      final pendingTransactions = await _transactionRepository.getPendingTransactions(
+        limit: batchSize,
+      );
+
+      if (pendingTransactions.isEmpty) {
+        return (SyncResult(
+          uploaded: 0,
+          downloaded: 0,
+          conflicts: 0,
+          failed: 0,
+          duration: DateTime.now().difference(startTime),
+        ), null);
+      }
+
+      int uploaded = 0;
+      int conflicts = 0;
+      int failed = 0;
+      final errorMessages = <String>[];
+
+      for (final transaction in pendingTransactions) {
+        if (_isCancelled) break;
+
+        final syncResult = await _syncSingleTransaction(
+          transaction,
+          params.conflictStrategy ?? AppConstants.conflictStrategyLastWriteWins,
+          params.enableRetry,
+        );
+
+        switch (syncResult) {
+          case _SyncSingleResult.success:
+            uploaded++;
+            break;
+          case _SyncSingleResult.conflict:
+            conflicts++;
+            break;
+          case _SyncSingleResult.failed:
+            failed++;
+            errorMessages.add('Failed to sync transaction ${transaction.id}');
+            break;
+        }
+      }
+
+      final serverTransactions = await _fetchServerChanges();
+      int downloaded = 0;
+      for (final serverTx in serverTransactions) {
+        if (_isCancelled) break;
+        await _applyServerTransaction(serverTx);
+        downloaded++;
+      }
+
+      final duration = DateTime.now().difference(startTime);
+      final result = SyncResult(
+        uploaded: uploaded,
+        downloaded: downloaded,
+        conflicts: conflicts,
+        failed: failed,
+        duration: duration,
+        errorMessages: errorMessages,
+      );
+
+      if (failed > 0) {
+        return (result, SyncFailure.batchFailed(failed, pendingTransactions.length));
+      }
+
+      return (result, null);
+    } on SyncConflictException catch (e) {
+      return (null, ConflictFailure.detected(e.entityId, e.localData, e.serverData));
+    } on NetworkException catch (e) {
+      return (null, SyncFailure.serverError(e.message));
+    } catch (e) {
+      return (null, SyncFailure.serverError(e.toString()));
+    }
+  }
+
+  Future<_SyncSingleResult> _syncSingleTransaction(
+    Transaction transaction,
+    String conflictStrategy,
+    bool enableRetry,
+  ) async {
+    int attempts = 0;
+    while (attempts <= _maxRetryAttempts) {
+      if (_isCancelled) return _SyncSingleResult.failed;
+
+      try {
+        final result = await _transactionRepository.syncTransaction(transaction);
+        if (result.hasConflict) {
+          return _handleConflict(transaction, result.serverData!, conflictStrategy);
+        }
+        await _updateSyncRecord(transaction.id, true, null);
+        return _SyncSingleResult.success;
+      } catch (e) {
+        attempts++;
+        if (attempts > _maxRetryAttempts || !enableRetry) {
+          await _updateSyncRecord(transaction.id, false, e.toString());
+          return _SyncSingleResult.failed;
+        }
+        await Future.delayed(Duration(seconds: _retryDelaySeconds * attempts));
+      }
+    }
+    return _SyncSingleResult.failed;
+  }
+
+  Future<_SyncSingleResult> _handleConflict(
+    Transaction transaction,
+    Map<String, dynamic> serverData,
+    String strategy,
+  ) async {
+    switch (strategy) {
+      case AppConstants.conflictStrategyServerWins:
+        await _transactionRepository.resolveConflict(
+          transaction.id,
+          serverData,
+          'server',
+        );
+        return _SyncSingleResult.success;
+      case AppConstants.conflictStrategyClientWins:
+        await _transactionRepository.forceSync(transaction);
+        return _SyncSingleResult.success;
+      case AppConstants.conflictStrategyManual:
+        return _SyncSingleResult.conflict;
+      default:
+        final localVersion = transaction.version ?? 0;
+        final serverVersion = serverData['version'] as int? ?? 0;
+        if (serverVersion > localVersion) {
+          await _transactionRepository.resolveConflict(
+            transaction.id,
+            serverData,
+            'server',
+          );
+        } else {
+          await _transactionRepository.forceSync(transaction);
+        }
+        return _SyncSingleResult.success;
+    }
+  }
+
+  Future<List<Transaction>> _fetchServerChanges() async {
+    return await _transactionRepository.getServerTransactions();
+  }
+
+  Future<void> _applyServerTransaction(Transaction serverTx) async {
+    final localTx = await _transactionRepository.getByExternalId(serverTx.externalId);
+    if (localTx == null) {
+      await _transactionRepository.create(serverTx);
+    } else if ((localTx.version ?? 0) < (serverTx.version ?? 0)) {
+      await _transactionRepository.update(serverTx);
+    }
+  }
+
+  Future<void> _updateSyncRecord(String entityId, bool success, String? error) async {
+    final record = SyncRecord(
+      id: '',
+      entityId: entityId,
+      entityType: 'transaction',
+      operationType: 'sync',
+      status: success ? 'completed' : 'failed',
+      retryCount: 0,
+      errorMessage: error,
+      createdAt: DateTime.now(),
+      lastAttempt: DateTime.now(),
+    );
+    await _syncRepository.saveSyncRecord(record);
+  }
+
+  @override
+  Future<void> cancelSync() async {
+    _isCancelled = true;
+  }
+
+  @override
+  Future<SyncStatus> getCurrentSyncStatus() async {
+    final pendingCount = await _transactionRepository.getPendingCount();
+    if (pendingCount > 0) return SyncStatus.idle;
+    return SyncStatus.completed;
+  }
+}
+
+enum _SyncSingleResult { success, conflict, failed }
+
+// === ARCHIVO: lib/domain/usecases/resolve_conflict.dart ===
+import 'package:equatable/equatable.dart';
+import '../../entities/transaction.dart';
+import '../../repositories/transaction_repository.dart';
+import '../../../core/errors/failures.dart';
+import '../../../core/errors/exceptions.dart';
+import '../../../core/constants/app_constants.dart';
+
+class ResolveConflictParams extends Equatable {
+  final String entityId;
+  final ConflictResolutionStrategy strategy;
+  final Map<String, dynamic>? manualResolution;
+  final bool notifyServer;
+
+  const ResolveConflictParams({
+    required this.entityId,
+    required this.strategy,
+    this.manualResolution,
+    this.notifyServer = true,
+  });
+
+  @override
+  List<Object?> get props => [entityId, strategy, manualResolution, notifyServer];
 }
 
 enum ConflictResolutionStrategy {
@@ -1898,1839 +3466,703 @@ enum ConflictResolutionStrategy {
   merge,
 }
 
-class ConflictResolutionResult extends Equatable {
-  final bool success;
-  final String entityId;
-  final ConflictResolutionStrategy usedStrategy;
-  final Map<String, dynamic>? resolvedData;
-  final String? errorMessage;
-
-  const ConflictResolutionResult({
-    required this.success,
-    required this.entityId,
-    required this.usedStrategy,
-    this.resolvedData,
-    this.errorMessage,
-  });
-
-  @override
-  List<Object?> get props => [
-        success,
-        entityId,
-        usedStrategy,
-        resolvedData,
-        errorMessage,
-      ];
-}
-
-class SyncStatusSummary extends Equatable {
-  final int pendingCount;
-  final int syncedCount;
-  final int failedCount;
-  final int conflictCount;
-  final DateTime? lastSyncAt;
-  final bool isSyncing;
-
-  const SyncStatusSummary({
-    required this.pendingCount,
-    required this.syncedCount,
-    required this.failedCount,
-    required this.conflictCount,
-    this.lastSyncAt,
-    required this.isSyncing,
-  });
-
-  int get totalCount => pendingCount + syncedCount + failedCount + conflictCount;
-  double get syncPercentage =>
-      totalCount > 0 ? (syncedCount / totalCount) * 100 : 0;
-
-  @override
-  List<Object?> get props => [
-        pendingCount,
-        syncedCount,
-        failedCount,
-        conflictCount,
-        lastSyncAt,
-        isSyncing,
-      ];
-}
-
-class SyncProgress extends Equatable {
-  final String phase;
-  final int currentItem;
-  final int totalItems;
-  final String? currentEntityId;
-  final double progressPercentage;
-  final String? statusMessage;
-
-  const SyncProgress({
-    required this.phase,
-    required this.currentItem,
-    required this.totalItems,
-    this.currentEntityId,
-    required this.progressPercentage,
-    this.statusMessage,
-  });
-
-  @override
-  List<Object?> get props => [
-        phase,
-        currentItem,
-        totalItems,
-        currentEntityId,
-        progressPercentage,
-        statusMessage,
-      ];
-}
-
-// === ARCHIVO: lib/domain/usecases/get_local_tasks.dart ===
-import 'package:equatable/equatable.dart';
-import '../../core/errors/failures.dart';
-import '../entities/task_entity.dart';
-
-abstract class GetLocalTasks extends Equatable {
-  const GetLocalTasks();
-
-  Future<Either<Failure, List<TaskEntity>>> call({
-    GetLocalTasksParams? params,
-  });
-}
-
-class GetLocalTasksParams extends Equatable {
-  final TaskFilter? filter;
-  final TaskSortOptions? sortBy;
-  final bool ascending;
-  final int? limit;
-  final int? offset;
-
-  const GetLocalTasksParams({
-    this.filter,
-    this.sortBy,
-    this.ascending = true,
-    this.limit,
-    this.offset,
-  });
-
-  @override
-  List<Object?> get props => [filter, sortBy, ascending, limit, offset];
-}
-
-enum TaskFilter {
-  all,
-  pending,
-  inProgress,
-  completed,
-  cancelled,
-  failed,
-  synced,
-  notSynced,
-  hasConflict,
-}
-
-enum TaskSortOptions {
-  createdAt,
-  updatedAt,
-  priority,
-  status,
-  dueDate,
-  title,
-}
-
-class GetLocalTasksImpl implements GetLocalTasks {
-  final TaskRepository _taskRepository;
-
-  const GetLocalTasksImpl(this._taskRepository);
-
-  @override
-  Future<Either<Failure, List<TaskEntity>>> call({
-    GetLocalTasksParams? params,
-  }) async {
-    final effectiveParams = params ?? const GetLocalTasksParams();
-
-    final result = await _taskRepository.getLocalTasks(
-      filter: effectiveParams.filter,
-      sortBy: effectiveParams.sortBy,
-      ascending: effectiveParams.ascending,
-      limit: effectiveParams.limit,
-      offset: effectiveParams.offset,
-    );
-
-    return result.fold(
-      (failure) => Left(failure),
-      (tasks) {
-        if (tasks.isEmpty) {
-          return const Right<Failure, List<TaskEntity>>([]);
-        }
-        return Right<Failure, List<TaskEntity>>(tasks);
-      },
-    );
-  }
-}
-
-abstract class TaskRepository extends Equatable {
-  const TaskRepository();
-
-  Future<Either<Failure, List<TaskEntity>>> getLocalTasks({
-    TaskFilter? filter,
-    TaskSortOptions? sortBy,
-    bool ascending = true,
-    int? limit,
-    int? offset,
-  });
-
-  Future<Either<Failure, TaskEntity>> getLocalTaskById(String id);
-
-  Future<Either<Failure, void>> saveLocalTask(TaskEntity task);
-
-  Future<Either<Failure, void>> updateLocalTask(TaskEntity task);
-
-  Future<Either<Failure, void>> deleteLocalTask(String id);
-
-  Future<Either<Failure, List<TaskEntity>>> getUnsyncedTasks();
-
-  Future<Either<Failure, void>> markTaskAsSynced(String id);
-
-  Future<Either<Failure, void>> markTaskAsFailed(String id, String error);
-
-  Future<Either<Failure, int>> getPendingSyncCount();
-
-  Future<Either<Failure, void>> clearAllLocalTasks();
-}
-
-// === ARCHIVO: lib/domain/usecases/save_task_local.dart ===
-import 'package:equatable/equatable.dart';
-import '../../core/errors/failures.dart';
-import '../entities/task_entity.dart';
-
-abstract class SaveTaskLocal extends Equatable {
-  const SaveTaskLocal();
-
-  Future<Either<Failure, SaveTaskResult>> call(SaveTaskParams params);
-}
-
-class SaveTaskParams extends Equatable {
-  final TaskEntity task;
-  final bool markForSync;
-  final bool validateBeforeSave;
-
-  const SaveTaskParams({
-    required this.task,
-    this.markForSync = true,
-    this.validateBeforeSave = true,
-  });
-
-  @override
-  List<Object?> get props => [task, markForSync, validateBeforeSave];
-}
-
-class SaveTaskResult extends Equatable {
-  final bool success;
-  final String taskId;
-  final bool wasCreated;
-  final bool wasUpdated;
-  final bool markedForSync;
-  final DateTime savedAt;
-  final String? errorMessage;
-
-  const SaveTaskResult({
-    required this.success,
-    required this.taskId,
-    required this.wasCreated,
-    required this.wasUpdated,
-    required this.markedForSync,
-    required this.savedAt,
-    this.errorMessage,
-  });
-
-  @override
-  List<Object?> get props => [
-        success,
-        taskId,
-        wasCreated,
-        wasUpdated,
-        markedForSync,
-        savedAt,
-        errorMessage,
-      ];
-}
-
-class SaveTaskLocalImpl implements SaveTaskLocal {
-  final TaskRepository _taskRepository;
-
-  const SaveTaskLocalImpl(this._taskRepository);
-
-  @override
-  Future<Either<Failure, SaveTaskResult>> call(
-    SaveTaskParams params,
-  ) async {
-    if (params.validateBeforeSave) {
-      final validationResult = _validateTask(params.task);
-      if (validationResult != null) {
-        return Left(validationResult);
-      }
-    }
-
-    final existingTaskResult = await _taskRepository.getLocalTaskById(
-      params.task.id,
-    );
-
-    final isUpdate = existingTaskResult.isRight() &&
-        existingTaskResult.fold((_) => false, (_) => true);
-
-    final saveResult = isUpdate
-        ? await _taskRepository.updateLocalTask(params.task)
-        : await _taskRepository.saveLocalTask(params.task);
-
-    return saveResult.fold(
-      (failure) => Left(failure),
-      (_) async {
-        if (params.markForSync && !params.task.isSynced) {
-          return Right<Failure, SaveTaskResult>(SaveTaskResult(
-            success: true,
-            taskId: params.task.id,
-            wasCreated: !isUpdate,
-            wasUpdated: isUpdate,
-            markedForSync: true,
-            savedAt: DateTime.now(),
-          ));
-        }
-
-        return Right<Failure, SaveTaskResult>(SaveTaskResult(
-          success: true,
-          taskId: params.task.id,
-          wasCreated: !isUpdate,
-          wasUpdated: isUpdate,
-          markedForSync: false,
-          savedAt: DateTime.now(),
-        ));
-      },
-    );
-  }
-
-  Failure? _validateTask(TaskEntity task) {
-    if (task.title.isEmpty) {
-      return const ValidationFailure(
-        message: 'El título de la tarea no puede estar vacío',
-        fieldErrors: {'title': ['El título es requerido']},
-      );
-    }
-
-    if (task.title.length > 200) {
-      return const ValidationFailure(
-        message: 'El título excede la longitud máxima permitida',
-        fieldErrors: {'title': ['El título no puede exceder 200 caracteres']},
-      );
-    }
-
-    if (task.description != null && task.description!.length > 2000) {
-      return const ValidationFailure(
-        message: 'La descripción excede la longitud máxima permitida',
-        fieldErrors: {
-          'description': ['La descripción no puede exceder 2000 caracteres']
-        },
-      );
-    }
-
-    return null;
-  }
-}
-
-
-// === ARCHIVO: lib/domain/usecases/sync_tasks.dart ===
-package field_app.domain.usecases;
-
-import 'package:equatable/equatable.dart';
-import 'package:field_app/core/errors/failures.dart';
-import 'package:field_app/core/network/network_info.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/domain/repositories/task_repository.dart';
-import 'package:field_app/domain/repositories/sync_repository.dart';
-
-class SyncTasksParams extends Equatable {
-  final bool forceFullSync;
-  final int? batchSize;
-  final bool resolveConflictsAutomatically;
-
-  const SyncTasksParams({
-    this.forceFullSync = false,
-    this.batchSize,
-    this.resolveConflictsAutomatically = false,
-  });
-
-  @override
-  List<Object?> get props => [forceFullSync, batchSize, resolveConflictsAutomatically];
-}
-
-class SyncTasksResult extends Equatable {
-  final int syncedCount;
-  final int failedCount;
-  final int conflictCount;
-  final Duration duration;
-  final List<String> errorMessages;
-
-  const SyncTasksResult({
-    required this.syncedCount,
-    required this.failedCount,
-    required this.conflictCount,
-    required this.duration,
-    this.errorMessages = const [],
-  });
-
-  bool get hasConflicts => conflictCount > 0;
-  bool get hasErrors => failedCount > 0;
-  bool get isPartialSuccess => syncedCount > 0 && (failedCount > 0 || conflictCount > 0);
-  bool get isFullSuccess => syncedCount > 0 && failedCount == 0 && conflictCount == 0;
-
-  @override
-  List<Object?> get props => [syncedCount, failedCount, conflictCount, duration, errorMessages];
-}
-
-abstract class SyncTasks {
-  Future<({SyncTasksResult result, Failure? failure})> call(SyncTasksParams params);
-}
-
-class SyncTasksImpl implements SyncTasks {
-  final TaskRepository taskRepository;
-  final SyncRepository syncRepository;
-  final NetworkInfo networkInfo;
-
-  static const int defaultBatchSize = 50;
-  static const int maxRetryAttempts = 3;
-
-  SyncTasksImpl({
-    required this.taskRepository,
-    required this.syncRepository,
-    required this.networkInfo,
-  });
-
-  @override
-  Future<({SyncTasksResult result, Failure? failure})> call(SyncTasksParams params) async {
-    final stopwatch = Stopwatch()..start();
-    
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      stopwatch.stop();
-      return (
-        result: SyncTasksResult(
-          syncedCount: 0,
-          failedCount: 0,
-          conflictCount: 0,
-          duration: stopwatch.elapsed,
-          errorMessages: ['No network connection available'],
-        ),
-        failure: const NetworkFailure(
-          message: 'No network connection available for sync',
-          isConnectionError: true,
-          isTimeout: false,
-        ),
-      );
-    }
-
-    try {
-      final pendingTasks = await taskRepository.getPendingSyncTasks();
-      
-      if (pendingTasks.isEmpty) {
-        stopwatch.stop();
-        return (
-          result: SyncTasksResult(
-            syncedCount: 0,
-            failedCount: 0,
-            conflictCount: 0,
-            duration: stopwatch.elapsed,
-            errorMessages: [],
-          ),
-          failure: null,
-        );
-      }
-
-      final batchSize = params.batchSize ?? defaultBatchSize;
-      final batches = _createBatches(pendingTasks, batchSize);
-      
-      int syncedCount = 0;
-      int failedCount = 0;
-      int conflictCount = 0;
-      final List<String> errorMessages = [];
-
-      for (final batch in batches) {
-        final batchResult = await _processBatch(
-          batch,
-          params.resolveConflictsAutomatically,
-        );
-        
-        syncedCount += batchResult.synced;
-        failedCount += batchResult.failed;
-        conflictCount += batchResult.conflicts;
-        errorMessages.addAll(batchResult.errors);
-      }
-
-      stopwatch.stop();
-      
-      await syncRepository.recordSyncOperation(
-        entityType: 'tasks',
-        totalCount: pendingTasks.length,
-        successCount: syncedCount,
-        failedCount: failedCount,
-        conflictCount: conflictCount,
-      );
-
-      return (
-        result: SyncTasksResult(
-          syncedCount: syncedCount,
-          failedCount: failedCount,
-          conflictCount: conflictCount,
-          duration: stopwatch.elapsed,
-          errorMessages: errorMessages,
-        ),
-        failure: failedCount > 0 || conflictCount > 0
-            ? SyncFailure(
-                message: 'Sync completed with errors',
-                retryCount: failedCount,
-              )
-            : null,
-      );
-    } catch (e) {
-      stopwatch.stop();
-      return (
-        result: SyncTasksResult(
-          syncedCount: 0,
-          failedCount: 0,
-          conflictCount: 0,
-          duration: stopwatch.elapsed,
-          errorMessages: [e.toString()],
-        ),
-        failure: SyncFailure(
-          message: 'Sync operation failed: ${e.toString()}',
-          retryCount: 0,
-        ),
-      );
-    }
-  }
-
-  List<List<TaskEntity>> _createBatches(List<TaskEntity> tasks, int batchSize) {
-    final batches = <List<TaskEntity>>[];
-    for (var i = 0; i < tasks.length; i += batchSize) {
-      final end = (i + batchSize < tasks.length) ? i + batchSize : tasks.length;
-      batches.add(tasks.sublist(i, end));
-    }
-    return batches;
-  }
-
-  Future<({int synced, int failed, int conflicts, List<String> errors})> _processBatch(
-    List<TaskEntity> batch,
-    bool resolveAutomatically,
-  ) async {
-    int synced = 0;
-    int failed = 0;
-    int conflicts = 0;
-    final errors = <String>[];
-
-    for (final task in batch) {
-      try {
-        final syncResult = await taskRepository.syncTask(task);
-        
-        if (syncResult.isConflict) {
-          conflicts++;
-          if (resolveAutomatically) {
-            await _autoResolveConflict(task, syncResult);
-          } else {
-            await taskRepository.markTaskAsConflict(task.id);
-          }
-        } else if (syncResult.isSuccess) {
-          synced++;
-        } else {
-          failed++;
-          errors.add('Failed to sync task ${task.id}: ${syncResult.errorMessage}');
-        }
-      } catch (e) {
-        failed++;
-        errors.add('Exception syncing task ${task.id}: $e');
-      }
-    }
-
-    return (synced: synced, failed: failed, conflicts: conflicts, errors: errors);
-  }
-
-  Future<void> _autoResolveConflict(TaskEntity task, SyncResult result) async {
-    final resolutionStrategy = result.serverVersion != null 
-        ? ConflictResolutionStrategy.serverWins 
-        : ConflictResolutionStrategy.keepLocal;
-    
-    await taskRepository.resolveConflict(
-      taskId: task.id,
-      resolution: resolutionStrategy,
-      winningVersion: resolutionStrategy == ConflictResolutionStrategy.serverWins
-          ? result.serverVersion
-          : task,
-    );
-  }
-}
-
-enum ConflictResolutionStrategy {
-  serverWins,
-  clientWins,
-  keepLocal,
-  merge,
-}
-
-class SyncResult {
-  final bool isSuccess;
-  final bool isConflict;
-  final String? errorMessage;
-  final TaskEntity? serverVersion;
-
-  const SyncResult({
-    required this.isSuccess,
-    this.isConflict = false,
-    this.errorMessage,
-    this.serverVersion,
-  });
-}
-
-// === ARCHIVO: lib/domain/usecases/resolve_conflict.dart ===
-package field_app.domain.usecases;
-
-import 'package:equatable/equatable.dart';
-import 'package:field_app/core/errors/failures.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/domain/repositories/task_repository.dart';
-
-enum ResolutionStrategy {
-  useLocal,
-  useServer,
-  merge,
-  lastWriteWins,
-}
-
-class ResolveConflictParams extends Equatable {
-  final String taskId;
-  final ResolutionStrategy strategy;
-  final TaskEntity? mergedData;
-
-  const ResolveConflictParams({
-    required this.taskId,
-    required this.strategy,
-    this.mergedData,
-  });
-
-  @override
-  List<Object?> get props => [taskId, strategy, mergedData];
-}
-
 class ConflictData extends Equatable {
-  final String taskId;
-  final TaskEntity localVersion;
-  final TaskEntity serverVersion;
-  final DateTime localModifiedAt;
-  final DateTime serverModifiedAt;
+  final String entityId;
+  final Map<String, dynamic> localData;
+  final Map<String, dynamic> serverData;
+  final int localVersion;
+  final int serverVersion;
+  final DateTime localUpdatedAt;
+  final DateTime serverUpdatedAt;
   final List<String> conflictingFields;
 
   const ConflictData({
-    required this.taskId,
+    required this.entityId,
+    required this.localData,
+    required this.serverData,
     required this.localVersion,
     required this.serverVersion,
-    required this.localModifiedAt,
-    required this.serverModifiedAt,
+    required this.localUpdatedAt,
+    required this.serverUpdatedAt,
     required this.conflictingFields,
   });
 
-  Duration get timeDifference => localModifiedAt.difference(serverModifiedAt);
-  bool get localIsNewer => localModifiedAt.isAfter(serverModifiedAt);
-  bool get serverIsNewer => serverModifiedAt.isAfter(localModifiedAt);
-
   @override
   List<Object?> get props => [
-        taskId,
+        entityId,
+        localData,
+        serverData,
         localVersion,
         serverVersion,
-        localModifiedAt,
-        serverModifiedAt,
+        localUpdatedAt,
+        serverUpdatedAt,
         conflictingFields,
       ];
 }
 
-class ResolveConflictResult extends Equatable {
+class ConflictResolutionResult extends Equatable {
   final bool success;
-  final TaskEntity? resolvedTask;
+  final Transaction? resolvedTransaction;
   final String? errorMessage;
-  final ResolutionStrategy appliedStrategy;
+  final String resolutionType;
 
-  const ResolveConflictResult({
+  const ConflictResolutionResult({
     required this.success,
-    this.resolvedTask,
+    this.resolvedTransaction,
     this.errorMessage,
-    required this.appliedStrategy,
+    required this.resolutionType,
   });
 
   @override
-  List<Object?> get props => [success, resolvedTask, errorMessage, appliedStrategy];
+  List<Object?> get props => [success, resolvedTransaction, errorMessage, resolutionType];
 }
 
-abstract class ResolveConflict {
-  Future<({ResolveConflictResult result, Failure? failure})> call(ResolveConflictParams params);
-  Future<ConflictData?> getConflictData(String taskId);
-  Future<List<ConflictData>> getAllConflicts();
+abstract class ResolveConflictUseCase {
+  Future<(ConflictData?, Failure?)> getConflictData(String entityId);
+  Future<(List<ConflictData>, Failure?)> getAllConflicts();
+  Future<(ConflictResolutionResult, Failure?)> call(ResolveConflictParams params);
+  Future<(ConflictResolutionResult, Failure?)> autoResolve(String entityId, String strategy);
 }
 
-class ResolveConflictImpl implements ResolveConflict {
-  final TaskRepository taskRepository;
+class ResolveConflictUseCaseImpl implements ResolveConflictUseCase {
+  final TransactionRepository _repository;
+  final int _maxMergeFields;
 
-  ResolveConflictImpl({required this.taskRepository});
+  ResolveConflictUseCaseImpl({
+    required TransactionRepository repository,
+    int maxMergeFields = 10,
+  })  : _repository = repository,
+        _maxMergeFields = maxMergeFields;
 
   @override
-  Future<({ResolveConflictResult result, Failure? failure})> call(ResolveConflictParams params) async {
-    if (params.taskId.isEmpty) {
-      return (
-        result: ResolveConflictResult(
-          success: false,
-          errorMessage: 'Task ID cannot be empty',
-          appliedStrategy: params.strategy,
-        ),
-        failure: const ValidationFailure(
-          message: 'Invalid task ID for conflict resolution',
-          fieldErrors: {'taskId': ['Task ID is required']},
-        ),
-      );
-    }
-
+  Future<(ConflictData?, Failure?)> getConflictData(String entityId) async {
     try {
-      final conflictData = await getConflictData(params.taskId);
-      
-      if (conflictData == null) {
-        return (
-          result: ResolveConflictResult(
-            success: false,
-            errorMessage: 'No conflict found for task ${params.taskId}',
-            appliedStrategy: params.strategy,
-          ),
-          failure: ConflictFailure(
-            entityId: params.taskId,
-            localVersion: null,
-            remoteVersion: null,
-            conflictType: 'not_found',
-          ),
-        );
+      final localTransaction = await _repository.getById(entityId);
+      if (localTransaction == null) {
+        return (null, DatabaseFailure.notFound('transactions', entityId));
       }
 
-      TaskEntity resolvedTask;
-      
-      switch (params.strategy) {
-        case ResolutionStrategy.useLocal:
-          resolvedTask = await _resolveWithLocal(conflictData);
-          break;
-        case ResolutionStrategy.useServer:
-          resolvedTask = await _resolveWithServer(conflictData);
-          break;
-        case ResolutionStrategy.merge:
-          resolvedTask = await _resolveWithMerge(conflictData, params.mergedData);
-          break;
-        case ResolutionStrategy.lastWriteWins:
-          resolvedTask = await _resolveWithLastWriteWins(conflictData);
-          break;
+      final serverTransaction = await _repository.getServerTransactionById(entityId);
+      if (serverTransaction == null) {
+        return (null, const SyncFailure.serverError('Server version not available'));
       }
 
-      await taskRepository.updateTask(resolvedTask);
-      await taskRepository.markTaskAsSynced(resolvedTask.id);
-
-      return (
-        result: ResolveConflictResult(
-          success: true,
-          resolvedTask: resolvedTask,
-          appliedStrategy: params.strategy,
-        ),
-        failure: null,
-      );
+      final conflictData = _buildConflictData(localTransaction, serverTransaction);
+      return (conflictData, null);
+    } on OfflineException catch (e) {
+      return (null, OfflineFailure.database(e.message));
     } catch (e) {
-      return (
-        result: ResolveConflictResult(
-          success: false,
-          errorMessage: 'Failed to resolve conflict: ${e.toString()}',
-          appliedStrategy: params.strategy,
-        ),
-        failure: ConflictFailure(
-          entityId: params.taskId,
-          localVersion: null,
-          remoteVersion: null,
-          conflictType: 'resolution_failed',
-        ),
-      );
+      return (null, DatabaseFailure.transactionFailed(e.toString()));
     }
   }
 
   @override
-  Future<ConflictData?> getConflictData(String taskId) async {
-    final localTask = await taskRepository.getTaskById(taskId);
-    if (localTask == null) return null;
+  Future<(List<ConflictData>, Failure?)> getAllConflicts() async {
+    try {
+      final pendingWithConflicts = await _repository.getPendingWithConflicts();
+      final conflicts = <ConflictData>[];
 
-    if (localTask.syncStatus != 'conflict') return null;
+      for (final localTx in pendingWithConflicts) {
+        final serverTx = await _repository.getServerTransactionById(localTx.id);
+        if (serverTx != null) {
+          conflicts.add(_buildConflictData(localTx, serverTx));
+        }
+      }
 
-    final serverTask = await taskRepository.getServerTaskById(taskId);
-    if (serverTask == null) return null;
+      return (conflicts, null);
+    } catch (e) {
+      return (<ConflictData>[], DatabaseFailure.transactionFailed(e.toString()));
+    }
+  }
 
-    final conflictingFields = _identifyConflictingFields(localTask, serverTask);
-    
+  @override
+  Future<(ConflictResolutionResult, Failure?)> call(ResolveConflictParams params) async {
+    try {
+      final (conflictData, failure) = await getConflictData(params.entityId);
+      if (failure != null || conflictData == null) {
+        return (ConflictResolutionResult(
+          success: false,
+          errorMessage: failure?.message ?? 'Conflict data not found',
+          resolutionType: 'failed',
+        ), failure);
+      }
+
+      final resolution = _determineResolution(params.strategy, conflictData, params.manualResolution);
+      final resolvedTransaction = await _applyResolution(params.entityId, resolution);
+
+      if (params.notifyServer) {
+        try {
+          await _notifyServerOfResolution(params.entityId, resolution);
+        } catch (_) {
+          // Non-critical, resolution already applied locally
+        }
+      }
+
+      return (ConflictResolutionResult(
+        success: true,
+        resolvedTransaction: resolvedTransaction,
+        resolutionType: params.strategy.name,
+      ), null);
+    } on SyncConflictException catch (e) {
+      return (ConflictResolutionResult(
+        success: false,
+        errorMessage: e.message,
+        resolutionType: 'failed',
+      ), ConflictFailure.unresolved(params.entityId));
+    } catch (e) {
+      return (ConflictResolutionResult(
+        success: false,
+        errorMessage: e.toString(),
+        resolutionType: 'failed',
+      ), ConflictFailure.unresolved(params.entityId));
+    }
+  }
+
+  @override
+  Future<(ConflictResolutionResult, Failure?)> autoResolve(
+    String entityId,
+    String strategy,
+  ) async {
+    final strategyEnum = _parseStrategy(strategy);
+    final params = ResolveConflictParams(
+      entityId: entityId,
+      strategy: strategyEnum,
+      notifyServer: true,
+    );
+    return call(params);
+  }
+
+  ConflictData _buildConflictData(Transaction local, Transaction server) {
+    final localData = _transactionToMap(local);
+    final serverData = _transactionToMap(server);
+    final conflictingFields = <String>[];
+
+    for (final key in localData.keys) {
+      if (localData[key] != serverData[key]) {
+        conflictingFields.add(key);
+      }
+    }
+
     return ConflictData(
-      taskId: taskId,
-      localVersion: localTask,
-      serverVersion: serverTask,
-      localModifiedAt: localTask.updatedAt,
-      serverModifiedAt: serverTask.updatedAt,
+      entityId: local.id,
+      localData: localData,
+      serverData: serverData,
+      localVersion: local.version ?? 0,
+      serverVersion: server.version ?? 0,
+      localUpdatedAt: local.updatedAt,
+      serverUpdatedAt: server.updatedAt,
       conflictingFields: conflictingFields,
     );
   }
 
-  @override
-  Future<List<ConflictData>> getAllConflicts() async {
-    final conflictingTasks = await taskRepository.getConflictingTasks();
-    final conflicts = <ConflictData>[];
+  Map<String, dynamic> _transactionToMap(Transaction tx) {
+    return {
+      'id': tx.id,
+      'externalId': tx.externalId,
+      'amount': tx.amount,
+      'currency': tx.currency,
+      'transactionType': tx.transactionType,
+      'description': tx.description,
+      'metadata': tx.metadata,
+      'version': tx.version,
+      'updatedAt': tx.updatedAt.toIso8601String(),
+    };
+  }
 
-    for (final task in conflictingTasks) {
-      final conflictData = await getConflictData(task.id);
-      if (conflictData != null) {
-        conflicts.add(conflictData);
+  Map<String, dynamic> _determineResolution(
+    ConflictResolutionStrategy strategy,
+    ConflictData conflictData,
+    Map<String, dynamic>? manualResolution,
+  ) {
+    switch (strategy) {
+      case ConflictResolutionStrategy.serverWins:
+        return conflictData.serverData;
+      case ConflictResolutionStrategy.clientWins:
+        return conflictData.localData;
+      case ConflictResolutionStrategy.lastWriteWins:
+        if (conflictData.serverUpdatedAt.isAfter(conflictData.localUpdatedAt)) {
+          return conflictData.serverData;
+        }
+        return conflictData.localData;
+      case ConflictResolutionStrategy.manual:
+        if (manualResolution != null) return manualResolution;
+        return conflictData.localData;
+      case ConflictResolutionStrategy.merge:
+        return _mergeData(conflictData);
+    }
+  }
+
+  Map<String, dynamic> _mergeData(ConflictData conflictData) {
+    final merged = <String, dynamic>{};
+    final allKeys = <String>{...conflictData.localData.keys, ...conflictData.serverData.keys};
+
+    for (final key in allKeys) {
+      if (key == 'version') {
+        merged[key] = (conflictData.localVersion > conflictData.serverVersion
+                ? conflictData.localVersion
+                : conflictData.serverVersion) +
+            1;
+      } else if (conflictData.localData[key] == conflictData.serverData[key]) {
+        merged[key] = conflictData.localData[key];
+      } else if (conflictData.conflictingFields.contains(key)) {
+        merged[key] = conflictData.serverData[key] ?? conflictData.localData[key];
+      } else {
+        merged[key] = conflictData.localData[key] ?? conflictData.serverData[key];
       }
     }
 
-    return conflicts;
+    return merged;
   }
 
-  List<String> _identifyConflictingFields(TaskEntity local, TaskEntity server) {
-    final conflictingFields = <String>[];
-
-    if (local.title != server.title) conflictingFields.add('title');
-    if (local.description != server.description) conflictingFields.add('description');
-    if (local.status != server.status) conflictingFields.add('status');
-    if (local.priority != server.priority) conflictingFields.add('priority');
-    if (local.dueDate != server.dueDate) conflictingFields.add('dueDate');
-    if (local.assignedTo != server.assignedTo) conflictingFields.add('assignedTo');
-    if (local.location != server.location) conflictingFields.add('location');
-    if (local.notes != server.notes) conflictingFields.add('notes');
-
-    return conflictingFields;
-  }
-
-  Future<TaskEntity> _resolveWithLocal(ConflictData conflictData) async {
-    return conflictData.localVersion;
-  }
-
-  Future<TaskEntity> _resolveWithServer(ConflictData conflictData) async {
-    return conflictData.serverVersion;
-  }
-
-  Future<TaskEntity> _resolveWithMerge(
-    ConflictData conflictData,
-    TaskEntity? mergedData,
+  Future<Transaction> _applyResolution(
+    String entityId,
+    Map<String, dynamic> resolution,
   ) async {
-    if (mergedData != null) return mergedData;
-
-    final local = conflictData.localVersion;
-    return TaskEntity(
-      id: local.id,
-      title: local.title,
-      description: local.description.isNotEmpty ? local.description : conflictData.serverVersion.description,
-      status: local.status,
-      priority: local.priority,
-      dueDate: local.dueDate ?? conflictData.serverVersion.dueDate,
-      assignedTo: local.assignedTo,
-      location: local.location,
-      notes: local.notes.isNotEmpty ? local.notes : conflictData.serverVersion.notes,
-      createdAt: local.createdAt,
+    final resolved = resolution['version'] as int? ?? 1;
+    final transaction = Transaction(
+      id: entityId,
+      externalId: resolution['externalId'] as String? ?? '',
+      amount: (resolution['amount'] as num?)?.toDouble() ?? 0.0,
+      currency: resolution['currency'] as String? ?? 'USD',
+      transactionType: resolution['transactionType'] as String? ?? 'default',
+      description: resolution['description'] as String? ?? '',
+      metadata: resolution['metadata'] as Map<String, dynamic>?,
+      version: resolved,
+      syncStatus: 'pending',
+      createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
-      syncStatus: 'synced',
-      version: conflictData.serverVersion.version + 1,
     );
+
+    await _repository.resolveConflict(entityId, resolution, 'resolved');
+    return transaction;
   }
 
-  Future<TaskEntity> _resolveWithLastWriteWins(ConflictData conflictData) async {
-    if (conflictData.localIsNewer) {
-      return conflictData.localVersion;
-    } else {
-      return conflictData.serverVersion;
+  Future<void> _notifyServerOfResolution(
+    String entityId,
+    Map<String, dynamic> resolution,
+  ) async {
+    // Placeholder for server notification
+    // In a real implementation, this would call the remote datasource
+  }
+
+  ConflictResolutionStrategy _parseStrategy(String strategy) {
+    switch (strategy) {
+      case 'server':
+        return ConflictResolutionStrategy.serverWins;
+      case 'client':
+        return ConflictResolutionStrategy.clientWins;
+      case 'last_write':
+        return ConflictResolutionStrategy.lastWriteWins;
+      case 'merge':
+        return ConflictResolutionStrategy.merge;
+      default:
+        return ConflictResolutionStrategy.manual;
     }
   }
 }
 
 
-// === ARCHIVO: lib/data/models/task_model.dart ===
-package field_app.data.models;
+// === ARCHIVO: lib/data/models/transaction_model.dart ===
+package lib.data.models;
 
 import 'dart:convert';
-import 'package:equatable/equatable.dart';
-import 'package:uuid/uuid.dart';
+import 'package:lib/core/constants/app_constants.dart';
+import 'package:lib/domain/entities/transaction.dart';
 
-import '../../domain/entities/task_entity.dart';
-import '../../core/constants/app_constants.dart';
-
-class TaskModel extends Equatable {
+class TransactionModel {
   final String id;
-  final String title;
+  final String? externalId;
+  final double amount;
+  final String currency;
+  final String transactionType;
   final String description;
-  final String priority;
-  final String status;
+  final Map<String, dynamic>? metadata;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String? assignedTo;
-  final String? location;
-  final String syncStatus;
   final int version;
-  final bool isDeleted;
-  final Map<String, dynamic>? metadata;
+  final String syncStatus;
+  final String? hash;
 
-  const TaskModel({
+  TransactionModel({
     required this.id,
-    required this.title,
+    this.externalId,
+    required this.amount,
+    required this.currency,
+    required this.transactionType,
     required this.description,
-    required this.priority,
-    required this.status,
+    this.metadata,
     required this.createdAt,
     required this.updatedAt,
-    this.assignedTo,
-    this.location,
-    required this.syncStatus,
     required this.version,
-    this.isDeleted = false,
-    this.metadata,
+    required this.syncStatus,
+    this.hash,
   });
 
-  factory TaskModel.fromEntity(TaskEntity entity) {
-    return TaskModel(
-      id: entity.id,
-      title: entity.title,
-      description: entity.description,
-      priority: entity.priority,
-      status: entity.status,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      assignedTo: entity.assignedTo,
-      location: entity.location,
-      syncStatus: entity.syncStatus,
-      version: entity.version,
-      isDeleted: entity.isDeleted,
-      metadata: entity.metadata,
-    );
-  }
-
-  factory TaskModel.fromMap(Map<String, dynamic> map) {
-    return TaskModel(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String,
-      priority: map['priority'] as String,
-      status: map['status'] as String,
-      createdAt: DateTime.parse(map['created_at'] as String),
-      updatedAt: DateTime.parse(map['updated_at'] as String),
-      assignedTo: map['assigned_to'] as String?,
-      location: map['location'] as String?,
-      syncStatus: map['sync_status'] as String,
-      version: map['version'] as int,
-      isDeleted: (map['is_deleted'] as int) == 1,
-      metadata: map['metadata'] != null
-          ? jsonDecode(map['metadata'] as String) as Map<String, dynamic>
+  factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    return TransactionModel(
+      id: json[DatabaseColumns.id] as String,
+      externalId: json[DatabaseColumns.externalId] as String?,
+      amount: (json[DatabaseColumns.amount] as num).toDouble(),
+      currency: json[DatabaseColumns.currency] as String,
+      transactionType: json[DatabaseColumns.transactionType] as String,
+      description: json[DatabaseColumns.description] as String,
+      metadata: json[DatabaseColumns.metadata] != null
+          ? jsonDecode(json[DatabaseColumns.metadata] as String) as Map<String, dynamic>
           : null,
+      createdAt: DateTime.parse(json[DatabaseColumns.createdAt] as String),
+      updatedAt: DateTime.parse(json[DatabaseColumns.updatedAt] as String),
+      version: json[DatabaseColumns.version] as int,
+      syncStatus: json[DatabaseColumns.syncStatus] as String,
+      hash: json[DatabaseColumns.hash] as String?,
     );
-  }
-
-  factory TaskModel.fromJson(Map<String, dynamic> json) {
-    return TaskModel(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      priority: json['priority'] as String,
-      status: json['status'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      assignedTo: json['assigned_to'] as String?,
-      location: json['location'] as String?,
-      syncStatus: json['sync_status'] as String? ?? AppConstants.syncStatusPending,
-      version: json['version'] as int? ?? 1,
-      isDeleted: json['is_deleted'] as bool? ?? false,
-      metadata: json['metadata'] as Map<String, dynamic>?,
-    );
-  }
-
-  factory TaskModel.create({
-    required String title,
-    required String description,
-    required String priority,
-    String? assignedTo,
-    String? location,
-    Map<String, dynamic>? metadata,
-  }) {
-    final now = DateTime.now();
-    return TaskModel(
-      id: const Uuid().v4(),
-      title: title,
-      description: description,
-      priority: priority,
-      status: AppConstants.taskStatusPending,
-      createdAt: now,
-      updatedAt: now,
-      assignedTo: assignedTo,
-      location: location,
-      syncStatus: AppConstants.syncStatusPending,
-      version: 1,
-      isDeleted: false,
-      metadata: metadata,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'priority': priority,
-      'status': status,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'assigned_to': assignedTo,
-      'location': location,
-      'sync_status': syncStatus,
-      'version': version,
-      'is_deleted': isDeleted ? 1 : 0,
-      'metadata': metadata != null ? jsonEncode(metadata) : null,
-    };
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'priority': priority,
-      'status': status,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'assigned_to': assignedTo,
-      'location': location,
-      'sync_status': syncStatus,
-      'version': version,
-      'is_deleted': isDeleted,
-      'metadata': metadata,
+      DatabaseColumns.id: id,
+      DatabaseColumns.externalId: externalId,
+      DatabaseColumns.amount: amount,
+      DatabaseColumns.currency: currency,
+      DatabaseColumns.transactionType: transactionType,
+      DatabaseColumns.description: description,
+      DatabaseColumns.metadata: metadata != null ? jsonEncode(metadata) : null,
+      DatabaseColumns.createdAt: createdAt.toIso8601String(),
+      DatabaseColumns.updatedAt: updatedAt.toIso8601String(),
+      DatabaseColumns.version: version,
+      DatabaseColumns.syncStatus: syncStatus,
+      DatabaseColumns.hash: hash,
     };
   }
 
-  TaskEntity toEntity() {
-    return TaskEntity(
+  Map<String, dynamic> toMap() {
+    return toJson();
+  }
+
+  factory TransactionModel.fromMap(Map<String, dynamic> map) {
+    return TransactionModel.fromJson(map);
+  }
+
+  Transaction toEntity() {
+    return Transaction(
       id: id,
-      title: title,
+      externalId: externalId,
+      amount: amount,
+      currency: currency,
+      transactionType: transactionType,
       description: description,
-      priority: priority,
-      status: status,
+      metadata: metadata,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      assignedTo: assignedTo,
-      location: location,
-      syncStatus: syncStatus,
       version: version,
-      isDeleted: isDeleted,
-      metadata: metadata,
+      syncStatus: syncStatus,
     );
   }
 
-  TaskModel copyWith({
-    String? id,
-    String? title,
-    String? description,
-    String? priority,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? assignedTo,
-    String? location,
-    String? syncStatus,
-    int? version,
-    bool? isDeleted,
-    Map<String, dynamic>? metadata,
-  }) {
-    return TaskModel(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      priority: priority ?? this.priority,
-      status: status ?? this.status,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      assignedTo: assignedTo ?? this.assignedTo,
-      location: location ?? this.location,
-      syncStatus: syncStatus ?? this.syncStatus,
-      version: version ?? this.version,
-      isDeleted: isDeleted ?? this.isDeleted,
-      metadata: metadata ?? this.metadata,
-    );
-  }
-
-  TaskModel incrementVersion() {
-    return copyWith(version: version + 1);
-  }
-
-  TaskModel markForDeletion() {
-    return copyWith(
-      isDeleted: true,
-      updatedAt: DateTime.now(),
-      syncStatus: AppConstants.syncStatusPending,
-    );
-  }
-
-  TaskModel markSynced() {
-    return copyWith(syncStatus: AppConstants.syncStatusSynced);
-  }
-
-  TaskModel markFailed() {
-    return copyWith(syncStatus: AppConstants.syncStatusFailed);
-  }
-
-  TaskModel markConflict() {
-    return copyWith(syncStatus: AppConstants.syncStatusConflict);
-  }
-
-  bool get isPendingSync => syncStatus == AppConstants.syncStatusPending;
-  bool get isSynced => syncStatus == AppConstants.syncStatusSynced;
-  bool get hasFailed => syncStatus == AppConstants.syncStatusFailed;
-  bool get hasConflict => syncStatus == AppConstants.syncStatusConflict;
-
-  bool get isValidTitle => title.isNotEmpty && title.length <= AppConstants.maxTitleLength;
-  bool get isValidDescription => description.length <= AppConstants.maxDescriptionLength;
-  bool get isValidPriority => [AppConstants.taskPriorityLow, AppConstants.taskPriorityMedium, AppConstants.taskPriorityHigh].contains(priority);
-  bool get isValidStatus => [AppConstants.taskStatusPending, AppConstants.taskStatusInProgress, AppConstants.taskStatusCompleted, AppConstants.taskStatusCancelled].contains(status);
-
-  bool get isValid => isValidTitle && isValidDescription && isValidPriority && isValidStatus;
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        priority,
-        status,
-        createdAt,
-        updatedAt,
-        assignedTo,
-        location,
-        syncStatus,
-        version,
-        isDeleted,
-        metadata,
-      ];
-}
-
-// === ARCHIVO: lib/data/models/sync_status_model.dart ===
-package field_app.data.models;
-
-import 'dart:convert';
-import 'package:equatable/equatable.dart';
-import 'package:uuid/uuid.dart';
-
-import '../../domain/entities/sync_status_entity.dart';
-import '../../core/constants/app_constants.dart';
-
-class SyncStatusModel extends Equatable {
-  final String id;
-  final String entityType;
-  final String entityId;
-  final String status;
-  final int version;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime? lastSyncAt;
-  final int retryCount;
-  final String? errorMessage;
-  final String? errorCode;
-  final Map<String, dynamic>? metadata;
-
-  const SyncStatusModel({
-    required this.id,
-    required this.entityType,
-    required this.entityId,
-    required this.status,
-    required this.version,
-    required this.createdAt,
-    required this.updatedAt,
-    this.lastSyncAt,
-    this.retryCount = 0,
-    this.errorMessage,
-    this.errorCode,
-    this.metadata,
-  });
-
-  factory SyncStatusModel.fromEntity(SyncStatusEntity entity) {
-    return SyncStatusModel(
+  factory TransactionModel.fromEntity(Transaction entity) {
+    return TransactionModel(
       id: entity.id,
-      entityType: entity.entityType,
-      entityId: entity.entityId,
-      status: entity.status,
-      version: entity.version,
+      externalId: entity.externalId,
+      amount: entity.amount,
+      currency: entity.currency,
+      transactionType: entity.transactionType,
+      description: entity.description,
+      metadata: entity.metadata,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      lastSyncAt: entity.lastSyncAt,
-      retryCount: entity.retryCount,
-      errorMessage: entity.errorMessage,
-      errorCode: entity.errorCode,
-      metadata: entity.metadata,
+      version: entity.version,
+      syncStatus: entity.syncStatus,
+      hash: entity.hash,
     );
   }
 
-  factory SyncStatusModel.fromMap(Map<String, dynamic> map) {
-    return SyncStatusModel(
-      id: map['id'] as String,
-      entityType: map['entity_type'] as String,
-      entityId: map['entity_id'] as String,
-      status: map['status'] as String,
-      version: map['version'] as int,
-      createdAt: DateTime.parse(map['created_at'] as String),
-      updatedAt: DateTime.parse(map['updated_at'] as String),
-      lastSyncAt: map['last_sync_at'] != null
-          ? DateTime.parse(map['last_sync_at'] as String)
-          : null,
-      retryCount: map['retry_count'] as int? ?? 0,
-      errorMessage: map['error_message'] as String?,
-      errorCode: map['error_code'] as String?,
-      metadata: map['metadata'] != null
-          ? jsonDecode(map['metadata'] as String) as Map<String, dynamic>
-          : null,
+  TransactionModel copyWith({
+    String? id,
+    String? externalId,
+    double? amount,
+    String? currency,
+    String? transactionType,
+    String? description,
+    Map<String, dynamic>? metadata,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? version,
+    String? syncStatus,
+    String? hash,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      externalId: externalId ?? this.externalId,
+      amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
+      transactionType: transactionType ?? this.transactionType,
+      description: description ?? this.description,
+      metadata: metadata ?? this.metadata,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      version: version ?? this.version,
+      syncStatus: syncStatus ?? this.syncStatus,
+      hash: hash ?? this.hash,
     );
   }
 
-  factory SyncStatusModel.fromJson(Map<String, dynamic> json) {
-    return SyncStatusModel(
-      id: json['id'] as String,
+  @override
+  String toString() {
+    return 'TransactionModel(id: $id, amount: $amount $currency, type: $transactionType, syncStatus: $syncStatus)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is TransactionModel &&
+        other.id == id &&
+        other.externalId == externalId &&
+        other.amount == amount &&
+        other.currency == currency &&
+        other.transactionType == transactionType &&
+        other.description == description &&
+        other.version == version &&
+        other.syncStatus == syncStatus;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      id,
+      externalId,
+      amount,
+      currency,
+      transactionType,
+      description,
+      version,
+      syncStatus,
+    );
+  }
+}
+
+// === ARCHIVO: lib/data/models/sync_record_model.dart ===
+package lib.data.models;
+
+import 'package:lib/core/constants/app_constants.dart';
+import 'package:lib/domain/entities/sync_record.dart';
+
+class SyncRecordModel {
+  final String id;
+  final String entityId;
+  final String entityType;
+  final String operationType;
+  final String? payload;
+  final String? payloadHash;
+  final String syncStatus;
+  final DateTime createdAt;
+  final DateTime? syncedAt;
+  final int retryCount;
+  final String? errorMessage;
+  final String? conflictData;
+  final int version;
+
+  SyncRecordModel({
+    required this.id,
+    required this.entityId,
+    required this.entityType,
+    required this.operationType,
+    this.payload,
+    this.payloadHash,
+    required this.syncStatus,
+    required this.createdAt,
+    this.syncedAt,
+    required this.retryCount,
+    this.errorMessage,
+    this.conflictData,
+    required this.version,
+  });
+
+  factory SyncRecordModel.fromJson(Map<String, dynamic> json) {
+    return SyncRecordModel(
+      id: json[DatabaseColumns.id] as String,
+      entityId: json[DatabaseColumns.uuid] as String,
       entityType: json['entity_type'] as String,
-      entityId: json['entity_id'] as String,
-      status: json['status'] as String,
-      version: json['version'] as int,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      lastSyncAt: json['last_sync_at'] != null
-          ? DateTime.parse(json['last_sync_at'] as String)
+      operationType: json[DatabaseColumns.operationType] as String,
+      payload: json['payload'] as String?,
+      payloadHash: json[DatabaseColumns.hash] as String?,
+      syncStatus: json[DatabaseColumns.syncStatus] as String,
+      createdAt: DateTime.parse(json[DatabaseColumns.createdAt] as String),
+      syncedAt: json['synced_at'] != null
+          ? DateTime.parse(json['synced_at'] as String)
           : null,
       retryCount: json['retry_count'] as int? ?? 0,
       errorMessage: json['error_message'] as String?,
-      errorCode: json['error_code'] as String?,
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      conflictData: json[DatabaseColumns.conflictData] as String?,
+      version: json[DatabaseColumns.version] as int? ?? 1,
     );
-  }
-
-  factory SyncStatusModel.create({
-    required String entityType,
-    required String entityId,
-    Map<String, dynamic>? metadata,
-  }) {
-    final now = DateTime.now();
-    return SyncStatusModel(
-      id: const Uuid().v4(),
-      entityType: entityType,
-      entityId: entityId,
-      status: AppConstants.syncStatusPending,
-      version: 1,
-      createdAt: now,
-      updatedAt: now,
-      lastSyncAt: null,
-      retryCount: 0,
-      errorMessage: null,
-      errorCode: null,
-      metadata: metadata,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'entity_type': entityType,
-      'entity_id': entityId,
-      'status': status,
-      'version': version,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'last_sync_at': lastSyncAt?.toIso8601String(),
-      'retry_count': retryCount,
-      'error_message': errorMessage,
-      'error_code': errorCode,
-      'metadata': metadata != null ? jsonEncode(metadata) : null,
-    };
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      DatabaseColumns.id: id,
+      DatabaseColumns.uuid: entityId,
       'entity_type': entityType,
-      'entity_id': entityId,
-      'status': status,
-      'version': version,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'last_sync_at': lastSyncAt?.toIso8601String(),
+      DatabaseColumns.operationType: operationType,
+      'payload': payload,
+      DatabaseColumns.hash: payloadHash,
+      DatabaseColumns.syncStatus: syncStatus,
+      DatabaseColumns.createdAt: createdAt.toIso8601String(),
+      'synced_at': syncedAt?.toIso8601String(),
       'retry_count': retryCount,
       'error_message': errorMessage,
-      'error_code': errorCode,
-      'metadata': metadata,
+      DatabaseColumns.conflictData: conflictData,
+      DatabaseColumns.version: version,
     };
   }
 
-  SyncStatusEntity toEntity() {
-    return SyncStatusEntity(
+  Map<String, dynamic> toMap() {
+    return toJson();
+  }
+
+  factory SyncRecordModel.fromMap(Map<String, dynamic> map) {
+    return SyncRecordModel.fromJson(map);
+  }
+
+  SyncRecord toEntity() {
+    return SyncRecord(
       id: id,
-      entityType: entityType,
       entityId: entityId,
-      status: status,
-      version: version,
+      entityType: entityType,
+      operationType: operationType,
+      payload: payload,
+      payloadHash: payloadHash,
+      syncStatus: syncStatus,
       createdAt: createdAt,
-      updatedAt: updatedAt,
-      lastSyncAt: lastSyncAt,
+      syncedAt: syncedAt,
       retryCount: retryCount,
       errorMessage: errorMessage,
-      errorCode: errorCode,
-      metadata: metadata,
+      conflictData: conflictData != null ? _parseConflictData(conflictData!) : null,
+      version: version,
     );
   }
 
-  SyncStatusModel copyWith({
+  factory SyncRecordModel.fromEntity(SyncRecord entity) {
+    return SyncRecordModel(
+      id: entity.id,
+      entityId: entity.entityId,
+      entityType: entity.entityType,
+      operationType: entity.operationType,
+      payload: entity.payload,
+      payloadHash: entity.payloadHash,
+      syncStatus: entity.syncStatus,
+      createdAt: entity.createdAt,
+      syncedAt: entity.syncedAt,
+      retryCount: entity.retryCount,
+      errorMessage: entity.errorMessage,
+      conflictData: entity.conflictData != null ? _encodeConflictData(entity.conflictData!) : null,
+      version: entity.version,
+    );
+  }
+
+  static Map<String, dynamic>? _parseConflictData(String data) {
+    try {
+      final parts = data.split('|');
+      if (parts.length >= 3) {
+        return {
+          'local_version': parts[0],
+          'server_version': parts[1],
+          'local_data': parts[2],
+          'server_data': parts.length > 3 ? parts[3] : '',
+        };
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  static String? _encodeConflictData(Map<String, dynamic>? data) {
+    if (data == null) return null;
+    return '${data['local_version']}|${data['server_version']}|${data['local_data']}|${data['server_data']}';
+  }
+
+  SyncRecordModel copyWith({
     String? id,
-    String? entityType,
     String? entityId,
-    String? status,
-    int? version,
+    String? entityType,
+    String? operationType,
+    String? payload,
+    String? payloadHash,
+    String? syncStatus,
     DateTime? createdAt,
-    DateTime? updatedAt,
-    DateTime? lastSyncAt,
+    DateTime? syncedAt,
     int? retryCount,
     String? errorMessage,
-    String? errorCode,
-    Map<String, dynamic>? metadata,
+    String? conflictData,
+    int? version,
   }) {
-    return SyncStatusModel(
+    return SyncRecordModel(
       id: id ?? this.id,
-      entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
-      status: status ?? this.status,
-      version: version ?? this.version,
+      entityType: entityType ?? this.entityType,
+      operationType: operationType ?? this.operationType,
+      payload: payload ?? this.payload,
+      payloadHash: payloadHash ?? this.payloadHash,
+      syncStatus: syncStatus ?? this.syncStatus,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      lastSyncAt: lastSyncAt ?? this.lastSyncAt,
+      syncedAt: syncedAt ?? this.syncedAt,
       retryCount: retryCount ?? this.retryCount,
       errorMessage: errorMessage ?? this.errorMessage,
-      errorCode: errorCode ?? this.errorCode,
-      metadata: metadata ?? this.metadata,
+      conflictData: conflictData ?? this.conflictData,
+      version: version ?? this.version,
     );
   }
 
-  SyncStatusModel markAsSynced() {
-    return copyWith(
-      status: AppConstants.syncStatusSynced,
-      updatedAt: DateTime.now(),
-      lastSyncAt: DateTime.now(),
-      retryCount: 0,
-      errorMessage: null,
-      errorCode: null,
-    );
-  }
-
-  SyncStatusModel markAsFailed({String? errorMessage, String? errorCode}) {
-    return copyWith(
-      status: AppConstants.syncStatusFailed,
-      updatedAt: DateTime.now(),
-      retryCount: retryCount + 1,
-      errorMessage: errorMessage,
-      errorCode: errorCode,
-    );
-  }
-
-  SyncStatusModel markAsConflict() {
-    return copyWith(
-      status: AppConstants.syncStatusConflict,
-      updatedAt: DateTime.now(),
-    );
-  }
-
-  SyncStatusModel incrementVersion() {
-    return copyWith(
-      version: version + 1,
-      updatedAt: DateTime.now(),
-    );
-  }
-
-  SyncStatusModel resetRetry() {
-    return copyWith(
-      retryCount: 0,
-      errorMessage: null,
-      errorCode: null,
-    );
-  }
-
-  bool get isPending => status == AppConstants.syncStatusPending;
-  bool get isSynced => status == AppConstants.syncStatusSynced;
-  bool get isFailed => status == AppConstants.syncStatusFailed;
-  bool get isConflict => status == AppConstants.syncStatusConflict;
-  bool get canRetry => retryCount < AppConstants.maxRetryAttempts;
-  bool get hasError => errorMessage != null;
+  bool get isPending => syncStatus == AppConstants.syncStatusPending;
+  bool get isInProgress => syncStatus == AppConstants.syncStatusInProgress;
+  bool get isCompleted => syncStatus == AppConstants.syncStatusCompleted;
+  bool get isFailed => syncStatus == AppConstants.syncStatusFailed;
+  bool get isConflict => syncStatus == AppConstants.syncStatusConflict;
 
   @override
-  List<Object?> get props => [
-        id,
-        entityType,
-        entityId,
-        status,
-        version,
-        createdAt,
-        updatedAt,
-        lastSyncAt,
-        retryCount,
-        errorMessage,
-        errorCode,
-        metadata,
-      ];
-}
-
-// === ARCHIVO: lib/data/datasources/local/task_local_datasource.dart ===
-package field_app.data.datasources.local;
-
-import 'package:sqflite/sqflite.dart';
-import 'package:uuid/uuid.dart';
-
-import '../../../core/constants/app_constants.dart';
-import '../../../core/errors/exceptions.dart';
-import '../../models/task_model.dart';
-import '../../models/sync_status_model.dart';
-import 'database_helper.dart';
-
-abstract class TaskLocalDataSource {
-  Future<List<TaskModel>> getAllTasks();
-  Future<List<TaskModel>> getPendingSyncTasks();
-  Future<TaskModel?> getTaskById(String id);
-  Future<void> saveTask(TaskModel task);
-  Future<void> saveTasks(List<TaskModel> tasks);
-  Future<void> updateTask(TaskModel task);
-  Future<void> deleteTask(String id);
-  Future<void> markTaskAsSynced(String id);
-  Future<void> markTaskAsFailed(String id, {String? errorMessage});
-  Future<void> markTaskAsConflict(String id);
-  Future<int> getPendingTasksCount();
-  Future<void> clearAllTasks();
-  Future<SyncStatusModel?> getSyncStatus(String entityId);
-  Future<void> saveSyncStatus(SyncStatusModel status);
-  Future<List<SyncStatusModel>> getAllSyncStatuses();
-}
-
-class TaskLocalDataSourceImpl implements TaskLocalDataSource {
-  final DatabaseHelper databaseHelper;
-  final Uuid _uuid = const Uuid();
-
-  TaskLocalDataSourceImpl({required this.databaseHelper});
-
-  Future<Database> get _db async => await databaseHelper.database;
-
-  @override
-  Future<List<TaskModel>> getAllTasks() async {
-    try {
-      final db = await _db;
-      final List<Map<String, dynamic>> maps = await db.query(
-        AppConstants.taskTableName,
-        where: 'is_deleted = ?',
-        whereArgs: [0],
-        orderBy: 'created_at DESC',
-      );
-      return maps.map((map) => TaskModel.fromMap(map)).toList();
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error fetching all tasks: ${e.toString()}',
-        operation: 'getAllTasks',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
+  String toString() {
+    return 'SyncRecordModel(id: $id, entityId: $entityId, operation: $operationType, status: $syncStatus)';
   }
 
   @override
-  Future<List<TaskModel>> getPendingSyncTasks() async {
-    try {
-      final db = await _db;
-      final List<Map<String, dynamic>> maps = await db.query(
-        AppConstants.taskTableName,
-        where: 'sync_status = ? AND is_deleted = ?',
-        whereArgs: [AppConstants.syncStatusPending, 0],
-        orderBy: 'updated_at ASC',
-        limit: AppConstants.batchSyncSize,
-      );
-      return maps.map((map) => TaskModel.fromMap(map)).toList();
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error fetching pending sync tasks: ${e.toString()}',
-        operation: 'getPendingSyncTasks',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is SyncRecordModel &&
+        other.id == id &&
+        other.entityId == entityId &&
+        other.operationType == operationType &&
+        other.syncStatus == syncStatus;
   }
 
   @override
-  Future<TaskModel?> getTaskById(String id) async {
-    try {
-      final db = await _db;
-      final List<Map<String, dynamic>> maps = await db.query(
-        AppConstants.taskTableName,
-        where: 'id = ?',
-        whereArgs: [id],
-        limit: 1,
-      );
-      if (maps.isEmpty) return null;
-      return TaskModel.fromMap(maps.first);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error fetching task by id: ${e.toString()}',
-        operation: 'getTaskById',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> saveTask(TaskModel task) async {
-    try {
-      final db = await _db;
-      await db.insert(
-        AppConstants.taskTableName,
-        task.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-      await _updateSyncStatus(task.id, AppConstants.syncStatusPending);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error saving task: ${e.toString()}',
-        operation: 'saveTask',
-        sql: 'INSERT INTO ${AppConstants.taskTableName}',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> saveTasks(List<TaskModel> tasks) async {
-    if (tasks.isEmpty) return;
-    try {
-      final db = await _db;
-      final batch = db.batch();
-      for (final task in tasks) {
-        batch.insert(
-          AppConstants.taskTableName,
-          task.toMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-        batch.insert(
-          AppConstants.syncStatusTableName,
-          SyncStatusModel.create(
-            entityType: AppConstants.taskTableName,
-            entityId: task.id,
-          ).toMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-      }
-      await batch.commit(noResult: true);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error saving tasks batch: ${e.toString()}',
-        operation: 'saveTasks',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> updateTask(TaskModel task) async {
-    try {
-      final db = await _db;
-      final updatedTask = task.copyWith(
-        updatedAt: DateTime.now(),
-        syncStatus: AppConstants.syncStatusPending,
-        version: task.version + 1,
-      );
-      final rowsAffected = await db.update(
-        AppConstants.taskTableName,
-        updatedTask.toMap(),
-        where: 'id = ?',
-        whereArgs: [task.id],
-      );
-      if (rowsAffected == 0) {
-        throw DatabaseException(
-          message: 'Task not found for update: ${task.id}',
-          operation: 'updateTask',
-        );
-      }
-      await _updateSyncStatus(task.id, AppConstants.syncStatusPending);
-    } catch (e, st) {
-      if (e is DatabaseException) rethrow;
-      throw DatabaseException(
-        message: 'Error updating task: ${e.toString()}',
-        operation: 'updateTask',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> deleteTask(String id) async {
-    try {
-      final db = await _db;
-      final task = await getTaskById(id);
-      if (task == null) {
-        throw DatabaseException(
-          message: 'Task not found for deletion: $id',
-          operation: 'deleteTask',
-        );
-      }
-      final deletedTask = task.markForDeletion();
-      await db.update(
-        AppConstants.taskTableName,
-        deletedTask.toMap(),
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-      await _updateSyncStatus(id, AppConstants.syncStatusPending);
-    } catch (e, st) {
-      if (e is DatabaseException) rethrow;
-      throw DatabaseException(
-        message: 'Error deleting task: ${e.toString()}',
-        operation: 'deleteTask',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> markTaskAsSynced(String id) async {
-    try {
-      final db = await _db;
-      await db.update(
-        AppConstants.taskTableName,
-        {
-          'sync_status': AppConstants.syncStatusSynced,
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-      await _updateSyncStatus(id, AppConstants.syncStatusSynced);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error marking task as synced: ${e.toString()}',
-        operation: 'markTaskAsSynced',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> markTaskAsFailed(String id, {String? errorMessage}) async {
-    try {
-      final db = await _db;
-      await db.update(
-        AppConstants.taskTableName,
-        {
-          'sync_status': AppConstants.syncStatusFailed,
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-      await _updateSyncStatus(id, AppConstants.syncStatusFailed, errorMessage: errorMessage);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error marking task as failed: ${e.toString()}',
-        operation: 'markTaskAsFailed',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> markTaskAsConflict(String id) async {
-    try {
-      final db = await _db;
-      await db.update(
-        AppConstants.taskTableName,
-        {
-          'sync_status': AppConstants.syncStatusConflict,
-          'updated_at': DateTime.now().toIso8601String(),
-        },
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-      await _updateSyncStatus(id, AppConstants.syncStatusConflict);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error marking task as conflict: ${e.toString()}',
-        operation: 'markTaskAsConflict',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<int> getPendingTasksCount() async {
-    try {
-      final db = await _db;
-      final result = await db.rawQuery(
-        'SELECT COUNT(*) as count FROM ${AppConstants.taskTableName} '
-        'WHERE sync_status = ? AND is_deleted = ?',
-        [AppConstants.syncStatusPending, 0],
-      );
-      return Sqflite.firstIntValue(result) ?? 0;
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error counting pending tasks: ${e.toString()}',
-        operation: 'getPendingTasksCount',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> clearAllTasks() async {
-    try {
-      final db = await _db;
-      await db.delete(AppConstants.taskTableName);
-      await db.delete(AppConstants.syncStatusTableName);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error clearing all tasks: ${e.toString()}',
-        operation: 'clearAllTasks',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<SyncStatusModel?> getSyncStatus(String entityId) async {
-    try {
-      final db = await _db;
-      final List<Map<String, dynamic>> maps = await db.query(
-        AppConstants.syncStatusTableName,
-        where: 'entity_id = ?',
-        whereArgs: [entityId],
-        limit: 1,
-      );
-      if (maps.isEmpty) return null;
-      return SyncStatusModel.fromMap(maps.first);
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error fetching sync status: ${e.toString()}',
-        operation: 'getSyncStatus',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<void> saveSyncStatus(SyncStatusModel status) async {
-    try {
-      final db = await _db;
-      await db.insert(
-        AppConstants.syncStatusTableName,
-        status.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error saving sync status: ${e.toString()}',
-        operation: 'saveSyncStatus',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  @override
-  Future<List<SyncStatusModel>> getAllSyncStatuses() async {
-    try {
-      final db = await _db;
-      final List<Map<String, dynamic>> maps = await db.query(
-        AppConstants.syncStatusTableName,
-        orderBy: 'updated_at DESC',
-      );
-      return maps.map((map) => SyncStatusModel.fromMap(map)).toList();
-    } catch (e, st) {
-      throw DatabaseException(
-        message: 'Error fetching all sync statuses: ${e.toString()}',
-        operation: 'getAllSyncStatuses',
-        originalException: e,
-        stackTrace: st,
-      );
-    }
-  }
-
-  Future<void> _updateSyncStatus(
-    String entityId,
-    String status, {
-    String? errorMessage,
-  }) async {
-    final db = await _db;
-    final existingStatus = await getSyncStatus(entityId);
-    final now = DateTime.now();
-    
-    if (existingStatus != null) {
-      SyncStatusModel updatedStatus;
-      if (status == AppConstants.syncStatusSynced) {
-        updatedStatus = existingStatus.markAsSynced();
-      } else if (status == AppConstants.syncStatusFailed) {
-        updatedStatus = existingStatus.markAsFailed(errorMessage: errorMessage);
-      } else if (status == AppConstants.syncStatusConflict) {
-        updatedStatus = existingStatus.markAsConflict();
-      } else {
-        updatedStatus = existingStatus.copyWith(
-          status: status,
-          updatedAt: now,
-        );
-      }
-      await db.update(
-        AppConstants.syncStatusTableName,
-        updatedStatus.toMap(),
-        where: 'entity_id = ?',
-        whereArgs: [entityId],
-      );
-    } else {
-      final newStatus = SyncStatusModel.create(
-        entityType: AppConstants.taskTableName,
-        entityId: entityId,
-      ).copyWith(status: status, updatedAt: now);
-      await db.insert(
-        AppConstants.syncStatusTableName,
-        newStatus.toMap(),
-      );
-    }
+  int get hashCode {
+    return Object.hash(id, entityId, operationType, syncStatus);
   }
 }
 
 // === ARCHIVO: lib/data/datasources/local/database_helper.dart ===
-import 'package:sqflite/sqflite.dart';
+package lib.data.datasources.local;
+
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import '../../../core/constants/app_constants.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:lib/core/constants/app_constants.dart';
 
 class DatabaseHelper {
+  static DatabaseHelper? _instance;
   static Database? _database;
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
 
-  factory DatabaseHelper() => _instance;
+  DatabaseHelper._();
 
-  DatabaseHelper._internal();
+  static DatabaseHelper get instance {
+    _instance ??= DatabaseHelper._();
+    return _instance!;
+  }
 
   Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
+    _database ??= await _initDatabase();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, AppConstants.databaseName);
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, AppConstants.databaseName);
 
     return await openDatabase(
       path,
@@ -3746,73 +4178,232 @@ class DatabaseHelper {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE ${AppConstants.taskTableName} (
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        description TEXT,
-        priority TEXT NOT NULL,
-        status TEXT NOT NULL,
-        due_date INTEGER,
-        assigned_to TEXT,
-        created_at INTEGER NOT NULL,
-        updated_at INTEGER NOT NULL,
-        sync_status TEXT NOT NULL,
-        local_modified INTEGER NOT NULL DEFAULT 0,
-        server_version INTEGER,
-        is_deleted INTEGER NOT NULL DEFAULT 0
-      )
-    ''');
-
-    await db.execute('''
-      CREATE TABLE ${AppConstants.syncStatusTableName} (
-        id TEXT PRIMARY KEY,
-        entity_type TEXT NOT NULL,
-        entity_id TEXT NOT NULL,
-        operation TEXT NOT NULL,
-        status TEXT NOT NULL,
-        created_at INTEGER NOT NULL,
-        last_attempt INTEGER,
-        attempt_count INTEGER NOT NULL DEFAULT 0,
-        error_message TEXT,
-        retry_after INTEGER
-      )
-    ''');
-
-    await db.execute('''
-      CREATE INDEX idx_tasks_sync_status 
-      ON ${AppConstants.taskTableName}(sync_status)
-    ''');
-
-    await db.execute('''
-      CREATE INDEX idx_sync_status_entity 
-      ON ${AppConstants.syncStatusTableName}(entity_type, entity_id)
-    ''');
+    await _createTransactionsTable(db);
+    await _createSyncRecordsTable(db);
+    await _createPendingOperationsTable(db);
+    await _createIndexes(db);
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < newVersion) {
-      await _performMigration(db, oldVersion, newVersion);
+    for (var i = oldVersion; i < newVersion; i++) {
+      await _runMigration(db, i);
     }
   }
 
-  Future<void> _performMigration(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      await db.execute('''
-        ALTER TABLE ${AppConstants.taskTableName} 
-        ADD COLUMN server_version INTEGER
-      ''');
+  Future<void> _runMigration(Database db, int fromVersion) async {
+    switch (fromVersion) {
+      case 1:
+        await _migrateToVersion2(db);
+        break;
+      case 2:
+        await _migrateToVersion3(db);
+        break;
     }
-    if (oldVersion < 3) {
-      await db.execute('''
-        CREATE TABLE IF NOT EXISTS task_tags (
-          task_id TEXT NOT NULL,
-          tag TEXT NOT NULL,
-          PRIMARY KEY (task_id, tag),
-          FOREIGN KEY (task_id) REFERENCES ${AppConstants.taskTableName}(id) ON DELETE CASCADE
-        )
-      ''');
-    }
+  }
+
+  Future<void> _migrateToVersion2(Database db) async {
+    await db.execute('''
+      ALTER TABLE ${AppConstants.transactionsTable}
+      ADD COLUMN ${DatabaseColumns.hash} TEXT
+    ''');
+  }
+
+  Future<void> _migrateToVersion3(Database db) async {
+    await db.execute('''
+      CREATE INDEX idx_transactions_sync_status
+      ON ${AppConstants.transactionsTable}(${DatabaseColumns.syncStatus})
+    ''');
+    await db.execute('''
+      CREATE INDEX idx_sync_records_status
+      ON ${AppConstants.syncRecordsTable}(${DatabaseColumns.syncStatus})
+    ''');
+  }
+
+  Future<void> _createTransactionsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE ${AppConstants.transactionsTable} (
+        ${DatabaseColumns.id} TEXT PRIMARY KEY,
+        ${DatabaseColumns.externalId} TEXT,
+        ${DatabaseColumns.amount} REAL NOT NULL,
+        ${DatabaseColumns.currency} TEXT NOT NULL,
+        ${DatabaseColumns.transactionType} TEXT NOT NULL,
+        ${DatabaseColumns.description} TEXT NOT NULL,
+        ${DatabaseColumns.metadata} TEXT,
+        ${DatabaseColumns.createdAt} TEXT NOT NULL,
+        ${DatabaseColumns.updatedAt} TEXT NOT NULL,
+        ${DatabaseColumns.version} INTEGER NOT NULL DEFAULT 1,
+        ${DatabaseColumns.syncStatus} TEXT NOT NULL DEFAULT '${AppConstants.syncStatusPending}',
+        ${DatabaseColumns.hash} TEXT
+      )
+    ''');
+  }
+
+  Future<void> _createSyncRecordsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE ${AppConstants.syncRecordsTable} (
+        ${DatabaseColumns.id} TEXT PRIMARY KEY,
+        ${DatabaseColumns.uuid} TEXT NOT NULL,
+        entity_type TEXT NOT NULL,
+        ${DatabaseColumns.operationType} TEXT NOT NULL,
+        payload TEXT,
+        ${DatabaseColumns.hash} TEXT,
+        ${DatabaseColumns.syncStatus} TEXT NOT NULL DEFAULT '${AppConstants.syncStatusPending}',
+        ${DatabaseColumns.createdAt} TEXT NOT NULL,
+        synced_at TEXT,
+        retry_count INTEGER DEFAULT 0,
+        error_message TEXT,
+        ${DatabaseColumns.conflictData} TEXT,
+        ${DatabaseColumns.version} INTEGER DEFAULT 1
+      )
+    ''');
+  }
+
+  Future<void> _createPendingOperationsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE ${AppConstants.pendingOperationsTable} (
+        ${DatabaseColumns.id} TEXT PRIMARY KEY,
+        ${DatabaseColumns.uuid} TEXT NOT NULL,
+        operation_type TEXT NOT NULL,
+        payload TEXT NOT NULL,
+        ${DatabaseColumns.hash} TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending'
+      )
+    ''');
+  }
+
+  Future<void> _createIndexes(Database db) async {
+    await db.execute('''
+      CREATE INDEX idx_transactions_created_at
+      ON ${AppConstants.transactionsTable}(${DatabaseColumns.createdAt})
+    ''');
+    await db.execute('''
+      CREATE INDEX idx_transactions_sync_status
+      ON ${AppConstants.transactionsTable}(${DatabaseColumns.syncStatus})
+    ''');
+    await db.execute('''
+      CREATE INDEX idx_sync_records_entity_id
+      ON ${AppConstants.syncRecordsTable}(${DatabaseColumns.uuid})
+    ''');
+    await db.execute('''
+      CREATE INDEX idx_sync_records_status
+      ON ${AppConstants.syncRecordsTable}(${DatabaseColumns.syncStatus})
+    ''');
+  }
+
+  Future<T> runInTransaction<T>(
+    Future<T> Function(Transaction txn) action,
+  ) async {
+    final db = await database;
+    return await db.transaction(action);
+  }
+
+  Future<void> runInTransactionVoid(
+    Future<void> Function(Transaction txn) action,
+  ) async {
+    final db = await database;
+    await db.transaction(action);
+  }
+
+  Future<int> insert(String table, Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert(
+      table,
+      data,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int> insertOrThrow(String table, Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert(
+      table,
+      data,
+      conflictAlgorithm: ConflictAlgorithm.abort,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> query(
+    String table, {
+    bool? distinct,
+    List<String>? columns,
+    String? where,
+    List<Object?>? whereArgs,
+    String? groupBy,
+    String? having,
+    String? orderBy,
+    int? limit,
+    int? offset,
+  }) async {
+    final db = await database;
+    return await db.query(
+      table,
+      distinct: distinct,
+      columns: columns,
+      where: where,
+      whereArgs: whereArgs,
+      groupBy: groupBy,
+      having: having,
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset,
+    );
+  }
+
+  Future<Map<String, dynamic>?> queryById(String table, String id) async {
+    final db = await database;
+    final results = await db.query(
+      table,
+      where: '${DatabaseColumns.id} = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+    return results.isNotEmpty ? results.first : null;
+  }
+
+  Future<int> update(
+    String table,
+    Map<String, dynamic> data, {
+    String? where,
+    List<Object?>? whereArgs,
+  }) async {
+    final db = await database;
+    return await db.update(
+      table,
+      data,
+      where: where,
+      whereArgs: whereArgs,
+    );
+  }
+
+  Future<int> delete(
+    String table, {
+    String? where,
+    List<Object?>? whereArgs,
+  }) async {
+    final db = await database;
+    return await db.delete(
+      table,
+      where: where,
+      whereArgs: whereArgs,
+    );
+  }
+
+  Future<int> count(String table, {String? where, List<Object?>? whereArgs}) async {
+    final db = await database;
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM $table${where != null ? ' WHERE $where' : ''}',
+      whereArgs,
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<List<Map<String, dynamic>>> rawQuery(
+    String sql, [
+    List<Object?>? arguments,
+  ]) async {
+    final db = await database;
+    return await db.rawQuery(sql, arguments);
   }
 
   Future<void> close() async {
@@ -3821,3125 +4412,1346 @@ class DatabaseHelper {
     _database = null;
   }
 
-  Future<void> clearAllTables() async {
-    final db = await database;
-    await db.delete(AppConstants.taskTableName);
-    await db.delete(AppConstants.syncStatusTableName);
-  }
-
-  Future<int> getPendingSyncCount() async {
-    final db = await database;
-    final result = await db.rawQuery('''
-      SELECT COUNT(*) as count 
-      FROM ${AppConstants.taskTableName} 
-      WHERE sync_status IN (?, ?)
-    ''', [AppConstants.syncStatusPending, AppConstants.syncStatusFailed]);
-    return Sqflite.firstIntValue(result) ?? 0;
-  }
-
-  Future<void> resetDatabase() async {
-    await clearAllTables();
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, AppConstants.databaseName);
-    await deleteDatabase(path);
+  Future<void> deleteDatabase() async {
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, AppConstants.databaseName);
+    await databaseFactory.deleteDatabase(path);
     _database = null;
   }
+
+  Future<void> clearTable(String table) async {
+    final db = await database;
+    await db.delete(table);
+  }
+
+  Future<void> clearAllTables() async {
+    final db = await database;
+    await db.delete(AppConstants.transactionsTable);
+    await db.delete(AppConstants.syncRecordsTable);
+    await db.delete(AppConstants.pendingOperationsTable);
+  }
 }
 
-// === ARCHIVO: lib/data/datasources/remote/task_remote_datasource.dart ===
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:uuid/uuid.dart';
+import 'package:crypto/crypto.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import '../../core/constants/app_constants.dart';
+import '../../core/errors/exceptions.dart';
+import '../../core/network/network_info.dart';
+import '../../domain/entities/transaction.dart';
+import '../../domain/entities/sync_record.dart';
+import '../models/transaction_model.dart';
+import '../models/sync_record_model.dart';
+import 'database_helper.dart';
+
+class TransactionLocalDatasource {
+  final DatabaseHelper _databaseHelper;
+  final NetworkInfo _networkInfo;
+  final Uuid _uuid;
+
+  TransactionLocalDatasource({
+    required DatabaseHelper databaseHelper,
+    required NetworkInfo networkInfo,
+    Uuid? uuid,
+  })  : _databaseHelper = databaseHelper,
+        _networkInfo = networkInfo,
+        _uuid = uuid ?? const Uuid();
+
+  Future<TransactionModel> createTransaction(Transaction transaction) async {
+    try {
+      final db = await _databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+      
+      final id = _uuid.v4();
+      final hash = _generateOperationHash(transaction);
+      
+      final model = TransactionModel(
+        id: id,
+        externalId: null,
+        amount: transaction.amount,
+        currency: transaction.currency,
+        transactionType: transaction.transactionType,
+        description: transaction.description,
+        metadata: transaction.metadata,
+        createdAt: now,
+        updatedAt: now,
+        version: 1,
+        syncStatus: AppConstants.syncStatusPending,
+        hash: hash,
+      );
+
+      await db.insert(
+        AppConstants.transactionsTable,
+        model.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      final syncRecord = SyncRecordModel(
+        id: _uuid.v4(),
+        entityId: id,
+        entityType: 'transaction',
+        operationType: 'CREATE',
+        payload: model.toMap(),
+        createdAt: now,
+        retryCount: 0,
+        lastAttempt: null,
+        status: AppConstants.syncStatusPending,
+      );
+
+      await db.insert(
+        AppConstants.pendingOperationsTable,
+        syncRecord.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      return model;
+    } catch (e) {
+      throw OfflineException.database('Failed to create transaction: $e');
+    }
+  }
+
+  Future<TransactionModel?> getTransactionById(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.transactionsTable,
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+        limit: 1,
+      );
+
+      if (results.isEmpty) {
+        return null;
+      }
+
+      return TransactionModel.fromMap(results.first);
+    } catch (e) {
+      throw OfflineException.database('Failed to get transaction: $e');
+    }
+  }
+
+  Future<List<TransactionModel>> getAllTransactions() async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.transactionsTable,
+        orderBy: '${DatabaseColumns.createdAt} DESC',
+      );
+
+      return results.map((map) => TransactionModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get all transactions: $e');
+    }
+  }
+
+  Future<List<TransactionModel>> getPendingTransactions() async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.transactionsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [AppConstants.syncStatusPending],
+        orderBy: '${DatabaseColumns.createdAt} ASC',
+      );
+
+      return results.map((map) => TransactionModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get pending transactions: $e');
+    }
+  }
+
+  Future<List<TransactionModel>> getTransactionsByStatus(String status) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.transactionsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [status],
+        orderBy: '${DatabaseColumns.createdAt} DESC',
+      );
+
+      return results.map((map) => TransactionModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get transactions by status: $e');
+    }
+  }
+
+  Future<TransactionModel> updateTransaction(TransactionModel model) async {
+    try {
+      final db = await _databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+      
+      final updatedModel = model.copyWith(
+        updatedAt: now,
+        version: model.version + 1,
+        syncStatus: AppConstants.syncStatusPending,
+      );
+
+      await db.update(
+        AppConstants.transactionsTable,
+        updatedModel.toMap(),
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [model.id],
+      );
+
+      final syncRecord = SyncRecordModel(
+        id: _uuid.v4(),
+        entityId: model.id,
+        entityType: 'transaction',
+        operationType: 'UPDATE',
+        payload: updatedModel.toMap(),
+        createdAt: now,
+        retryCount: 0,
+        lastAttempt: null,
+        status: AppConstants.syncStatusPending,
+      );
+
+      await db.insert(
+        AppConstants.pendingOperationsTable,
+        syncRecord.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      return updatedModel;
+    } catch (e) {
+      throw OfflineException.database('Failed to update transaction: $e');
+    }
+  }
+
+  Future<void> deleteTransaction(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+
+      await db.delete(
+        AppConstants.transactionsTable,
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+
+      final syncRecord = SyncRecordModel(
+        id: _uuid.v4(),
+        entityId: id,
+        entityType: 'transaction',
+        operationType: 'DELETE',
+        payload: {'id': id},
+        createdAt: now,
+        retryCount: 0,
+        lastAttempt: null,
+        status: AppConstants.syncStatusPending,
+      );
+
+      await db.insert(
+        AppConstants.pendingOperationsTable,
+        syncRecord.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to delete transaction: $e');
+    }
+  }
+
+  Future<void> markTransactionAsSynced(String id, String? externalId) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.update(
+        AppConstants.transactionsTable,
+        {
+          DatabaseColumns.syncStatus: AppConstants.syncStatusCompleted,
+          DatabaseColumns.externalId: externalId,
+        },
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to mark transaction as synced: $e');
+    }
+  }
+
+  Future<void> markTransactionAsFailed(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.update(
+        AppConstants.transactionsTable,
+        {DatabaseColumns.syncStatus: AppConstants.syncStatusFailed},
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to mark transaction as failed: $e');
+    }
+  }
+
+  Future<bool> isOperationIdempotent(String operationHash) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.transactionsTable,
+        where: '${DatabaseColumns.hash} = ?',
+        whereArgs: [operationHash],
+        limit: 1,
+      );
+
+      return results.isNotEmpty;
+    } catch (e) {
+      throw OfflineException.database('Failed to check idempotency: $e');
+    }
+  }
+
+  Future<int> getPendingCount() async {
+    try {
+      final db = await _databaseHelper.database;
+      final result = await db.rawQuery(
+        'SELECT COUNT(*) as count FROM ${AppConstants.transactionsTable} WHERE ${DatabaseColumns.syncStatus} = ?',
+        [AppConstants.syncStatusPending],
+      );
+
+      return Sqflite.firstIntValue(result) ?? 0;
+    } catch (e) {
+      throw OfflineException.database('Failed to get pending count: $e');
+    }
+  }
+
+  String _generateOperationHash(Transaction transaction) {
+    final data = '${transaction.amount}${transaction.currency}${transaction.transactionType}${transaction.description}${DateTime.now().millisecondsSinceEpoch}';
+    return sha256.convert(data.codeUnits).toString();
+  }
+
+  Future<void> markTransactionAsConflict(
+    String id,
+    Map<String, dynamic> conflictData,
+  ) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.update(
+        AppConstants.transactionsTable,
+        {
+          DatabaseColumns.syncStatus: AppConstants.syncStatusConflict,
+          DatabaseColumns.metadata: conflictData.toString(),
+        },
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to mark transaction as conflict: $e');
+    }
+  }
+
+  Future<void> resolveConflict(
+    String id,
+    TransactionModel resolvedModel,
+    String strategy,
+  ) async {
+    try {
+      final db = await _databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+      
+      await db.update(
+        AppConstants.transactionsTable,
+        {
+          DatabaseColumns.amount: resolvedModel.amount,
+          DatabaseColumns.currency: resolvedModel.currency,
+          DatabaseColumns.transactionType: resolvedModel.transactionType,
+          DatabaseColumns.description: resolvedModel.description,
+          DatabaseColumns.metadata: resolvedModel.metadata,
+          DatabaseColumns.updatedAt: now,
+          DatabaseColumns.version: resolvedModel.version,
+          DatabaseColumns.syncStatus: AppConstants.syncStatusPending,
+        },
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to resolve conflict: $e');
+    }
+  }
+}
+// === ARCHIVO: lib/data/datasources/local/sync_local_datasource.dart ===
+import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
+import '../../core/constants/app_constants.dart';
+import '../../core/errors/exceptions.dart';
+import '../../domain/entities/sync_record.dart';
+import '../models/sync_record_model.dart';
+import 'database_helper.dart';
+
+class SyncLocalDatasource {
+  final DatabaseHelper _databaseHelper;
+  final Uuid _uuid;
+
+  SyncLocalDatasource({
+    required DatabaseHelper databaseHelper,
+    Uuid? uuid,
+  })  : _databaseHelper = databaseHelper,
+        _uuid = uuid ?? const Uuid();
+
+  Future<SyncRecordModel> createSyncRecord(SyncRecord syncRecord) async {
+    try {
+      final db = await _databaseHelper.database;
+      final now = DateTime.now().toIso8601String();
+
+      final model = SyncRecordModel(
+        id: syncRecord.id ?? _uuid.v4(),
+        entityId: syncRecord.entityId,
+        entityType: syncRecord.entityType,
+        operationType: syncRecord.operationType,
+        payload: syncRecord.payload,
+        createdAt: syncRecord.createdAt ?? now,
+        retryCount: syncRecord.retryCount ?? 0,
+        lastAttempt: syncRecord.lastAttempt,
+        status: syncRecord.status ?? AppConstants.syncStatusPending,
+      );
+
+      await db.insert(
+        AppConstants.pendingOperationsTable,
+        model.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+
+      return model;
+    } catch (e) {
+      throw OfflineException.database('Failed to create sync record: $e');
+    }
+  }
+
+  Future<SyncRecordModel?> getSyncRecordById(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+        limit: 1,
+      );
+
+      if (results.isEmpty) {
+        return null;
+      }
+
+      return SyncRecordModel.fromMap(results.first);
+    } catch (e) {
+      throw OfflineException.database('Failed to get sync record: $e');
+    }
+  }
+
+  Future<List<SyncRecordModel>> getPendingSyncRecords() async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [AppConstants.syncStatusPending],
+        orderBy: '${DatabaseColumns.createdAt} ASC',
+      );
+
+      return results.map((map) => SyncRecordModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get pending sync records: $e');
+    }
+  }
+
+  Future<List<SyncRecordModel>> getFailedSyncRecords() async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [AppConstants.syncStatusFailed],
+        orderBy: '${DatabaseColumns.createdAt} ASC',
+      );
+
+      return results.map((map) => SyncRecordModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get failed sync records: $e');
+    }
+  }
+
+  Future<List<SyncRecordModel>> getSyncRecordsByEntityId(String entityId) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.pendingOperationsTable,
+        where: 'entity_id = ?',
+        whereArgs: [entityId],
+        orderBy: '${DatabaseColumns.createdAt} DESC',
+      );
+
+      return results.map((map) => SyncRecordModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get sync records by entity: $e');
+    }
+  }
+
+  Future<SyncRecordModel> updateSyncRecord(SyncRecordModel model) async {
+    try {
+      final db = await _databaseHelper.database;
+
+      await db.update(
+        AppConstants.pendingOperationsTable,
+        model.toMap(),
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [model.id],
+      );
+
+      return model;
+    } catch (e) {
+      throw OfflineException.database('Failed to update sync record: $e');
+    }
+  }
+
+  Future<void> deleteSyncRecord(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.delete(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to delete sync record: $e');
+    }
+  }
+
+  Future<void> markSyncRecordAsCompleted(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.update(
+        AppConstants.pendingOperationsTable,
+        {DatabaseColumns.syncStatus: AppConstants.syncStatusCompleted},
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to mark sync record as completed: $e');
+    }
+  }
+
+  Future<void> markSyncRecordAsFailed(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.update(
+        AppConstants.pendingOperationsTable,
+        {
+          DatabaseColumns.syncStatus: AppConstants.syncStatusFailed,
+          DatabaseColumns.operationType: 'RETRY',
+        },
+        where: '${DatabaseColumns.id} = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to mark sync record as failed: $e');
+    }
+  }
+
+  Future<void> incrementRetryCount(String id) async {
+    try {
+      final db = await _databaseHelper.database;
+      final record = await getSyncRecordById(id);
+      
+      if (record != null) {
+        await db.update(
+          AppConstants.pendingOperationsTable,
+          {
+            DatabaseColumns.operationType: record.retryCount + 1,
+            DatabaseColumns.syncStatus: record.lastAttempt = DateTime.now().toIso8601String(),
+          },
+          where: '${DatabaseColumns.id} = ?',
+          whereArgs: [id],
+        );
+      }
+    } catch (e) {
+      throw OfflineException.database('Failed to increment retry count: $e');
+    }
+  }
+
+  Future<void> deleteCompletedSyncRecords() async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.delete(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [AppConstants.syncStatusCompleted],
+      );
+    } catch (e) {
+      throw OfflineException.database('Failed to delete completed sync records: $e');
+    }
+  }
+
+  Future<int> getPendingCount() async {
+    try {
+      final db = await _databaseHelper.database;
+      final result = await db.rawQuery(
+        'SELECT COUNT(*) as count FROM ${AppConstants.pendingOperationsTable} WHERE ${DatabaseColumns.syncStatus} = ?',
+        [AppConstants.syncStatusPending],
+      );
+
+      return Sqflite.firstIntValue(result) ?? 0;
+    } catch (e) {
+      throw OfflineException.database('Failed to get pending count: $e');
+    }
+  }
+
+  Future<int> getFailedCount() async {
+    try {
+      final db = await _databaseHelper.database;
+      final result = await db.rawQuery(
+        'SELECT COUNT(*) as count FROM ${AppConstants.pendingOperationsTable} WHERE ${DatabaseColumns.syncStatus} = ?',
+        [AppConstants.syncStatusFailed],
+      );
+
+      return Sqflite.firstIntValue(result) ?? 0;
+    } catch (e) {
+      throw OfflineException.database('Failed to get failed count: $e');
+    }
+  }
+
+  Future<void> clearAllSyncRecords() async {
+    try {
+      final db = await _databaseHelper.database;
+      await db.delete(AppConstants.pendingOperationsTable);
+    } catch (e) {
+      throw OfflineException.database('Failed to clear all sync records: $e');
+    }
+  }
+
+  Future<List<SyncRecordModel>> getSyncRecordsByStatus(String status) async {
+    try {
+      final db = await _databaseHelper.database;
+      final results = await db.query(
+        AppConstants.pendingOperationsTable,
+        where: '${DatabaseColumns.syncStatus} = ?',
+        whereArgs: [status],
+        orderBy: '${DatabaseColumns.createdAt} ASC',
+      );
+
+      return results.map((map) => SyncRecordModel.fromMap(map)).toList();
+    } catch (e) {
+      throw OfflineException.database('Failed to get sync records by status: $e');
+    }
+  }
+
+  Future<void> bulkUpdateStatus(
+    List<String> ids,
+    String newStatus,
+  ) async {
+    try {
+      final db = await _databaseHelper.database;
+      final batch = db.batch();
+
+      for (final id in ids) {
+        batch.update(
+          AppConstants.pendingOperationsTable,
+          {DatabaseColumns.syncStatus: newStatus},
+          where: '${DatabaseColumns.id} = ?',
+          whereArgs: [id],
+        );
+      }
+
+      await batch.commit(noResult: true);
+    } catch (e) {
+      throw OfflineException.database('Failed to bulk update sync records: $e');
+    }
+  }
+}
+// === ARCHIVO: lib/data/datasources/remote/transaction_remote_datasource.dart ===
 import 'package:dio/dio.dart';
-import '../../../core/constants/app_constants.dart';
-import '../../../core/errors/exceptions.dart';
-import '../../models/task_model.dart';
+import '../../core/constants/app_constants.dart';
+import '../../core/errors/exceptions.dart';
+import '../../core/network/network_info.dart';
+import '../../domain/entities/transaction.dart';
+import '../models/transaction_model.dart';
 
-abstract class TaskRemoteDataSource {
-  Future<List<TaskModel>> getTasks();
-  Future<TaskModel> getTaskById(String id);
-  Future<TaskModel> createTask(TaskModel task);
-  Future<TaskModel> updateTask(TaskModel task);
-  Future<void> deleteTask(String id);
-  Future<List<TaskModel>> syncTasks(List<TaskModel> tasks);
-}
-
-class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
+class TransactionRemoteDatasource {
   final Dio _dio;
+  final NetworkInfo _networkInfo;
 
-  TaskRemoteDataSourceImpl({required Dio dio}) : _dio = dio;
+  TransactionRemoteDatasource({
+    required Dio dio,
+    required NetworkInfo networkInfo,
+  })  : _dio = dio,
+        _networkInfo = networkInfo;
 
-  @override
-  Future<List<TaskModel>> getTasks() async {
+  Future<bool> get isConnected => _networkInfo.isConnected;
+
+  Future<TransactionModel> createTransaction(TransactionModel model) async {
     try {
-      final response = await _dio.get(
-        '/${AppConstants.apiVersion}/tasks',
-        options: Options(
-          sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
-          receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['tasks'] ?? response.data;
-        return data.map((json) => TaskModel.fromJson(json)).toList();
-      } else {
-        throw ServerException(
-          message: 'Failed to fetch tasks',
-          statusCode: response.statusCode,
-          endpoint: '/tasks',
-        );
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
       }
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks');
-    }
-  }
 
-  @override
-  Future<TaskModel> getTaskById(String id) async {
-    try {
-      final response = await _dio.get(
-        '/${AppConstants.apiVersion}/tasks/$id',
-        options: Options(
-          sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
-          receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        return TaskModel.fromJson(response.data);
-      } else if (response.statusCode == 404) {
-        throw ServerException(
-          message: 'Task not found',
-          statusCode: 404,
-          endpoint: '/tasks/$id',
-        );
-      } else {
-        throw ServerException(
-          message: 'Failed to fetch task',
-          statusCode: response.statusCode,
-          endpoint: '/tasks/$id',
-        );
-      }
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/$id');
-    }
-  }
-
-  @override
-  Future<TaskModel> createTask(TaskModel task) async {
-    try {
       final response = await _dio.post(
-        '/${AppConstants.apiVersion}/tasks',
-        data: task.toJson(),
+        AppConstants.getApiUrl('/transactions'),
+        data: model.toServerMap(),
         options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
           sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
           receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
         ),
       );
 
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        return TaskModel.fromJson(response.data);
-      } else {
-        throw ServerException(
-          message: 'Failed to create task',
-          statusCode: response.statusCode,
-          endpoint: '/tasks',
-        );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return TransactionModel.fromServerMap(response.data);
       }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to create transaction on server',
+      );
     } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks');
+      throw _handleDioError(e);
     }
   }
 
-  @override
-  Future<TaskModel> updateTask(TaskModel task) async {
+  Future<TransactionModel?> getTransactionById(String externalId) async {
     try {
-      final response = await _dio.put(
-        '/${AppConstants.apiVersion}/tasks/${task.id}',
-        data: task.toJson(),
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
+      final response = await _dio.get(
+        AppConstants.getApiUrl('/transactions/$externalId'),
         options: Options(
+          headers: {
+            'Accept': 'application/json',
+          },
           sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
           receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
         ),
       );
 
       if (response.statusCode == 200) {
-        return TaskModel.fromJson(response.data);
+        return TransactionModel.fromServerMap(response.data);
       } else if (response.statusCode == 404) {
-        throw ServerException(
-          message: 'Task not found for update',
-          statusCode: 404,
-          endpoint: '/tasks/${task.id}',
-        );
-      } else {
-        throw ServerException(
-          message: 'Failed to update task',
-          statusCode: response.statusCode,
-          endpoint: '/tasks/${task.id}',
-        );
+        return null;
       }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to get transaction from server',
+      );
     } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/${task.id}');
+      throw _handleDioError(e);
     }
   }
 
-  @override
-  Future<void> deleteTask(String id) async {
+  Future<List<TransactionModel>> getAllTransactions({
+    int page = 1,
+    int pageSize = AppConstants.defaultPageSize,
+  }) async {
     try {
-      final response = await _dio.delete(
-        '/${AppConstants.apiVersion}/tasks/$id',
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
+      final response = await _dio.get(
+        AppConstants.getApiUrl('/transactions'),
+        queryParameters: {
+          'page': page,
+          'page_size': pageSize,
+        },
         options: Options(
+          headers: {
+            'Accept': 'application/json',
+          },
+          sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
+          receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['items'] ?? response.data;
+        return data.map((json) => TransactionModel.fromServerMap(json)).toList();
+      }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to get transactions from server',
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  Future<TransactionModel> updateTransaction(TransactionModel model) async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
+      final response = await _dio.put(
+        AppConstants.getApiUrl('/transactions/${model.externalId ?? model.id}'),
+        data: model.toServerMap(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'If-Match': model.version.toString(),
+          },
+          sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
+          receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return TransactionModel.fromServerMap(response.data);
+      } else if (response.statusCode == 409) {
+        throw SyncConflictException.detected(
+          entityId: model.id,
+          localData: model.toMap(),
+          serverData: response.data,
+          conflictStrategy: AppConstants.conflictStrategyLastWriteWins,
+        );
+      }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to update transaction on server',
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  Future<void> deleteTransaction(String externalId) async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
+      final response = await _dio.delete(
+        AppConstants.getApiUrl('/transactions/$externalId'),
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+          },
           sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
           receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
         ),
       );
 
       if (response.statusCode != 200 && response.statusCode != 204) {
-        throw ServerException(
-          message: 'Failed to delete task',
-          statusCode: response.statusCode,
-          endpoint: '/tasks/$id',
+        throw NetworkException.serverError(
+          response.statusCode ?? 500,
+          'Failed to delete transaction on server',
         );
       }
     } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/$id');
+      throw _handleDioError(e);
     }
   }
 
-  @override
-  Future<List<TaskModel>> syncTasks(List<TaskModel> tasks) async {
+  Future<List<TransactionModel>> syncBatch(
+    List<TransactionModel> models,
+  ) async {
     try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
       final response = await _dio.post(
-        '/${AppConstants.apiVersion}/tasks/sync',
+        AppConstants.getApiUrl('/transactions/batch'),
         data: {
-          'tasks': tasks.map((t) => t.toJson()).toList(),
+          'operations': models.map((m) => m.toServerMap()).toList(),
         },
         options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
           sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout * 2),
           receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout * 2),
         ),
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['tasks'] ?? response.data;
-        return data.map((json) => TaskModel.fromJson(json)).toList();
-      } else {
-        throw ServerException(
-          message: 'Failed to sync tasks',
-          statusCode: response.statusCode,
-          endpoint: '/tasks/sync',
-        );
+        final List<dynamic> data = response.data['results'] ?? [];
+        return data.map((json) => TransactionModel.fromServerMap(json)).toList();
       }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to sync batch to server',
+      );
     } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/sync');
+      throw _handleDioError(e);
     }
   }
 
-  AppException _handleDioError(DioException e, String endpoint) {
+  Future<Map<String, dynamic>> checkServerVersion() async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (!isConnected) {
+        throw const OfflineException.noConnectivity();
+      }
+
+      final response = await _dio.get(
+        AppConstants.getApiUrl('/version'),
+        options: Options(
+          sendTimeout: Duration(milliseconds: AppConstants.connectionTimeout),
+          receiveTimeout: Duration(milliseconds: AppConstants.receiveTimeout),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data as Map<String, dynamic>;
+      }
+
+      throw NetworkException.serverError(
+        response.statusCode ?? 500,
+        'Failed to check server version',
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  AppException _handleDioError(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return NetworkException(
-          message: 'Connection timeout while accessing $endpoint',
-          url: endpoint,
-          isConnectionError: false,
-          isTimeout: true,
-          isSslError: false,
-          originalException: e,
-        );
+        return NetworkException.timeout();
       case DioExceptionType.connectionError:
-        return NetworkException(
-          message: 'No internet connection',
-          url: endpoint,
-          isConnectionError: true,
-          isTimeout: false,
-          isSslError: false,
-          originalException: e,
-        );
+        return const OfflineException.noConnectivity();
       case DioExceptionType.badResponse:
-        final statusCode = e.response?.statusCode;
+        final statusCode = e.response?.statusCode ?? 500;
         if (statusCode == 401) {
-          return ServerException(
-            message: 'Unauthorized access',
-            statusCode: statusCode,
-            endpoint: endpoint,
-            originalException: e,
-          );
-        } else if (statusCode == 403) {
-          return ServerException(
-            message: 'Forbidden access',
-            statusCode: statusCode,
-            endpoint: endpoint,
-            originalException: e,
-          );
+          return NetworkException.unauthorized();
         } else if (statusCode == 404) {
-          return ServerException(
-            message: 'Resource not found',
-            statusCode: statusCode,
-            endpoint: endpoint,
-            originalException: e,
-          );
-        } else if (statusCode != null && statusCode >= 500) {
-          return ServerException(
-            message: 'Server error',
-            statusCode: statusCode,
-            endpoint: endpoint,
-            originalException: e,
-          );
+          return NetworkException.notFound(e.requestOptions.uri.toString());
         }
-        return ServerException(
-          message: 'Bad response from server',
-          statusCode: statusCode,
-          endpoint: endpoint,
-          originalException: e,
+        return NetworkException.serverError(
+          statusCode,
+          e.response?.data?['message'] ?? 'Unknown server error',
         );
       case DioExceptionType.cancel:
-        return ServerException(
-          message: 'Request cancelled',
-          endpoint: endpoint,
-          originalException: e,
-        );
+        return const AppException(message: 'Request cancelled', code: 'CANCELLED');
       default:
-        return ServerException(
+        return AppException(
           message: e.message ?? 'Unknown network error',
-          endpoint: endpoint,
-          originalException: e,
+          code: 'NETWORK_ERROR',
+          originalError: e,
         );
     }
   }
 }
 
-// === ARCHIVO: lib/data/repositories/task_repository_impl.dart ===
-import 'package:uuid/uuid.dart';
-import '../../core/constants/app_constants.dart';
-import '../../core/errors/exceptions.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/entities/task_entity.dart';
-import '../../domain/repositories/task_repository.dart';
-import '../datasources/local/task_local_datasource.dart';
-import '../datasources/remote/task_remote_datasource.dart';
-import '../models/task_model.dart';
+// === ARCHIVO: lib/data/repositories/transaction_repository_impl.dart ===
+package offline_field_app.data.repositories;
 
-class TaskRepositoryImpl implements TaskRepository {
-  final TaskLocalDataSource localDataSource;
-  final TaskRemoteDataSource remoteDataSource;
+import 'dart:async';
+import 'package:uuid/uuid.dart';
+import 'package:crypto/crypto.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import '../../domain/entities/transaction.dart' as domain;
+import '../../domain/repositories/transaction_repository.dart';
+import '../models/transaction_model.dart';
+import '../datasources/local/transaction_local_datasource.dart';
+import '../datasources/remote/transaction_remote_datasource.dart';
+import '../../core/errors/exceptions.dart';
+import '../../core/errors/failures.dart';
+import '../../core/network/network_info.dart';
+
+class TransactionRepositoryImpl implements TransactionRepository {
+  final TransactionLocalDataSource localDataSource;
+  final TransactionRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
   final Uuid uuid;
+  final Hash hash;
 
-  TaskRepositoryImpl({
+  TransactionRepositoryImpl({
     required this.localDataSource,
     required this.remoteDataSource,
     required this.networkInfo,
     required this.uuid,
+    required this.hash,
   });
 
   @override
-  Future<List<TaskEntity>> getTasks() async {
-    final isConnected = await networkInfo.isConnected;
-
-    if (isConnected) {
-      try {
-        final remoteTasks = await remoteDataSource.getTasks();
-        await localDataSource.cacheTasks(remoteTasks);
-        return remoteTasks.map((model) => model.toEntity()).toList();
-      } on ServerException {
-        return await _getLocalTasks();
-      } on NetworkException {
-        return await _getLocalTasks();
-      }
-    } else {
-      return await _getLocalTasks();
+  Future<domain.Transaction> createTransaction(domain.Transaction transaction) async {
+    final operationHash = _generateOperationHash(transaction);
+    final existingRecord = await localDataSource.getTransactionByHash(operationHash);
+    if (existingRecord != null) {
+      throw IdempotencyException.duplicateOperation(operationHash, existingRecord.id);
     }
-  }
 
-  Future<List<TaskEntity>> _getLocalTasks() async {
-    final localTasks = await localDataSource.getTasks();
-    return localTasks.map((model) => model.toEntity()).toList();
-  }
-
-  @override
-  Future<TaskEntity?> getTaskById(String id) async {
-    final isConnected = await networkInfo.isConnected;
-
-    if (isConnected) {
-      try {
-        final remoteTask = await remoteDataSource.getTaskById(id);
-        await localDataSource.cacheTask(remoteTask);
-        return remoteTask.toEntity();
-      } on ServerException {
-        return await _getLocalTaskById(id);
-      } on NetworkException {
-        return await _getLocalTaskById(id);
-      }
-    } else {
-      return await _getLocalTaskById(id);
-    }
-  }
-
-  Future<TaskEntity?> _getLocalTaskById(String id) async {
-    final localTask = await localDataSource.getTaskById(id);
-    return localTask?.toEntity();
-  }
-
-  @override
-  Future<TaskEntity> createTask(TaskEntity task) async {
-    final isConnected = await networkInfo.isConnected;
-    final now = DateTime.now();
-    final taskId = task.id ?? uuid.v4();
-
-    final taskModel = TaskModel(
-      id: taskId,
-      title: task.title,
-      description: task.description,
-      priority: task.priority,
-      status: task.status,
-      dueDate: task.dueDate,
-      assignedTo: task.assignedTo,
+    final now = DateTime.now().toUtc();
+    final transactionId = uuid.v4();
+    final model = TransactionModel(
+      id: transactionId,
+      externalId: transaction.externalId,
+      amount: transaction.amount,
+      currency: transaction.currency,
+      transactionType: transaction.transactionType,
+      description: transaction.description,
+      metadata: transaction.metadata,
       createdAt: now,
       updatedAt: now,
-      syncStatus: isConnected ? AppConstants.syncStatusSynced : AppConstants.syncStatusPending,
-      localModified: !isConnected,
-      serverVersion: 1,
-      isDeleted: false,
+      version: 1,
+      syncStatus: 'pending',
+      hash: operationHash,
     );
 
-    await localDataSource.saveTask(taskModel);
-
+    await localDataSource.insertTransaction(model);
+    
+    final isConnected = await networkInfo.isConnected;
     if (isConnected) {
       try {
-        final createdTask = await remoteDataSource.createTask(taskModel);
-        await localDataSource.updateTaskSyncStatus(
-          taskId,
-          AppConstants.syncStatusSynced,
+        final remoteModel = await remoteDataSource.createTransaction(model.toJson());
+        await localDataSource.updateTransactionSyncStatus(transactionId, 'completed', remoteModel.id);
+        return _mapModelToEntity(
+          await localDataSource.getTransactionById(transactionId)!,
         );
-        return createdTask.toEntity();
-      } on ServerException {
-        await localDataSource.updateTaskSyncStatus(
-          taskId,
-          AppConstants.syncStatusPending,
-        );
-        return taskModel.toEntity();
+      } catch (e) {
+        await localDataSource.updateTransactionSyncStatus(transactionId, 'failed', null);
+        rethrow;
       }
     }
 
-    return taskModel.toEntity();
+    return _mapModelToEntity(model);
   }
 
   @override
-  Future<TaskEntity> updateTask(TaskEntity task) async {
-    final isConnected = await networkInfo.isConnected;
-    final now = DateTime.now();
+  Future<domain.Transaction?> getTransactionById(String id) async {
+    final model = await localDataSource.getTransactionById(id);
+    if (model == null) return null;
+    return _mapModelToEntity(model);
+  }
 
-    final taskModel = TaskModel(
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      priority: task.priority,
-      status: task.status,
-      dueDate: task.dueDate,
-      assignedTo: task.assignedTo,
-      createdAt: task.createdAt,
-      updatedAt: now,
-      syncStatus: isConnected ? AppConstants.syncStatusSynced : AppConstants.syncStatusPending,
-      localModified: !isConnected,
-      serverVersion: task.serverVersion,
-      isDeleted: task.isDeleted,
+  @override
+  Future<List<domain.Transaction>> getAllTransactions({int? limit, int? offset}) async {
+    final models = await localDataSource.getAllTransactions(limit: limit, offset: offset);
+    return models.map(_mapModelToEntity).toList();
+  }
+
+  @override
+  Future<List<domain.Transaction>> getPendingTransactions() async {
+    final models = await localDataSource.getPendingTransactions();
+    return models.map(_mapModelToEntity).toList();
+  }
+
+  @override
+  Future<domain.Transaction> updateTransaction(domain.Transaction transaction) async {
+    final existing = await localDataSource.getTransactionById(transaction.id);
+    if (existing == null) {
+      throw const OfflineException.database('Transaction not found');
+    }
+
+    final newVersion = existing.version + 1;
+    final operationHash = _generateOperationHash(transaction, existing.version);
+    final model = TransactionModel(
+      id: transaction.id,
+      externalId: transaction.externalId,
+      amount: transaction.amount,
+      currency: transaction.currency,
+      transactionType: transaction.transactionType,
+      description: transaction.description,
+      metadata: transaction.metadata,
+      createdAt: existing.createdAt,
+      updatedAt: DateTime.now().toUtc(),
+      version: newVersion,
+      syncStatus: 'pending',
+      hash: operationHash,
     );
 
-    await localDataSource.updateTask(taskModel);
+    await localDataSource.updateTransaction(model);
 
+    final isConnected = await networkInfo.isConnected;
     if (isConnected) {
       try {
-        final updatedTask = await remoteDataSource.updateTask(taskModel);
-        await localDataSource.updateTaskSyncStatus(
-          task.id!,
-          AppConstants.syncStatusSynced,
-        );
-        return updatedTask.toEntity();
-      } on ServerException catch (e) {
-        if (e.statusCode == 409) {
-          throw ConflictException(
-            message: 'Conflict detected during update',
-            entityId: task.id!,
-            localData: taskModel.toJson(),
-            remoteData: null,
-            conflictType: 'update',
-          );
-        }
-        await localDataSource.updateTaskSyncStatus(
-          task.id!,
-          AppConstants.syncStatusPending,
-        );
-        return taskModel.toEntity();
+        await remoteDataSource.updateTransaction(model.toJson());
+        await localDataSource.updateTransactionSyncStatus(transaction.id, 'completed', null);
+      } catch (e) {
+        await localDataSource.updateTransactionSyncStatus(transaction.id, 'failed', null);
+        rethrow;
       }
     }
 
-    return taskModel.toEntity();
+    return _mapModelToEntity(model);
   }
 
   @override
-  Future<void> deleteTask(String id) async {
-    final isConnected = await networkInfo.isConnected;
-    final now = DateTime.now();
-
-    final existingTask = await localDataSource.getTaskById(id);
-    if (existingTask == null) {
-      throw DatabaseException(
-        message: 'Task not found for deletion',
-        sql: 'DELETE FROM tasks WHERE id = ?',
-      );
+  Future<void> deleteTransaction(String id) async {
+    final existing = await localDataSource.getTransactionById(id);
+    if (existing == null) {
+      throw const OfflineException.database('Transaction not found');
     }
 
-    final deletedTask = TaskModel(
-      id: existingTask.id,
-      title: existingTask.title,
-      description: existingTask.description,
-      priority: existingTask.priority,
-      status: existingTask.status,
-      dueDate: existingTask.dueDate,
-      assignedTo: existingTask.assignedTo,
-      createdAt: existingTask.createdAt,
-      updatedAt: now,
-      syncStatus: isConnected ? AppConstants.syncStatusSynced : AppConstants.syncStatusPending,
-      localModified: !isConnected,
-      serverVersion: existingTask.serverVersion,
-      isDeleted: true,
+    await localDataSource.deleteTransaction(id);
+
+    final isConnected = await networkInfo.isConnected;
+    if (isConnected) {
+      try {
+        await remoteDataSource.deleteTransaction(id);
+      } catch (e) {
+        // Log error but don't throw - local delete succeeded
+      }
+    }
+  }
+
+  @override
+  Future<List<domain.Transaction>> searchTransactions(String query) async {
+    final models = await localDataSource.searchTransactions(query);
+    return models.map(_mapModelToEntity).toList();
+  }
+
+  String _generateOperationHash(domain.Transaction transaction, [int? baseVersion]) {
+    final content = '${transaction.amount}${transaction.currency}'
+        '${transaction.transactionType}${transaction.description}'
+        '${baseVersion ?? 0}';
+    return hash.convert(content.codeUnits).toString();
+  }
+
+  domain.Transaction _mapModelToEntity(TransactionModel model) {
+    return domain.Transaction(
+      id: model.id,
+      externalId: model.externalId,
+      amount: model.amount,
+      currency: model.currency,
+      transactionType: model.transactionType,
+      description: model.description,
+      metadata: model.metadata,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+      version: model.version,
+      syncStatus: model.syncStatus,
     );
-
-    await localDataSource.updateTask(deletedTask);
-
-    if (isConnected) {
-      try {
-        await remoteDataSource.deleteTask(id);
-        await localDataSource.deleteTask(id);
-      } on ServerException {
-        await localDataSource.updateTaskSyncStatus(
-          id,
-          AppConstants.syncStatusPending,
-        );
-      }
-    }
-  }
-
-  @override
-  Future<List<TaskEntity>> getPendingSyncTasks() async {
-    final pendingTasks = await localDataSource.getPendingTasks();
-    return pendingTasks.map((model) => model.toEntity()).toList();
-  }
-
-  @override
-  Future<void> syncTasks() async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      throw NetworkException(
-        message: 'No internet connection for sync',
-        url: '/sync',
-        isConnectionError: true,
-        isTimeout: false,
-        isSslError: false,
-      );
-    }
-
-    final pendingTasks = await localDataSource.getPendingTasks();
-    if (pendingTasks.isEmpty) return;
-
-    try {
-      final syncedTasks = await remoteDataSource.syncTasks(pendingTasks);
-
-      for (final syncedTask in syncedTasks) {
-        await localDataSource.updateTaskSyncStatus(
-          syncedTask.id,
-          AppConstants.syncStatusSynced,
-        );
-      }
-    } on ServerException catch (e) {
-      if (e.statusCode == 409) {
-        throw ConflictException(
-          message: 'Conflict during batch sync',
-          entityId: 'batch',
-          localData: pendingTasks.map((t) => t.toJson()).toList(),
-          remoteData: null,
-          conflictType: 'batch_sync',
-        );
-      }
-      for (final task in pendingTasks) {
-        await localDataSource.updateTaskSyncStatus(
-          task.id,
-          AppConstants.syncStatusFailed,
-        );
-      }
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<TaskEntity>> searchTasks(String query) async {
-    final localTasks = await localDataSource.searchTasks(query);
-    return localTasks.map((model) => model.toEntity()).toList();
-  }
-
-  @override
-  Future<List<TaskEntity>> getTasksByStatus(String status) async {
-    final localTasks = await localDataSource.getTasksByStatus(status);
-    return localTasks.map((model) => model.toEntity()).toList();
-  }
-
-  @override
-  Future<List<TaskEntity>> getTasksByPriority(String priority) async {
-    final localTasks = await localDataSource.getTasksByPriority(priority);
-    return localTasks.map((model) => model.toEntity()).toList();
   }
 }
 
-
 // === ARCHIVO: lib/data/repositories/sync_repository_impl.dart ===
-package lib.data.repositories;
+package offline_field_app.data.repositories;
 
-import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/core/errors/exceptions.dart';
-import 'package:field_app/core/network/network_info.dart';
-import 'package:field_app/data/datasources/local/task_local_datasource.dart';
-import 'package:field_app/data/datasources/remote/task_remote_datasource.dart';
-import 'package:field_app/data/models/task_model.dart';
-import 'package:field_app/data/models/sync_status_model.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/domain/repositories/sync_repository.dart';
+import 'dart:async';
 import 'package:uuid/uuid.dart';
+import 'package:sqflite/sqflite.dart';
+import '../../domain/entities/sync_record.dart' as domain;
+import '../../domain/repositories/sync_repository.dart';
+import '../models/sync_record_model.dart';
+import '../datasources/local/sync_local_datasource.dart';
+import '../../core/errors/exceptions.dart';
+import '../../core/errors/failures.dart';
+import '../../core/network/network_info.dart';
 
 class SyncRepositoryImpl implements SyncRepository {
-  final TaskLocalDataSource localDataSource;
-  final TaskRemoteDataSource remoteDataSource;
+  final SyncLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   final Uuid uuid;
 
   SyncRepositoryImpl({
     required this.localDataSource,
-    required this.remoteDataSource,
     required this.networkInfo,
     required this.uuid,
   });
 
   @override
-  Future<SyncResult> syncAll() async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 0,
-        conflicts: [],
-        errorMessage: 'No hay conexión a internet',
-      );
+  Future<domain.SyncRecord> recordOperation(domain.SyncRecord record) async {
+    final recordId = uuid.v4();
+    final now = DateTime.now().toUtc();
+    
+    final model = SyncRecordModel(
+      id: recordId,
+      entityId: record.entityId,
+      entityType: record.entityType,
+      operationType: record.operationType,
+      payload: record.payload,
+      status: 'pending',
+      createdAt: now,
+      updatedAt: now,
+      attempts: 0,
+      lastAttemptAt: null,
+      errorMessage: null,
+      version: 1,
+    );
+
+    await localDataSource.insertSyncRecord(model);
+    return _mapModelToEntity(model);
+  }
+
+  @override
+  Future<List<domain.SyncRecord>> getPendingSyncRecords() async {
+    final models = await localDataSource.getPendingRecords();
+    return models.map(_mapModelToEntity).toList();
+  }
+
+  @override
+  Future<List<domain.SyncRecord>> getFailedSyncRecords() async {
+    final models = await localDataSource.getFailedRecords();
+    return models.map(_mapModelToEntity).toList();
+  }
+
+  @override
+  Future<domain.SyncRecord> updateSyncRecord(domain.SyncRecord record) async {
+    final existing = await localDataSource.getSyncRecordById(record.id);
+    if (existing == null) {
+      throw const OfflineException.database('Sync record not found');
     }
 
-    final pendingTasks = await localDataSource.getPendingSyncTasks();
-    final conflicts = <SyncConflict>[];
-    int syncedCount = 0;
-    int failedCount = 0;
+    final model = SyncRecordModel(
+      id: record.id,
+      entityId: record.entityId,
+      entityType: record.entityType,
+      operationType: record.operationType,
+      payload: record.payload,
+      status: record.status,
+      createdAt: existing.createdAt,
+      updatedAt: DateTime.now().toUtc(),
+      attempts: record.attempts,
+      lastAttemptAt: record.lastAttemptAt,
+      errorMessage: record.errorMessage,
+      version: existing.version + 1,
+    );
 
-    for (final task in pendingTasks) {
-      try {
-        final result = await _syncSingleTask(task);
-        if (result.conflict != null) {
-          conflicts.add(result.conflict!);
-          await localDataSource.updateTaskSyncStatus(
-            task.id,
-            AppConstants.syncStatusConflict,
-          );
-        } else if (result.success) {
-          syncedCount++;
-          await localDataSource.updateTaskSyncStatus(
-            task.id,
-            AppConstants.syncStatusSynced,
-          );
-          await _recordSyncOperation(task.id, 'sync', true);
-        } else {
-          failedCount++;
-          await localDataSource.updateTaskSyncStatus(
-            task.id,
-            AppConstants.syncStatusFailed,
-          );
-        }
-      } catch (e) {
-        failedCount++;
-        await localDataSource.updateTaskSyncStatus(
-          task.id,
-          AppConstants.syncStatusFailed,
-        );
-      }
+    await localDataSource.updateSyncRecord(model);
+    return _mapModelToEntity(model);
+  }
+
+  @override
+  Future<void> markAsCompleted(String recordId) async {
+    await localDataSource.updateSyncRecordStatus(recordId, 'completed');
+  }
+
+  @override
+  Future<void> markAsFailed(String recordId, String errorMessage) async {
+    final record = await localDataSource.getSyncRecordById(recordId);
+    if (record == null) {
+      throw const OfflineException.database('Sync record not found');
     }
 
-    await _fetchRemoteChanges();
-
-    return SyncResult(
-      success: conflicts.isEmpty && failedCount == 0,
-      syncedCount: syncedCount,
-      failedCount: failedCount,
-      conflicts: conflicts,
+    await localDataSource.updateSyncRecordWithError(
+      recordId,
+      'failed',
+      record.attempts + 1,
+      DateTime.now().toUtc(),
+      errorMessage,
     );
   }
 
   @override
-  Future<SyncResult> syncTask(String taskId) async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 1,
-        conflicts: [],
-        errorMessage: 'No hay conexión a internet',
-      );
+  Future<void> incrementAttempt(String recordId) async {
+    final record = await localDataSource.getSyncRecordById(recordId);
+    if (record == null) {
+      throw const OfflineException.database('Sync record not found');
     }
 
-    final task = await localDataSource.getTaskById(taskId);
-    if (task == null) {
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 1,
-        conflicts: [],
-        errorMessage: 'Tarea no encontrada',
-      );
-    }
-
-    final result = await _syncSingleTask(task);
-    if (result.conflict != null) {
-      await localDataSource.updateTaskSyncStatus(
-        taskId,
-        AppConstants.syncStatusConflict,
-      );
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 0,
-        conflicts: [result.conflict!],
-      );
-    } else if (result.success) {
-      await localDataSource.updateTaskSyncStatus(
-        taskId,
-        AppConstants.syncStatusSynced,
-      );
-      await _recordSyncOperation(taskId, 'sync', true);
-      return SyncResult(
-        success: true,
-        syncedCount: 1,
-        failedCount: 0,
-        conflicts: [],
-      );
-    } else {
-      await localDataSource.updateTaskSyncStatus(
-        taskId,
-        AppConstants.syncStatusFailed,
-      );
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 1,
-        conflicts: [],
-        errorMessage: result.errorMessage,
-      );
-    }
-  }
-
-  @override
-  Future<List<TaskEntity>> getPendingSyncItems() async {
-    final tasks = await localDataSource.getPendingSyncTasks();
-    return tasks;
-  }
-
-  @override
-  Future<SyncResult> resolveConflict({
-    required String taskId,
-    required ConflictResolutionStrategy strategy,
-    TaskEntity? localVersion,
-    TaskEntity? remoteVersion,
-  }) async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 1,
-        conflicts: [],
-        errorMessage: 'No hay conexión a internet',
-      );
-    }
-
-    TaskEntity resolvedTask;
-    switch (strategy) {
-      case ConflictResolutionStrategy.server:
-        if (remoteVersion == null) {
-          return SyncResult(
-            success: false,
-            syncedCount: 0,
-            failedCount: 1,
-            conflicts: [],
-            errorMessage: 'Versión remota no disponible',
-          );
-        }
-        resolvedTask = remoteVersion;
-        break;
-      case ConflictResolutionStrategy.client:
-        if (localVersion == null) {
-          return SyncResult(
-            success: false,
-            syncedCount: 0,
-            failedCount: 1,
-            conflicts: [],
-            errorMessage: 'Versión local no disponible',
-          );
-        }
-        resolvedTask = localVersion;
-        break;
-      case ConflictResolutionStrategy.lastWriteWins:
-        final localUpdated = localVersion?.updatedAt ?? DateTime(1970);
-        final remoteUpdated = remoteVersion?.updatedAt ?? DateTime(1970);
-        resolvedTask = localUpdated.isAfter(remoteUpdated) 
-            ? localVersion! 
-            : remoteVersion!;
-        break;
-      case ConflictResolutionStrategy.manual:
-        return SyncResult(
-          success: false,
-          syncedCount: 0,
-          failedCount: 0,
-          conflicts: [],
-          errorMessage: 'Estrategia manual requiere intervención del usuario',
-        );
-    }
-
-    try {
-      await remoteDataSource.updateTask(resolvedTask as TaskModel);
-      await localDataSource.updateTask(resolvedTask as TaskModel);
-      await localDataSource.updateTaskSyncStatus(
-        taskId,
-        AppConstants.syncStatusSynced,
-      );
-      await _recordSyncOperation(taskId, 'resolve_conflict', true);
-      return SyncResult(
-        success: true,
-        syncedCount: 1,
-        failedCount: 0,
-        conflicts: [],
-      );
-    } catch (e) {
-      return SyncResult(
-        success: false,
-        syncedCount: 0,
-        failedCount: 1,
-        conflicts: [],
-        errorMessage: 'Error al resolver conflicto: $e',
-      );
-    }
-  }
-
-  @override
-  Future<DateTime?> getLastSyncTime() async {
-    return await localDataSource.getLastSyncTime();
-  }
-
-  @override
-  Future<void> clearSyncQueue() async {
-    await localDataSource.clearPendingSyncTasks();
-  }
-
-  Future<_SyncSingleResult> _syncSingleTask(TaskEntity task) async {
-    try {
-      final remoteTask = await remoteDataSource.getTaskById(task.id);
-      
-      if (remoteTask != null) {
-        final hasConflict = _detectConflict(task, remoteTask);
-        if (hasConflict) {
-          return _SyncSingleResult(
-            success: false,
-            conflict: SyncConflict(
-              taskId: task.id,
-              localVersion: task,
-              remoteVersion: remoteTask,
-              conflictType: 'update_update',
-            ),
-          );
-        }
-      }
-
-      final taskModel = task as TaskModel;
-      if (task.syncStatus == AppConstants.syncStatusPending) {
-        await remoteDataSource.createTask(taskModel);
-      } else {
-        await remoteDataSource.updateTask(taskModel);
-      }
-      return _SyncSingleResult(success: true);
-    } on ConflictException catch (e) {
-      return _SyncSingleResult(
-        success: false,
-        conflict: SyncConflict(
-          taskId: task.id,
-          localVersion: task,
-          remoteVersion: e.remoteData as TaskEntity?,
-          conflictType: e.conflictType,
-        ),
-      );
-    } on ServerException catch (e) {
-      if (e.statusCode == 409) {
-        return _SyncSingleResult(
-          success: false,
-          conflict: SyncConflict(
-            taskId: task.id,
-            localVersion: task,
-            remoteVersion: null,
-            conflictType: 'server_conflict',
-          ),
-        );
-      }
-      return _SyncSingleResult(
-        success: false,
-        errorMessage: e.message,
-      );
-    } catch (e) {
-      return _SyncSingleResult(
-        success: false,
-        errorMessage: e.toString(),
-      );
-    }
-  }
-
-  bool _detectConflict(TaskEntity local, TaskEntity remote) {
-    if (local.version != remote.version) {
-      final localUpdated = local.updatedAt.millisecondsSinceEpoch;
-      final remoteUpdated = remote.updatedAt.millisecondsSinceEpoch;
-      if (localUpdated != remoteUpdated) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Future<void> _fetchRemoteChanges() async {
-    try {
-      final lastSync = await getLastSyncTime();
-      final remoteTasks = await remoteDataSource.getTasksSince(lastSync);
-      
-      for (final remoteTask in remoteTasks) {
-        final localTask = await localDataSource.getTaskById(remoteTask.id);
-        if (localTask == null) {
-          await localDataSource.insertTask(remoteTask);
-        } else if (localTask.syncStatus == AppConstants.syncStatusSynced) {
-          await localDataSource.updateTask(remoteTask);
-        } else if (localTask.syncStatus == AppConstants.syncStatusPending) {
-          final hasConflict = _detectConflict(localTask, remoteTask);
-          if (hasConflict) {
-            await localDataSource.updateTaskSyncStatus(
-              remoteTask.id,
-              AppConstants.syncStatusConflict,
-            );
-          } else {
-            await localDataSource.updateTask(remoteTask);
-          }
-        }
-      }
-      
-      await localDataSource.updateLastSyncTime(DateTime.now());
-    } catch (e) {
-      // Log error pero no falla la sincronización
-    }
-  }
-
-  Future<void> _recordSyncOperation(
-    String entityId,
-    String operation,
-    bool success,
-  ) async {
-    final syncStatus = SyncStatusModel(
-      id: uuid.v4(),
-      entityType: 'task',
-      entityId: entityId,
-      operation: operation,
-      status: success ? 'success' : 'failed',
-      timestamp: DateTime.now(),
-      retryCount: 0,
+    await localDataSource.updateSyncRecordWithError(
+      recordId,
+      'in_progress',
+      record.attempts + 1,
+      DateTime.now().toUtc(),
+      null,
     );
-    await localDataSource.insertSyncStatus(syncStatus);
   }
-}
-
-class _SyncSingleResult {
-  final bool success;
-  final SyncConflict? conflict;
-  final String? errorMessage;
-
-  _SyncSingleResult({
-    required this.success,
-    this.conflict,
-    this.errorMessage,
-  });
-}
-
-class SyncResult extends Equatable {
-  final bool success;
-  final int syncedCount;
-  final int failedCount;
-  final List<SyncConflict> conflicts;
-  final String? errorMessage;
-
-  const SyncResult({
-    required this.success,
-    required this.syncedCount,
-    required this.failedCount,
-    required this.conflicts,
-    this.errorMessage,
-  });
 
   @override
-  List<Object?> get props => [
-        success,
-        syncedCount,
-        failedCount,
-        conflicts,
-        errorMessage,
-      ];
-}
-
-class SyncConflict extends Equatable {
-  final String taskId;
-  final TaskEntity localVersion;
-  final TaskEntity? remoteVersion;
-  final String conflictType;
-
-  const SyncConflict({
-    required this.taskId,
-    required this.localVersion,
-    this.remoteVersion,
-    required this.conflictType,
-  });
+  Future<void> deleteSyncRecord(String recordId) async {
+    await localDataSource.deleteSyncRecord(recordId);
+  }
 
   @override
-  List<Object?> get props => [
-        taskId,
-        localVersion,
-        remoteVersion,
-        conflictType,
-      ];
-}
-
-enum ConflictResolutionStrategy {
-  server,
-  client,
-  manual,
-  lastWriteWins,
-}
-
-
-// === ARCHIVO: lib/presentation/bloc/task/task_event.dart ===
-import 'package:equatable/equatable.dart';
-import '../../../domain/entities/task_entity.dart';
-
-abstract class TaskEvent extends Equatable {
-  const TaskEvent();
+  Future<void> clearCompletedRecords() async {
+    await localDataSource.deleteCompletedRecords();
+  }
 
   @override
-  List<Object?> get props => [];
-}
-
-class LoadTasksEvent extends TaskEvent {
-  final bool forceRefresh;
-  final bool fromRemote;
-
-  const LoadTasksEvent({
-    this.forceRefresh = false,
-    this.fromRemote = false,
-  });
+  Future<int> getPendingCount() async {
+    final records = await localDataSource.getPendingRecords();
+    return records.length;
+  }
 
   @override
-  List<Object?> get props => [forceRefresh, fromRemote];
-}
-
-class LoadTaskByIdEvent extends TaskEvent {
-  final String taskId;
-
-  const LoadTaskByIdEvent({required this.taskId});
+  Future<int> getFailedCount() async {
+    final records = await localDataSource.getFailedRecords();
+    return records.length;
+  }
 
   @override
-  List<Object?> get props => [taskId];
-}
+  Future<List<domain.SyncRecord>> getSyncRecordsByEntityId(String entityId) async {
+    final models = await localDataSource.getSyncRecordsByEntityId(entityId);
+    return models.map(_mapModelToEntity).toList();
+  }
 
-class AddTaskEvent extends TaskEvent {
-  final TaskEntity task;
-
-  const AddTaskEvent({required this.task});
-
-  @override
-  List<Object?> get props => [task];
-}
-
-class UpdateTaskEvent extends TaskEvent {
-  final TaskEntity task;
-  final bool syncImmediately;
-
-  const UpdateTaskEvent({
-    required this.task,
-    this.syncImmediately = false,
-  });
-
-  @override
-  List<Object?> get props => [task, syncImmediately];
-}
-
-class DeleteTaskEvent extends TaskEvent {
-  final String taskId;
-  final bool hardDelete;
-
-  const DeleteTaskEvent({
-    required this.taskId,
-    this.hardDelete = false,
-  });
-
-  @override
-  List<Object?> get props => [taskId, hardDelete];
-}
-
-class RefreshTasksEvent extends TaskEvent {
-  final String? filterStatus;
-  final String? filterPriority;
-
-  const RefreshTasksEvent({
-    this.filterStatus,
-    this.filterPriority,
-  });
-
-  @override
-  List<Object?> get props => [filterStatus, filterPriority];
-}
-
-class FilterTasksEvent extends TaskEvent {
-  final String? status;
-  final String? priority;
-  final String? searchQuery;
-  final DateTime? dueDateFrom;
-  final DateTime? dueDateTo;
-
-  const FilterTasksEvent({
-    this.status,
-    this.priority,
-    this.searchQuery,
-    this.dueDateFrom,
-    this.dueDateTo,
-  });
-
-  @override
-  List<Object?> get props => [status, priority, searchQuery, dueDateFrom, dueDateTo];
-}
-
-class ClearFiltersEvent extends TaskEvent {
-  const ClearFiltersEvent();
-}
-
-class SyncTaskEvent extends TaskEvent {
-  final String taskId;
-
-  const SyncTaskEvent({required this.taskId});
-
-  @override
-  List<Object?> get props => [taskId];
-}
-
-class SyncAllTasksEvent extends TaskEvent {
-  const SyncAllTasksEvent();
-}
-
-class ResolveTaskConflictEvent extends TaskEvent {
-  final String taskId;
-  final String resolutionStrategy;
-
-  const ResolveTaskConflictEvent({
-    required this.taskId,
-    required this.resolutionStrategy,
-  });
-
-  @override
-  List<Object?> get props => [taskId, resolutionStrategy];
-}
-
-class SelectTaskEvent extends TaskEvent {
-  final String taskId;
-
-  const SelectTaskEvent({required this.taskId});
-
-  @override
-  List<Object?> get props => [taskId];
-}
-
-class DeselectTaskEvent extends TaskEvent {
-  final String taskId;
-
-  const DeselectTaskEvent({required this.taskId});
-
-  @override
-  List<Object?> get props => [taskId];
-}
-
-class ClearSelectionEvent extends TaskEvent {
-  const ClearSelectionEvent();
-}
-
-class BulkUpdateTasksEvent extends TaskEvent {
-  final List<String> taskIds;
-  final Map<String, dynamic> updates;
-
-  const BulkUpdateTasksEvent({
-    required this.taskIds,
-    required this.updates,
-  });
-
-  @override
-  List<Object?> get props => [taskIds, updates];
-}
-
-class BulkDeleteTasksEvent extends TaskEvent {
-  final List<String> taskIds;
-
-  const BulkDeleteTasksEvent({required this.taskIds});
-
-  @override
-  List<Object?> get props => [taskIds];
-}
-
-class RetryFailedSyncEvent extends TaskEvent {
-  const RetryFailedSyncEvent();
-}
-
-// === ARCHIVO: lib/presentation/bloc/task/task_state.dart ===
-import 'package:equatable/equatable.dart';
-import '../../../domain/entities/task_entity.dart';
-
-abstract class TaskState extends Equatable {
-  final List<TaskEntity> tasks;
-  final List<TaskEntity> filteredTasks;
-  final Set<String> selectedTaskIds;
-  final bool isLoading;
-  final bool isSyncing;
-  final String? errorMessage;
-  final String? errorCode;
-  final DateTime? lastSyncTime;
-  final TaskFilter currentFilter;
-  final bool hasReachedMax;
-  final int totalCount;
-
-  const TaskState({
-    this.tasks = const [],
-    this.filteredTasks = const [],
-    this.selectedTaskIds = const {},
-    this.isLoading = false,
-    this.isSyncing = false,
-    this.errorMessage,
-    this.errorCode,
-    this.lastSyncTime,
-    this.currentFilter = const TaskFilter(),
-    this.hasReachedMax = false,
-    this.totalCount = 0,
-  });
-
-  @override
-  List<Object?> get props => [
-        tasks,
-        filteredTasks,
-        selectedTaskIds,
-        isLoading,
-        isSyncing,
-        errorMessage,
-        errorCode,
-        lastSyncTime,
-        currentFilter,
-        hasReachedMax,
-        totalCount,
-      ];
-
-  TaskState copyWith({
-    List<TaskEntity>? tasks,
-    List<TaskEntity>? filteredTasks,
-    Set<String>? selectedTaskIds,
-    bool? isLoading,
-    bool? isSyncing,
-    String? errorMessage,
-    String? errorCode,
-    DateTime? lastSyncTime,
-    TaskFilter? currentFilter,
-    bool? hasReachedMax,
-    int? totalCount,
-    bool clearError = false,
-  });
-}
-
-class TaskInitial extends TaskState {
-  const TaskInitial() : super();
-}
-
-class TaskLoading extends TaskState {
-  const TaskLoading({
-    super.tasks,
-    super.filteredTasks,
-    super.selectedTaskIds,
-    super.currentFilter,
-  }) : super(isLoading: true);
-}
-
-class TaskLoaded extends TaskState {
-  const TaskLoaded({
-    required super.tasks,
-    required super.filteredTasks,
-    super.selectedTaskIds,
-    super.isSyncing,
-    super.errorMessage,
-    super.lastSyncTime,
-    super.currentFilter,
-    super.hasReachedMax,
-    super.totalCount,
-  });
-
-  @override
-  TaskLoaded copyWith({
-    List<TaskEntity>? tasks,
-    List<TaskEntity>? filteredTasks,
-    Set<String>? selectedTaskIds,
-    bool? isLoading,
-    bool? isSyncing,
-    String? errorMessage,
-    String? errorCode,
-    DateTime? lastSyncTime,
-    TaskFilter? currentFilter,
-    bool? hasReachedMax,
-    int? totalCount,
-    bool clearError = false,
-  }) {
-    return TaskLoaded(
-      tasks: tasks ?? this.tasks,
-      filteredTasks: filteredTasks ?? this.filteredTasks,
-      selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-      isSyncing: isSyncing ?? this.isSyncing,
-      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      lastSyncTime: lastSyncTime ?? this.lastSyncTime,
-      currentFilter: currentFilter ?? this.currentFilter,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      totalCount: totalCount ?? this.totalCount,
+  domain.SyncRecord _mapModelToEntity(SyncRecordModel model) {
+    return domain.SyncRecord(
+      id: model.id,
+      entityId: model.entityId,
+      entityType: model.entityType,
+      operationType: model.operationType,
+      payload: model.payload,
+      status: model.status,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+      attempts: model.attempts,
+      lastAttemptAt: model.lastAttemptAt,
+      errorMessage: model.errorMessage,
     );
   }
 }
 
-class TaskOperationSuccess extends TaskState {
-  final String operation;
-  final TaskEntity? affectedTask;
-  final List<String>? affectedTaskIds;
 
-  const TaskOperationSuccess({
-    required this.operation,
-    super.tasks,
-    super.filteredTasks,
-    super.selectedTaskIds,
-    super.isSyncing,
-    super.lastSyncTime,
-    super.currentFilter,
-    this.affectedTask,
-    this.affectedTaskIds,
-  });
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        operation,
-        affectedTask,
-        affectedTaskIds,
-      ];
-
-  @override
-  TaskOperationSuccess copyWith({
-    List<TaskEntity>? tasks,
-    List<TaskEntity>? filteredTasks,
-    Set<String>? selectedTaskIds,
-    bool? isLoading,
-    bool? isSyncing,
-    String? errorMessage,
-    String? errorCode,
-    DateTime? lastSyncTime,
-    TaskFilter? currentFilter,
-    bool? hasReachedMax,
-    int? totalCount,
-    bool clearError = false,
-  }) {
-    return TaskOperationSuccess(
-      operation: operation,
-      tasks: tasks ?? this.tasks,
-      filteredTasks: filteredTasks ?? this.filteredTasks,
-      selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-      isSyncing: isSyncing ?? this.isSyncing,
-      lastSyncTime: lastSyncTime ?? this.lastSyncTime,
-      currentFilter: currentFilter ?? this.currentFilter,
-      affectedTask: affectedTask,
-      affectedTaskIds: affectedTaskIds,
-    );
-  }
-}
-
-class TaskError extends TaskState {
-  const TaskError({
-    required String message,
-    String? code,
-    super.tasks,
-    super.filteredTasks,
-    super.selectedTaskIds,
-    super.currentFilter,
-  }) : super(
-          errorMessage: message,
-          errorCode: code,
-          isLoading: false,
-        );
-
-  @override
-  TaskError copyWith({
-    List<TaskEntity>? tasks,
-    List<TaskEntity>? filteredTasks,
-    Set<String>? selectedTaskIds,
-    bool? isLoading,
-    bool? isSyncing,
-    String? errorMessage,
-    String? errorCode,
-    DateTime? lastSyncTime,
-    TaskFilter? currentFilter,
-    bool? hasReachedMax,
-    int? totalCount,
-    bool clearError = false,
-  }) {
-    return TaskError(
-      message: errorMessage ?? this.errorMessage ?? 'Unknown error',
-      code: errorCode ?? this.errorCode,
-      tasks: tasks ?? this.tasks,
-      filteredTasks: filteredTasks ?? this.filteredTasks,
-      selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-      currentFilter: currentFilter ?? this.currentFilter,
-    );
-  }
-}
-
-class TaskFilter extends Equatable {
-  final String? status;
-  final String? priority;
-  final String? searchQuery;
-  final DateTime? dueDateFrom;
-  final DateTime? dueDateTo;
-  final bool showCompleted;
-  final bool showPending;
-  final bool showInProgress;
-
-  const TaskFilter({
-    this.status,
-    this.priority,
-    this.searchQuery,
-    this.dueDateFrom,
-    this.dueDateTo,
-    this.showCompleted = true,
-    this.showPending = true,
-    this.showInProgress = true,
-  });
-
-  bool get hasActiveFilters =>
-      status != null ||
-      priority != null ||
-      (searchQuery != null && searchQuery!.isNotEmpty) ||
-      dueDateFrom != null ||
-      dueDateTo != null;
-
-  @override
-  List<Object?> get props => [
-        status,
-        priority,
-        searchQuery,
-        dueDateFrom,
-        dueDateTo,
-        showCompleted,
-        showPending,
-        showInProgress,
-      ];
-
-  TaskFilter copyWith({
-    String? status,
-    String? priority,
-    String? searchQuery,
-    DateTime? dueDateFrom,
-    DateTime? dueDateTo,
-    bool? showCompleted,
-    bool? showPending,
-    bool? showInProgress,
-    bool clearStatus = false,
-    bool clearPriority = false,
-    bool clearSearchQuery = false,
-    bool clearDueDateFrom = false,
-    bool clearDueDateTo = false,
-  }) {
-    return TaskFilter(
-      status: clearStatus ? null : (status ?? this.status),
-      priority: clearPriority ? null : (priority ?? this.priority),
-      searchQuery: clearSearchQuery ? null : (searchQuery ?? this.searchQuery),
-      dueDateFrom: clearDueDateFrom ? null : (dueDateFrom ?? this.dueDateFrom),
-      dueDateTo: clearDueDateTo ? null : (dueDateTo ?? this.dueDateTo),
-      showCompleted: showCompleted ?? this.showCompleted,
-      showPending: showPending ?? this.showPending,
-      showInProgress: showInProgress ?? this.showInProgress,
-    );
-  }
-}
-
-extension TaskStateCopyWith on TaskState {
-  TaskState copyWith({
-    List<TaskEntity>? tasks,
-    List<TaskEntity>? filteredTasks,
-    Set<String>? selectedTaskIds,
-    bool? isLoading,
-    bool? isSyncing,
-    String? errorMessage,
-    String? errorCode,
-    DateTime? lastSyncTime,
-    TaskFilter? currentFilter,
-    bool? hasReachedMax,
-    int? totalCount,
-    bool clearError = false,
-  }) {
-    if (this is TaskInitial) {
-      return TaskLoaded(
-        tasks: tasks ?? const [],
-        filteredTasks: filteredTasks ?? const [],
-        selectedTaskIds: selectedTaskIds ?? const {},
-        isLoading: isLoading ?? false,
-        isSyncing: isSyncing ?? false,
-        lastSyncTime: lastSyncTime,
-        currentFilter: currentFilter ?? const TaskFilter(),
-        hasReachedMax: hasReachedMax ?? false,
-        totalCount: totalCount ?? 0,
-      );
-    }
-    if (this is TaskLoading) {
-      return TaskLoading(
-        tasks: tasks ?? this.tasks,
-        filteredTasks: filteredTasks ?? this.filteredTasks,
-        selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-        currentFilter: currentFilter ?? this.currentFilter,
-      );
-    }
-    if (this is TaskLoaded) {
-      return TaskLoaded(
-        tasks: tasks ?? this.tasks,
-        filteredTasks: filteredTasks ?? this.filteredTasks,
-        selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-        isLoading: isLoading ?? this.isLoading,
-        isSyncing: isSyncing ?? this.isSyncing,
-        errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-        errorCode: clearError ? null : (errorCode ?? this.errorCode),
-        lastSyncTime: lastSyncTime ?? this.lastSyncTime,
-        currentFilter: currentFilter ?? this.currentFilter,
-        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-        totalCount: totalCount ?? this.totalCount,
-      );
-    }
-    if (this is TaskOperationSuccess) {
-      return TaskOperationSuccess(
-        operation: (this as TaskOperationSuccess).operation,
-        tasks: tasks ?? this.tasks,
-        filteredTasks: filteredTasks ?? this.filteredTasks,
-        selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-        isLoading: isLoading ?? this.isLoading,
-        isSyncing: isSyncing ?? this.isSyncing,
-        errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-        errorCode: clearError ? null : (errorCode ?? this.errorCode),
-        lastSyncTime: lastSyncTime ?? this.lastSyncTime,
-        currentFilter: currentFilter ?? this.currentFilter,
-        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-        totalCount: totalCount ?? this.totalCount,
-      );
-    }
-    return TaskError(
-      message: errorMessage ?? this.errorMessage ?? 'Unknown error',
-      code: errorCode ?? this.errorCode,
-      tasks: tasks ?? this.tasks,
-      filteredTasks: filteredTasks ?? this.filteredTasks,
-      selectedTaskIds: selectedTaskIds ?? this.selectedTaskIds,
-      currentFilter: currentFilter ?? this.currentFilter,
-    );
-  }
-}
-
-// === ARCHIVO: lib/presentation/bloc/task/task_bloc.dart ===
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import '../../../domain/entities/task_entity.dart';
-import '../../../domain/repositories/task_repository.dart';
-import '../../../domain/usecases/get_local_tasks.dart';
-import '../../../domain/usecases/save_task_local.dart';
-import '../../../domain/usecases/sync_tasks.dart';
-import '../../../domain/usecases/resolve_conflict.dart';
-import '../../../core/errors/failures.dart';
-import '../../../core/network/network_info.dart';
-import 'task_event.dart';
-import 'task_state.dart';
-
-class TaskBloc extends Bloc<TaskEvent, TaskState> {
-  final GetLocalTasks getLocalTasks;
-  final SaveTaskLocal saveTaskLocal;
-  final SyncTasks syncTasks;
-  final ResolveConflict resolveConflict;
-  final TaskRepository taskRepository;
-  final NetworkInfo networkInfo;
-
-  static const int _pageSize = 20;
-  int _currentPage = 0;
-
-  TaskBloc({
-    required this.getLocalTasks,
-    required this.saveTaskLocal,
-    required this.syncTasks,
-    required this.resolveConflict,
-    required this.taskRepository,
-    required this.networkInfo,
-  }) : super(const TaskInitial()) {
-    on<LoadTasksEvent>(_onLoadTasks);
-    on<LoadTaskByIdEvent>(_onLoadTaskById);
-    on<AddTaskEvent>(_onAddTask);
-    on<UpdateTaskEvent>(_onUpdateTask);
-    on<DeleteTaskEvent>(_onDeleteTask);
-    on<RefreshTasksEvent>(_onRefreshTasks);
-    on<FilterTasksEvent>(_onFilterTasks);
-    on<ClearFiltersEvent>(_onClearFilters);
-    on<SyncTaskEvent>(_onSyncTask);
-    on<SyncAllTasksEvent>(_onSyncAllTasks);
-    on<ResolveTaskConflictEvent>(_onResolveConflict);
-    on<SelectTaskEvent>(_onSelectTask);
-    on<DeselectTaskEvent>(_onDeselectTask);
-    on<ClearSelectionEvent>(_onClearSelection);
-    on<BulkUpdateTasksEvent>(_onBulkUpdateTasks);
-    on<BulkDeleteTasksEvent>(_onBulkDeleteTasks);
-    on<RetryFailedSyncEvent>(_onRetryFailedSync);
-  }
-
-  Future<void> _onLoadTasks(
-    LoadTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      final isConnected = await networkInfo.isConnected;
-      final List<TaskEntity> tasks;
-
-      if (event.fromRemote && isConnected) {
-        tasks = await taskRepository.getRemoteTasks();
-      } else {
-        tasks = await getLocalTasks(
-          page: _currentPage,
-          pageSize: _pageSize,
-        );
-      }
-
-      final allTasks = event.forceRefresh ? tasks : [...state.tasks, ...tasks];
-      final hasReachedMax = tasks.length < _pageSize;
-
-      final filteredTasks = _applyFilters(allTasks, state.currentFilter);
-
-      emit(TaskLoaded(
-        tasks: allTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: state.selectedTaskIds,
-        hasReachedMax: hasReachedMax,
-        totalCount: allTasks.length,
-        lastSyncTime: isConnected ? DateTime.now() : state.lastSyncTime,
-        currentFilter: state.currentFilter,
-      ));
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al cargar las tareas: ${e.toString()}',
-        code: 'LOAD_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onLoadTaskById(
-    LoadTaskByIdEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      final task = await taskRepository.getTaskById(event.taskId);
-      if (task != null) {
-        emit(TaskOperationSuccess(
-          operation: 'LOADED',
-          affectedTask: task,
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          selectedTaskIds: state.selectedTaskIds,
-          currentFilter: state.currentFilter,
-        ));
-      } else {
-        emit(TaskError(
-          message: 'Tarea no encontrada',
-          code: 'NOT_FOUND',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al cargar la tarea: ${e.toString()}',
-        code: 'LOAD_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onAddTask(
-    AddTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      await saveTaskLocal(task: event.task);
-
-      final updatedTasks = [event.task, ...state.tasks];
-      final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-      emit(TaskOperationSuccess(
-        operation: 'CREATED',
-        affectedTask: event.task,
-        tasks: updatedTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: state.selectedTaskIds,
-        currentFilter: state.currentFilter,
-      ));
-
-      final isConnected = await networkInfo.isConnected;
-      if (isConnected) {
-        add(const SyncAllTasksEvent());
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al crear la tarea: ${e.toString()}',
-        code: 'CREATE_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onUpdateTask(
-    UpdateTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      await saveTaskLocal(task: event.task);
-
-      final updatedTasks = state.tasks.map((task) {
-        return task.id == event.task.id ? event.task : task;
-      }).toList();
-
-      final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-      emit(TaskOperationSuccess(
-        operation: 'UPDATED',
-        affectedTask: event.task,
-        tasks: updatedTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: state.selectedTaskIds,
-        currentFilter: state.currentFilter,
-      ));
-
-      final isConnected = await networkInfo.isConnected;
-      if (event.syncImmediately && isConnected) {
-        add(SyncTaskEvent(taskId: event.task.id));
-      } else if (!isConnected) {
-        add(const SyncAllTasksEvent());
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al actualizar la tarea: ${e.toString()}',
-        code: 'UPDATE_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onDeleteTask(
-    DeleteTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      await taskRepository.deleteTask(event.taskId, hard: event.hardDelete);
-
-      final updatedTasks = state.tasks
-          .where((task) => task.id != event.taskId)
-          .toList();
-
-      final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-      final updatedSelection = Set<String>.from(state.selectedTaskIds)
-        ..remove(event.taskId);
-
-      emit(TaskOperationSuccess(
-        operation: 'DELETED',
-        affectedTaskIds: [event.taskId],
-        tasks: updatedTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: updatedSelection,
-        currentFilter: state.currentFilter,
-      ));
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al eliminar la tarea: ${e.toString()}',
-        code: 'DELETE_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onRefreshTasks(
-    RefreshTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    _currentPage = 0;
-    add(LoadTasksEvent(
-      forceRefresh: true,
-      fromRemote: false,
-    ));
-
-    if (event.filterStatus != null || event.filterPriority != null) {
-      add(FilterTasksEvent(
-        status: event.filterStatus,
-        priority: event.filterPriority,
-      ));
-    }
-  }
-
-  Future<void> _onFilterTasks(
-    FilterTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final newFilter = TaskFilter(
-      status: event.status,
-      priority: event.priority,
-      searchQuery: event.searchQuery,
-      dueDateFrom: event.dueDateFrom,
-      dueDateTo: event.dueDateTo,
-    );
-
-    final filteredTasks = _applyFilters(state.tasks, newFilter);
-
-    emit(TaskLoaded(
-      tasks: state.tasks,
-      filteredTasks: filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      lastSyncTime: state.lastSyncTime,
-      currentFilter: newFilter,
-      totalCount: state.totalCount,
-    ));
-  }
-
-  Future<void> _onClearFilters(
-    ClearFiltersEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoaded(
-      tasks: state.tasks,
-      filteredTasks: state.tasks,
-      selectedTaskIds: state.selectedTaskIds,
-      lastSyncTime: state.lastSyncTime,
-      currentFilter: const TaskFilter(),
-      totalCount: state.totalCount,
-    ));
-  }
-
-  Future<void> _onSyncTask(
-    SyncTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final currentState = state;
-    if (currentState is TaskLoaded) {
-      emit(currentState.copyWith(isSyncing: true));
-    }
-
-    try {
-      final isConnected = await networkInfo.isConnected;
-      if (!isConnected) {
-        emit(TaskError(
-          message: 'No hay conexión a internet para sincronizar',
-          code: 'NO_CONNECTION',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-        return;
-      }
-
-      final result = await syncTasks(taskIds: [event.taskId]);
-
-      if (result.isSuccess) {
-        final updatedTasks = await getLocalTasks(
-          page: 0,
-          pageSize: state.totalCount,
-        );
-        final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-        emit(TaskLoaded(
-          tasks: updatedTasks,
-          filteredTasks: filteredTasks,
-          selectedTaskIds: state.selectedTaskIds,
-          isSyncing: false,
-          lastSyncTime: DateTime.now(),
-          currentFilter: state.currentFilter,
-          totalCount: updatedTasks.length,
-        ));
-      } else {
-        emit(TaskError(
-          message: result.error?.userFriendlyMessage ?? 'Error de sincronización',
-          code: result.error?.failureType ?? 'SYNC_ERROR',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al sincronizar la tarea: ${e.toString()}',
-        code: 'SYNC_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onSyncAllTasks(
-    SyncAllTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final currentState = state;
-    if (currentState is TaskLoaded) {
-      emit(currentState.copyWith(isSyncing: true));
-    }
-
-    try {
-      final isConnected = await networkInfo.isConnected;
-      if (!isConnected) {
-        emit(TaskError(
-          message: 'No hay conexión a internet para sincronizar',
-          code: 'NO_CONNECTION',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-        return;
-      }
-
-      final taskIds = state.tasks.map((t) => t.id).toList();
-      final result = await syncTasks(taskIds: taskIds);
-
-      if (result.isSuccess) {
-        final updatedTasks = await getLocalTasks(
-          page: 0,
-          pageSize: state.totalCount,
-        );
-        final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-        emit(TaskLoaded(
-          tasks: updatedTasks,
-          filteredTasks: filteredTasks,
-          selectedTaskIds: state.selectedTaskIds,
-          isSyncing: false,
-          lastSyncTime: DateTime.now(),
-          currentFilter: state.currentFilter,
-          totalCount: updatedTasks.length,
-        ));
-      } else {
-        emit(TaskError(
-          message: result.error?.userFriendlyMessage ?? 'Error de sincronización',
-          code: result.error?.failureType ?? 'SYNC_ERROR',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al sincronizar las tareas: ${e.toString()}',
-        code: 'SYNC_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onResolveConflict(
-    ResolveTaskConflictEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      final result = await resolveConflict(
-        entityId: event.taskId,
-        strategy: event.resolutionStrategy,
-      );
-
-      if (result.isSuccess) {
-        final updatedTasks = await getLocalTasks(
-          page: 0,
-          pageSize: state.totalCount,
-        );
-        final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-        emit(TaskOperationSuccess(
-          operation: 'CONFLICT_RESOLVED',
-          tasks: updatedTasks,
-          filteredTasks: filteredTasks,
-          selectedTaskIds: state.selectedTaskIds,
-          currentFilter: state.currentFilter,
-        ));
-      } else {
-        emit(TaskError(
-          message: result.error?.userFriendlyMessage ?? 'Error al resolver conflicto',
-          code: result.error?.failureType ?? 'CONFLICT_ERROR',
-          tasks: state.tasks,
-          filteredTasks: state.filteredTasks,
-          currentFilter: state.currentFilter,
-        ));
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error al resolver el conflicto: ${e.toString()}',
-        code: 'CONFLICT_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onSelectTask(
-    SelectTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final updatedSelection = Set<String>.from(state.selectedTaskIds)
-      ..add(event.taskId);
-
-    emit(TaskLoaded(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: updatedSelection,
-      lastSyncTime: state.lastSyncTime,
-      currentFilter: state.currentFilter,
-      totalCount: state.totalCount,
-    ));
-  }
-
-  Future<void> _onDeselectTask(
-    DeselectTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final updatedSelection = Set<String>.from(state.selectedTaskIds)
-      ..remove(event.taskId);
-
-    emit(TaskLoaded(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: updatedSelection,
-      lastSyncTime: state.lastSyncTime,
-      currentFilter: state.currentFilter,
-      totalCount: state.totalCount,
-    ));
-  }
-
-  Future<void> _onClearSelection(
-    ClearSelectionEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoaded(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: const {},
-      lastSyncTime: state.lastSyncTime,
-      currentFilter: state.currentFilter,
-      totalCount: state.totalCount,
-    ));
-  }
-
-  Future<void> _onBulkUpdateTasks(
-    BulkUpdateTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      for (final taskId in event.taskIds) {
-        final task = state.tasks.firstWhere((t) => t.id == taskId);
-        final updatedTask = task.copyWith(
-          ...event.updates.map((key, value) => MapEntry(
-            key == 'status' ? 'status' : key,
-            value,
-          )),
-        );
-        await saveTaskLocal(task: updatedTask);
-      }
-
-      final updatedTasks = state.tasks.map((task) {
-        if (event.taskIds.contains(task.id)) {
-          return task.copyWith(
-            ...event.updates.map((key, value) => MapEntry(key, value)),
-          );
-        }
-        return task;
-      }).toList();
-
-      final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-      emit(TaskOperationSuccess(
-        operation: 'BULK_UPDATED',
-        affectedTaskIds: event.taskIds,
-        tasks: updatedTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: state.selectedTaskIds,
-        currentFilter: state.currentFilter,
-      ));
-
-      final isConnected = await networkInfo.isConnected;
-      if (isConnected) {
-        add(const SyncAllTasksEvent());
-      }
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error en actualización masiva: ${e.toString()}',
-        code: 'BULK_UPDATE_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onBulkDeleteTasks(
-    BulkDeleteTasksEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    emit(TaskLoading(
-      tasks: state.tasks,
-      filteredTasks: state.filteredTasks,
-      selectedTaskIds: state.selectedTaskIds,
-      currentFilter: state.currentFilter,
-    ));
-
-    try {
-      for (final taskId in event.taskIds) {
-        await taskRepository.deleteTask(taskId, hard: true);
-      }
-
-      final updatedTasks = state.tasks
-          .where((task) => !event.taskIds.contains(task.id))
-          .toList();
-
-      final filteredTasks = _applyFilters(updatedTasks, state.currentFilter);
-
-      emit(TaskOperationSuccess(
-        operation: 'BULK_DELETED',
-        affectedTaskIds: event.taskIds,
-        tasks: updatedTasks,
-        filteredTasks: filteredTasks,
-        selectedTaskIds: const {},
-        currentFilter: state.currentFilter,
-      ));
-    } on Failure catch (e) {
-      emit(TaskError(
-        message: e.userFriendlyMessage,
-        code: e.failureType,
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    } catch (e) {
-      emit(TaskError(
-        message: 'Error en eliminación masiva: ${e.toString()}',
-        code: 'BULK_DELETE_ERROR',
-        tasks: state.tasks,
-        filteredTasks: state.filteredTasks,
-        currentFilter: state.currentFilter,
-      ));
-    }
-  }
-
-  Future<void> _onRetryFailedSync(
-    RetryFailedSyncEvent event,
-    Emitter<TaskState> emit,
-  ) async {
-    final failedTasks = state.tasks
-        .where((task) => task.syncStatus == 'failed')
-        .map((task) => task.id)
-        .toList();
-
-    if (failedTasks.isEmpty) {
-      return;
-    }
-
-    final isConnected = await networkInfo.isConnected;
-    if (isConnected) {
-      final result = await syncTasks(taskIds: failedTasks);
-      if (result.isSuccess) {
-        add(const LoadTasksEvent(forceRefresh: true));
-      }
-    }
-  }
-
-  List<TaskEntity> _applyFilters(
-    List<TaskEntity> tasks,
-    TaskFilter filter,
-  ) {
-    var filtered = tasks;
-
-    if (filter.status != null) {
-      filtered = filtered.where((t) => t.status == filter.status).toList();
-    }
-
-    if (filter.priority != null) {
-      filtered = filtered.where((t) => t.priority == filter.priority).toList();
-    }
-
-    if (filter.searchQuery != null && filter.searchQuery!.isNotEmpty) {
-      final query = filter.searchQuery!.toLowerCase();
-      filtered = filtered.where((t) {
-        return t.title.toLowerCase().contains(query) ||
-            (t.description?.toLowerCase().contains(query) ?? false);
-      }).toList();
-    }
-
-    if (filter.dueDateFrom != null) {
-      filtered = filtered.where((t) {
-        return t.dueDate != null && t.dueDate!.isAfter(filter.dueDateFrom!);
-      }).toList();
-    }
-
-    if (filter.dueDateTo != null) {
-      filtered = filtered.where((t) {
-        return t.dueDate != null && t.dueDate!.isBefore(filter.dueDateTo!);
-      }).toList();
-    }
-
-    if (!filter.showCompleted) {
-      filtered = filtered.where((t) => t.status != 'completed').toList();
-    }
-
-    if (!filter.showPending) {
-      filtered = filtered.where((t) => t.status != 'pending').toList();
-    }
-
-    if (!filter.showInProgress) {
-      filtered = filtered.where((t) => t.status != 'in_progress').toList();
-    }
-
-    return filtered;
-  }
-}
-
-
-// === ARCHIVO: lib/presentation/bloc/sync/sync_event.dart ===
-import 'package:equatable/equatable.dart';
-
-abstract class SyncEvent extends Equatable {
-  const SyncEvent();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class ConnectionChangedEvent extends SyncEvent {
-  final bool isConnected;
-  final String? connectionType;
-
-  const ConnectionChangedEvent({
-    required this.isConnected,
-    this.connectionType,
-  });
-
-  @override
-  List<Object?> get props => [isConnected, connectionType];
-}
-
-class SyncRequestedEvent extends SyncEvent {
-  final bool forceFullSync;
-
-  const SyncRequestedEvent({
-    this.forceFullSync = false,
-  });
-
-  @override
-  List<Object?> get props => [forceFullSync];
-}
-
-class SyncStartedEvent extends SyncEvent {
-  final int pendingItemsCount;
-
-  const SyncStartedEvent({
-    required this.pendingItemsCount,
-  });
-
-  @override
-  List<Object?> get props => [pendingItemsCount];
-}
-
-class SyncProgressEvent extends SyncEvent {
-  final int processedItems;
-  final int totalItems;
-  final String? currentItemId;
-
-  const SyncProgressEvent({
-    required this.processedItems,
-    required this.totalItems,
-    this.currentItemId,
-  });
-
-  double get progressPercentage =>
-      totalItems > 0 ? (processedItems / totalItems) * 100 : 0;
-
-  @override
-  List<Object?> get props => [processedItems, totalItems, currentItemId];
-}
-
-class SyncCompletedEvent extends SyncEvent {
-  final int syncedItemsCount;
-  final Duration syncDuration;
-  final List<String>? conflictIds;
-
-  const SyncCompletedEvent({
-    required this.syncedItemsCount,
-    required this.syncDuration,
-    this.conflictIds,
-  });
-
-  @override
-  List<Object?> get props => [syncedItemsCount, syncDuration, conflictIds];
-}
-
-class SyncFailedEvent extends SyncEvent {
-  final String errorMessage;
-  final String? errorCode;
-  final int retryCount;
-  final bool canRetry;
-
-  const SyncFailedEvent({
-    required this.errorMessage,
-    this.errorCode,
-    this.retryCount = 0,
-    this.canRetry = true,
-  });
-
-  @override
-  List<Object?> get props => [errorMessage, errorCode, retryCount, canRetry];
-}
-
-class ConflictDetectedEvent extends SyncEvent {
-  final String entityId;
-  final String entityType;
-  final dynamic localVersion;
-  final dynamic remoteVersion;
-  final String conflictType;
-
-  const ConflictDetectedEvent({
-    required this.entityId,
-    required this.entityType,
-    required this.localVersion,
-    required this.remoteVersion,
-    required this.conflictType,
-  });
-
-  @override
-  List<Object?> get props =>
-      [entityId, entityType, localVersion, remoteVersion, conflictType];
-}
-
-class ConflictResolvedEvent extends SyncEvent {
-  final String entityId;
-  final String resolutionStrategy;
-  final dynamic resolvedVersion;
-
-  const ConflictResolvedEvent({
-    required this.entityId,
-    required this.resolutionStrategy,
-    required this.resolvedVersion,
-  });
-
-  @override
-  List<Object?> get props => [entityId, resolutionStrategy, resolvedVersion];
-}
-
-class SyncStatusCheckEvent extends SyncEvent {
-  const SyncStatusCheckEvent();
-}
-
-class RetrySyncEvent extends SyncEvent {
-  const RetrySyncEvent();
-}
-
-// === ARCHIVO: lib/presentation/bloc/sync/sync_state.dart ===
-import 'package:equatable/equatable.dart';
-import '../../../domain/entities/sync_status_entity.dart';
-
-abstract class SyncState extends Equatable {
-  final bool isConnected;
-  final String? connectionType;
-  final DateTime? lastSyncTime;
-  final int pendingChangesCount;
-
-  const SyncState({
-    required this.isConnected,
-    this.connectionType,
-    this.lastSyncTime,
-    this.pendingChangesCount = 0,
-  });
-
-  @override
-  List<Object?> get props => [
-        isConnected,
-        connectionType,
-        lastSyncTime,
-        pendingChangesCount,
-      ];
-}
-
-class SyncInitial extends SyncState {
-  const SyncInitial()
-      : super(
-          isConnected: false,
-          pendingChangesCount: 0,
-        );
-}
-
-class SyncOffline extends SyncState {
-  const SyncOffline({
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  }) : super(isConnected: false, connectionType: null);
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        'offline',
-      ];
-}
-
-class SyncOnline extends SyncState {
-  const SyncOnline({
-    super.connectionType,
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  }) : super(isConnected: true);
-
-  bool get hasPendingChanges => pendingChangesCount > 0;
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        'online',
-      ];
-}
-
-class SyncInProgress extends SyncState {
-  final int totalItems;
-  final int processedItems;
-  final String? currentItemId;
-  final String? currentOperation;
-  final DateTime startTime;
-
-  const SyncInProgress({
-    required super.isConnected,
-    super.connectionType,
-    required this.totalItems,
-    required this.processedItems,
-    this.currentItemId,
-    this.currentOperation,
-    required this.startTime,
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  });
-
-  double get progressPercentage =>
-      totalItems > 0 ? (processedItems / totalItems) * 100 : 0;
-
-  Duration get elapsedTime => DateTime.now().difference(startTime);
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        totalItems,
-        processedItems,
-        currentItemId,
-        currentOperation,
-        startTime,
-      ];
-}
-
-class SyncCompleted extends SyncState {
-  final int syncedItemsCount;
-  final Duration syncDuration;
-  final List<String>? conflictIds;
-  final bool hasConflicts;
-
-  const SyncCompleted({
-    required this.syncedItemsCount,
-    required this.syncDuration,
-    this.conflictIds,
-    super.lastSyncTime,
-    super.pendingChangesCount = 0,
-  })  : hasConflicts = conflictIds != null && conflictIds.isNotEmpty,
-        super(isConnected: true);
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        syncedItemsCount,
-        syncDuration,
-        conflictIds,
-        hasConflicts,
-      ];
-}
-
-class SyncFailure extends SyncState {
-  final String errorMessage;
-  final String? errorCode;
-  final int retryCount;
-  final bool canRetry;
-  final List<SyncStatusEntity>? failedItems;
-
-  const SyncFailure({
-    required this.errorMessage,
-    this.errorCode,
-    this.retryCount = 0,
-    this.canRetry = true,
-    this.failedItems,
-    super.isConnected,
-    super.connectionType,
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  });
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        errorMessage,
-        errorCode,
-        retryCount,
-        canRetry,
-        failedItems,
-      ];
-}
-
-class SyncConflict extends SyncState {
-  final String entityId;
-  final String entityType;
-  final dynamic localVersion;
-  final dynamic remoteVersion;
-  final String conflictType;
-  final List<SyncStatusEntity> pendingSyncItems;
-
-  const SyncConflict({
-    required this.entityId,
-    required this.entityType,
-    required this.localVersion,
-    required this.remoteVersion,
-    required this.conflictType,
-    required this.pendingSyncItems,
-    super.isConnected,
-    super.connectionType,
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  });
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        entityId,
-        entityType,
-        localVersion,
-        remoteVersion,
-        conflictType,
-        pendingSyncItems,
-      ];
-}
-
-class SyncWaitingForRetry extends SyncState {
-  final DateTime? nextRetryAt;
-  final int currentRetryCount;
-  final String lastError;
-
-  const SyncWaitingForRetry({
-    this.nextRetryAt,
-    this.currentRetryCount = 0,
-    required this.lastError,
-    super.isConnected,
-    super.connectionType,
-    super.lastSyncTime,
-    super.pendingChangesCount,
-  });
-
-  Duration? get timeUntilRetry =>
-      nextRetryAt != null ? nextRetryAt!.difference(DateTime.now()) : null;
-
-  bool get canRetryNow =>
-      nextRetryAt == null || DateTime.now().isAfter(nextRetryAt!);
-
-  @override
-  List<Object?> get props => [
-        ...super.props,
-        nextRetryAt,
-        currentRetryCount,
-        lastError,
-      ];
-}
-
-// === ARCHIVO: lib/presentation/bloc/sync/sync_bloc.dart ===
-import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import '../../../core/network/network_info.dart';
-import '../../../core/errors/failures.dart';
-import '../../../domain/usecases/sync_tasks.dart';
-import '../../../domain/usecases/resolve_conflict.dart';
-import '../../../domain/repositories/sync_repository.dart';
-import '../../../domain/entities/sync_status_entity.dart';
-import '../../../core/constants/app_constants.dart';
-import 'sync_event.dart';
-import 'sync_state.dart';
-
-class SyncBloc extends Bloc<SyncEvent, SyncState> {
-  final NetworkInfo networkInfo;
-  final SyncTasks syncTasksUseCase;
-  final ResolveConflict resolveConflictUseCase;
-  final SyncRepository syncRepository;
-
-  StreamSubscription<bool>? _connectivitySubscription;
-  Timer? _retryTimer;
-  Timer? _periodicSyncTimer;
-  int _retryCount = 0;
-  DateTime? _lastSyncTime;
-
-  SyncBloc({
-    required this.networkInfo,
-    required this.syncTasksUseCase,
-    required this.resolveConflictUseCase,
-    required this.syncRepository,
-  }) : super(const SyncInitial()) {
-    on<SyncStatusCheckEvent>(_onSyncStatusCheck);
-    on<ConnectionChangedEvent>(_onConnectionChanged);
-    on<SyncRequestedEvent>(_onSyncRequested);
-    on<SyncStartedEvent>(_onSyncStarted);
-    on<SyncProgressEvent>(_onSyncProgress);
-    on<SyncCompletedEvent>(_onSyncCompleted);
-    on<SyncFailedEvent>(_onSyncFailed);
-    on<ConflictDetectedEvent>(_onConflictDetected);
-    on<ConflictResolvedEvent>(_onConflictResolved);
-    on<RetrySyncEvent>(_onRetrySync);
-
-    _initializeConnectivityListener();
-    _initializePeriodicSync();
-  }
-
-  void _initializeConnectivityListener() {
-    _connectivitySubscription = networkInfo.onConnectivityChanged.listen(
-      (isConnected) {
-        add(ConnectionChangedEvent(
-          isConnected: isConnected,
-          connectionType: isConnected ? 'network' : null,
-        ));
-      },
-    );
-  }
-
-  void _initializePeriodicSync() {
-    if (AppConstants.enableAutoSync) {
-      _periodicSyncTimer = Timer.periodic(
-        AppConstants.networkCheckInterval,
-        (_) => _checkAndSync(),
-      );
-    }
-  }
-
-  Future<void> _checkAndSync() async {
-    final isConnected = await networkInfo.isConnected;
-    if (isConnected && AppConstants.enableAutoSync) {
-      final pendingCount = await _getPendingChangesCount();
-      if (pendingCount > 0) {
-        add(const SyncRequestedEvent());
-      }
-    }
-  }
-
-  Future<int> _getPendingChangesCount() async {
-    try {
-      final pendingItems = await syncRepository.getPendingSyncItems();
-      return pendingItems.length;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  Future<void> _onSyncStatusCheck(
-    SyncStatusCheckEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    try {
-      final isConnected = await networkInfo.isConnected;
-      final pendingCount = await _getPendingChangesCount();
-
-      if (isConnected) {
-        final connectivityResult = await networkInfo.connectivityResult;
-        emit(SyncOnline(
-          connectionType: connectivityResult.name,
-          lastSyncTime: _lastSyncTime,
-          pendingChangesCount: pendingCount,
-        ));
-      } else {
-        emit(SyncOffline(
-          lastSyncTime: _lastSyncTime,
-          pendingChangesCount: pendingCount,
-        ));
-      }
-    } catch (e) {
-      emit(SyncFailure(
-        errorMessage: 'Failed to check sync status: ${e.toString()}',
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-      ));
-    }
-  }
-
-  Future<void> _onConnectionChanged(
-    ConnectionChangedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    if (event.isConnected) {
-      final pendingCount = await _getPendingChangesCount();
-      emit(SyncOnline(
-        connectionType: event.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: pendingCount,
-      ));
-
-      if (pendingCount > 0 && AppConstants.enableAutoSync) {
-        add(const SyncRequestedEvent());
-      }
-    } else {
-      emit(SyncOffline(
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-    }
-  }
-
-  Future<void> _onSyncRequested(
-    SyncRequestedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      emit(SyncOffline(
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-      return;
-    }
-
-    try {
-      final pendingCount = await _getPendingChangesCount();
-      if (pendingCount == 0) {
-        emit(SyncOnline(
-          connectionType: state.connectionType,
-          lastSyncTime: _lastSyncTime,
-          pendingChangesCount: 0,
-        ));
-        return;
-      }
-
-      add(SyncStartedEvent(pendingItemsCount: pendingCount));
-
-      final result = await syncTasksUseCase(
-        forceFullSync: event.forceFullSync,
-      );
-
-      result.fold(
-        (failure) {
-          add(SyncFailedEvent(
-            errorMessage: failure.userFriendlyMessage,
-            errorCode: failure.code,
-            retryCount: _retryCount,
-            canRetry: failure.isRecoverable,
-          ));
-        },
-        (syncResult) {
-          _lastSyncTime = DateTime.now();
-          _retryCount = 0;
-
-          add(SyncCompletedEvent(
-            syncedItemsCount: syncResult.syncedCount,
-            syncDuration: syncResult.duration,
-            conflictIds: syncResult.conflictIds,
-          ));
-        },
-      );
-    } catch (e) {
-      add(SyncFailedEvent(
-        errorMessage: 'Sync failed: ${e.toString()}',
-        retryCount: _retryCount,
-        canRetry: true,
-      ));
-    }
-  }
-
-  Future<void> _onSyncStarted(
-    SyncStartedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    emit(SyncInProgress(
-      isConnected: state.isConnected,
-      connectionType: state.connectionType,
-      totalItems: event.pendingItemsCount,
-      processedItems: 0,
-      currentOperation: 'Initializing sync...',
-      startTime: DateTime.now(),
-      lastSyncTime: _lastSyncTime,
-      pendingChangesCount: event.pendingItemsCount,
-    ));
-  }
-
-  Future<void> _onSyncProgress(
-    SyncProgressEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    if (state is SyncInProgress) {
-      final currentState = state as SyncInProgress;
-      emit(SyncInProgress(
-        isConnected: currentState.isConnected,
-        connectionType: currentState.connectionType,
-        totalItems: event.totalItems,
-        processedItems: event.processedItems,
-        currentItemId: event.currentItemId,
-        currentOperation: 'Syncing item ${event.processedItems}/${event.totalItems}',
-        startTime: currentState.startTime,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: currentState.pendingChangesCount,
-      ));
-    }
-  }
-
-  Future<void> _onSyncCompleted(
-    SyncCompletedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    final pendingCount = await _getPendingChangesCount();
-
-    if (event.conflictIds != null && event.conflictIds!.isNotEmpty) {
-      emit(SyncCompleted(
-        syncedItemsCount: event.syncedItemsCount,
-        syncDuration: event.syncDuration,
-        conflictIds: event.conflictIds,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: pendingCount,
-      ));
-    } else {
-      emit(SyncCompleted(
-        syncedItemsCount: event.syncedItemsCount,
-        syncDuration: event.syncDuration,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: pendingCount,
-      ));
-    }
-  }
-
-  Future<void> _onSyncFailed(
-    SyncFailedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    _retryCount = event.retryCount;
-
-    if (event.canRetry && _retryCount < AppConstants.maxRetryAttempts) {
-      final nextRetry = DateTime.now().add(
-        Duration(milliseconds: AppConstants.retryDelayMilliseconds),
-      );
-
-      emit(SyncWaitingForRetry(
-        nextRetryAt: nextRetry,
-        currentRetryCount: _retryCount,
-        lastError: event.errorMessage,
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-
-      _scheduleRetry(nextRetry);
-    } else {
-      emit(SyncFailure(
-        errorMessage: event.errorMessage,
-        errorCode: event.errorCode,
-        retryCount: _retryCount,
-        canRetry: false,
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-    }
-  }
-
-  void _scheduleRetry(DateTime nextRetryAt) {
-    _retryTimer?.cancel();
-    final delay = nextRetryAt.difference(DateTime.now());
-    if (delay.isNegative) {
-      add(const RetrySyncEvent());
-      return;
-    }
-
-    _retryTimer = Timer(delay, () {
-      add(const RetrySyncEvent());
-    });
-  }
-
-  Future<void> _onRetrySync(
-    RetrySyncEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    add(SyncRequestedEvent(forceFullSync: false));
-  }
-
-  Future<void> _onConflictDetected(
-    ConflictDetectedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    try {
-      final pendingItems = await syncRepository.getPendingSyncItems();
-
-      emit(SyncConflict(
-        entityId: event.entityId,
-        entityType: event.entityType,
-        localVersion: event.localVersion,
-        remoteVersion: event.remoteVersion,
-        conflictType: event.conflictType,
-        pendingSyncItems: pendingItems,
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-    } catch (e) {
-      emit(SyncFailure(
-        errorMessage: 'Failed to handle conflict: ${e.toString()}',
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-    }
-  }
-
-  Future<void> _onConflictResolved(
-    ConflictResolvedEvent event,
-    Emitter<SyncState> emit,
-  ) async {
-    try {
-      await resolveConflictUseCase(
-        entityId: event.entityId,
-        resolutionStrategy: event.resolutionStrategy,
-        resolvedData: event.resolvedVersion,
-      );
-
-      final pendingCount = await _getPendingChangesCount();
-
-      if (state.isConnected) {
-        emit(SyncOnline(
-          connectionType: state.connectionType,
-          lastSyncTime: _lastSyncTime,
-          pendingChangesCount: pendingCount,
-        ));
-      } else {
-        emit(SyncOffline(
-          lastSyncTime: _lastSyncTime,
-          pendingChangesCount: pendingCount,
-        ));
-      }
-    } catch (e) {
-      emit(SyncFailure(
-        errorMessage: 'Failed to resolve conflict: ${e.toString()}',
-        isConnected: state.isConnected,
-        connectionType: state.connectionType,
-        lastSyncTime: _lastSyncTime,
-        pendingChangesCount: state.pendingChangesCount,
-      ));
-    }
-  }
-
-  @override
-  Future<void> close() {
-    _connectivitySubscription?.cancel();
-    _retryTimer?.cancel();
-    _periodicSyncTimer?.cancel();
-    return super.close();
-  }
-}
-
-
-// === ARCHIVO: lib/presentation/pages/home_page.dart ===
-package field_app.presentation.pages;
-
+// === ARCHIVO: lib/presentation/screens/home_screen.dart ===
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/presentation/bloc/task/task_bloc.dart';
-import 'package:field_app/presentation/bloc/sync/sync_bloc.dart';
-import 'package:field_app/presentation/widgets/task_card.dart';
-import 'package:field_app/presentation/widgets/sync_indicator.dart';
-import 'package:field_app/presentation/widgets/offline_banner.dart';
-import 'package:field_app/presentation/pages/task_list_page.dart';
-import 'package:field_app/presentation/pages/task_detail_page.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
+import 'package:provider/provider.dart';
+import 'package:offline_field_app/domain/entities/transaction.dart';
+import 'package:offline_field_app/presentation/providers/transaction_provider.dart';
+import 'package:offline_field_app/presentation/providers/sync_provider.dart';
+import 'package:offline_field_app/presentation/widgets/transaction_tile.dart';
+import 'package:offline_field_app/presentation/widgets/connectivity_banner.dart';
+import 'package:offline_field_app/presentation/screens/transaction_form_screen.dart';
+import 'package:offline_field_app/presentation/screens/sync_status_screen.dart';
+import 'package:offline_field_app/core/constants/app_constants.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<TaskBloc>().add(LoadTasks());
-    context.read<SyncBloc>().add(StartSyncMonitoring());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadTransactions();
+    });
+  }
+
+  Future<void> _loadTransactions() async {
+    final transactionProvider = context.read<TransactionProvider>();
+    await transactionProvider.loadTransactions();
+  }
+
+  Future<void> _refreshTransactions() async {
+    await _loadTransactions();
+  }
+
+  void _navigateToTransactionForm({Transaction? transaction}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TransactionFormScreen(transaction: transaction),
+      ),
+    );
+  }
+
+  void _navigateToSyncStatus() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SyncStatusScreen(),
+      ),
+    );
   }
 
   @override
@@ -6947,1945 +5759,1272 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppConstants.appName),
-        backgroundColor: AppConstants.primaryColor,
-        actions: const [
-          SyncIndicator(),
-          SizedBox(width: 8),
+        backgroundColor: Color(AppConstants.primaryColor),
+        actions: [
+          Consumer<SyncProvider>(
+            builder: (context, syncProvider, child) {
+              final pendingCount = syncProvider.pendingOperations.length;
+              return Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.sync),
+                    onPressed: _navigateToSyncStatus,
+                    tooltip: 'Estado de sincronización',
+                  ),
+                  if (pendingCount > 0)
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 18,
+                          minHeight: 18,
+                        ),
+                        child: Text(
+                          pendingCount.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
         ],
       ),
       body: Column(
         children: [
-          BlocBuilder<SyncBloc, SyncState>(
-            builder: (context, state) {
-              if (!state.isConnected) {
-                return const OfflineBanner();
-              }
-              return const SizedBox.shrink();
-            },
-          ),
+          const ConnectivityBanner(),
           Expanded(
-            child: _buildBody(),
+            child: Consumer<TransactionProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (provider.error != null) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          size: 64,
+                          color: Color(AppConstants.errorColor),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          provider.error!,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: _loadTransactions,
+                          child: const Text('Reintentar'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                final transactions = provider.transactions;
+
+                if (transactions.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.receipt_long_outlined,
+                          size: 80,
+                          color: Colors.grey.shade400,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No hay transacciones',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: Colors.grey.shade600,
+                              ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Toca el botón + para crear una',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Colors.grey.shade500,
+                              ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return RefreshIndicator(
+                  onRefresh: _refreshTransactions,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction = transactions[index];
+                      return TransactionTile(
+                        transaction: transaction,
+                        onTap: () => _navigateToTransactionForm(transaction: transaction),
+                        onDelete: () => _confirmDelete(transaction),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _navigateToTaskDetail(context, null),
-        icon: const Icon(Icons.add),
-        label: const Text('Nueva Tarea'),
-        backgroundColor: AppConstants.primaryColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _navigateToTransactionForm(),
+        backgroundColor: Color(AppConstants.primaryColor),
+        child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Inicio',
+    );
+  }
+
+  Future<void> _confirmDelete(Transaction transaction) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmar eliminación'),
+        content: Text('¿Estás seguro de eliminar la transacción ${transaction.id}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancelar'),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.task_outlined),
-            selectedIcon: Icon(Icons.task),
-            label: 'Tareas',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.sync_outlined),
-            selectedIcon: Icon(Icons.sync),
-            label: 'Sincronizar',
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Color(AppConstants.errorColor),
+            ),
+            child: const Text('Eliminar'),
           ),
         ],
       ),
     );
-  }
 
-  Widget _buildBody() {
-    switch (_selectedIndex) {
-      case 0:
-        return _buildDashboard();
-      case 1:
-        return const TaskListPage();
-      case 2:
-        return _buildSyncSection();
-      default:
-        return _buildDashboard();
-    }
-  }
-
-  Widget _buildDashboard() {
-    return BlocBuilder<TaskBloc, TaskState>(
-      builder: (context, state) {
-        if (state is TaskLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (state is TaskError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppConstants.errorColor,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  state.message,
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<TaskBloc>().add(LoadTasks());
-                  },
-                  child: const Text('Reintentar'),
-                ),
-              ],
-            ),
-          );
-        }
-
-        if (state is TaskLoaded) {
-          return _buildDashboardContent(state.tasks);
-        }
-
-        return const Center(
-          child: Text('Cargando tareas...'),
-        );
-      },
-    );
-  }
-
-  Widget _buildDashboardContent(List<TaskEntity> tasks) {
-    final pendingTasks = tasks.where((t) => t.status == AppConstants.taskStatusPending).toList();
-    final inProgressTasks = tasks.where((t) => t.status == AppConstants.taskStatusInProgress).toList();
-    final completedTasks = tasks.where((t) => t.status == AppConstants.taskStatusCompleted).toList();
-    final highPriorityTasks = tasks.where((t) => t.priority == AppConstants.taskPriorityHigh && t.status != AppConstants.taskStatusCompleted).toList();
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildWelcomeSection(),
-          const SizedBox(height: 24),
-          _buildQuickStatsSection(pendingTasks.length, inProgressTasks.length, completedTasks.length),
-          const SizedBox(height: 24),
-          if (highPriorityTasks.isNotEmpty) ...[
-            _buildHighPrioritySection(highPriorityTasks),
-            const SizedBox(height: 24),
-          ],
-          _buildRecentTasksSection(tasks.take(5).toList()),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWelcomeSection() {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.wb_sunny,
-                  color: AppConstants.primaryColor,
-                  size: 32,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  'Bienvenido a ${AppConstants.appName}',
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Gestiona tus tareas de campo sin conexión y sincroniza cuando tengas internet.',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildQuickStatsSection(int pending, int inProgress, int completed) {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildStatCard(
-            'Pendientes',
-            pending.toString(),
-            Icons.pending_actions,
-            AppConstants.warningColor,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildStatCard(
-            'En Progreso',
-            inProgress.toString(),
-            Icons.play_circle_outline,
-            AppConstants.primaryColor,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _buildStatCard(
-            'Completadas',
-            completed.toString(),
-            Icons.check_circle_outline,
-            Colors.green,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHighPrioritySection(List<TaskEntity> tasks) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.priority_high, color: AppConstants.errorColor),
-            const SizedBox(width: 8),
-            const Text(
-              'Tareas Prioritarias',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        ...tasks.map((task) => Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: TaskCard(
-            task: task,
-            onTap: () => _navigateToTaskDetail(context, task),
-          ),
-        )),
-      ],
-    );
-  }
-
-  Widget _buildRecentTasksSection(List<TaskEntity> tasks) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Tareas Recientes',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 12),
-        if (tasks.isEmpty)
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.all(32),
-              child: Column(
-                children: [
-                  Icon(Icons.inbox, size: 64, color: Colors.grey),
-                  SizedBox(height: 16),
-                  Text(
-                    'No hay tareas recientes',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-          )
-        else
-          ...tasks.map((task) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: TaskCard(
-              task: task,
-              onTap: () => _navigateToTaskDetail(context, task),
-            ),
-          )),
-      ],
-    );
-  }
-
-  Widget _buildSyncSection() {
-    return BlocBuilder<SyncBloc, SyncState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSyncStatusCard(state),
-              const SizedBox(height: 24),
-              _buildSyncActionsCard(state),
-              const SizedBox(height: 24),
-              _buildSyncHistoryCard(state),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildSyncStatusCard(SyncState state) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  state.isConnected ? Icons.cloud_done : Icons.cloud_off,
-                  color: state.isConnected ? Colors.green : AppConstants.errorColor,
-                  size: 32,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  state.isConnected ? 'Conectado' : 'Sin Conexión',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: state.isConnected ? Colors.green : AppConstants.errorColor,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildStatusRow('Estado de sincronización', state.syncStatus),
-            _buildStatusRow('Última sincronización', _formatDateTime(state.lastSyncTime)),
-            _buildStatusRow('Pendientes', state.pendingSyncCount.toString()),
-            _buildStatusRow('Conflictos', state.conflictCount.toString()),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: const TextStyle(color: Colors.grey)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSyncActionsCard(SyncState state) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Acciones de Sincronización',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: state.isSyncing || !state.isConnected
-                    ? null
-                    : () {
-                        context.read<SyncBloc>().add(TriggerManualSync());
-                      },
-                icon: state.isSyncing
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.sync),
-                label: Text(state.isSyncing ? 'Sincronizando...' : 'Sincronizar Ahora'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppConstants.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: state.isConnected
-                    ? null
-                    : () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('No hay conexión a internet'),
-                            backgroundColor: AppConstants.warningColor,
-                          ),
-                        );
-                      },
-                icon: const Icon(Icons.cloud_upload),
-                label: const Text('Forzar Subida'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSyncHistoryCard(SyncState state) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Historial de Sincronización',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (state.syncHistory.isEmpty)
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'No hay historial de sincronización',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              )
-            else
-              ...state.syncHistory.take(10).map((entry) => ListTile(
-                leading: Icon(
-                  entry['success'] == true ? Icons.check_circle : Icons.error,
-                  color: entry['success'] == true ? Colors.green : AppConstants.errorColor,
-                ),
-                title: Text(entry['message'] ?? 'Sincronización'),
-                subtitle: Text(_formatDateTime(entry['timestamp'])),
-                contentPadding: EdgeInsets.zero,
-              )),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _navigateToTaskDetail(BuildContext context, TaskEntity? task) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TaskDetailPage(task: task),
-      ),
-    );
-  }
-
-  String _formatDateTime(DateTime? dateTime) {
-    if (dateTime == null) return 'Nunca';
-    final now = DateTime.now();
-    final difference = now.difference(dateTime);
-
-    if (difference.inMinutes < 1) {
-      return 'Hace un momento';
-    } else if (difference.inHours < 1) {
-      return 'Hace ${difference.inMinutes} minutos';
-    } else if (difference.inDays < 1) {
-      return 'Hace ${difference.inHours} horas';
-    } else if (difference.inDays < 7) {
-      return 'Hace ${difference.inDays} días';
-    } else {
-      return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+    if (confirmed == true && mounted) {
+      final provider = context.read<TransactionProvider>();
+      await provider.deleteTransaction(transaction.id);
     }
   }
 }
 
-// === ARCHIVO: lib/presentation/pages/task_list_page.dart ===
-package field_app.presentation.pages;
-
+// === ARCHIVO: lib/presentation/screens/transaction_form_screen.dart ===
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/presentation/bloc/task/task_bloc.dart';
-import 'package:field_app/presentation/bloc/sync/sync_bloc.dart';
-import 'package:field_app/presentation/widgets/task_card.dart';
-import 'package:field_app/presentation/widgets/offline_banner.dart';
-import 'package:field_app/presentation/pages/task_detail_page.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:offline_field_app/domain/entities/transaction.dart';
+import 'package:offline_field_app/presentation/providers/transaction_provider.dart';
+import 'package:offline_field_app/core/constants/app_constants.dart';
+import 'package:offline_field_app/core/errors/failures.dart';
 
-class TaskListPage extends StatefulWidget {
-  const TaskListPage({super.key});
+class TransactionFormScreen extends StatefulWidget {
+  final Transaction? transaction;
+
+  const TransactionFormScreen({super.key, this.transaction});
 
   @override
-  State<TaskListPage> createState() => _TaskListPageState();
+  State<TransactionFormScreen> createState() => _TransactionFormScreenState();
 }
 
-class _TaskListPageState extends State<TaskListPage> {
-  String _selectedFilter = 'all';
-  String _searchQuery = '';
-  final TextEditingController _searchController = TextEditingController();
+class _TransactionFormScreenState extends State<TransactionFormScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _amountController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _metadataController = TextEditingController();
+
+  String _selectedCurrency = 'USD';
+  String _selectedType = 'credit';
+  bool _isSubmitting = false;
+
+  bool get isEditing => widget.transaction != null;
 
   @override
   void initState() {
     super.initState();
-    context.read<TaskBloc>().add(LoadTasks());
+    if (widget.transaction != null) {
+      _amountController.text = widget.transaction!.amount.toString();
+      _descriptionController.text = widget.transaction!.description ?? '';
+      _selectedCurrency = widget.transaction!.currency;
+      _selectedType = widget.transaction!.transactionType;
+      _metadataController.text = widget.transaction!.metadata ?? '';
+    }
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _amountController.dispose();
+    _descriptionController.dispose();
+    _metadataController.dispose();
     super.dispose();
+  }
+
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+
+    try {
+      final amount = double.parse(_amountController.text);
+      final description = _descriptionController.text.trim();
+      final metadata = _metadataController.text.trim();
+
+      if (!AppConstants.isValidAmount(amount, _selectedCurrency)) {
+        _showError(ValidationFailure.invalidAmount(_selectedCurrency, amount));
+        return;
+      }
+
+      final provider = context.read<TransactionProvider>();
+
+      if (isEditing) {
+        final updated = widget.transaction!.copyWith(
+          amount: amount,
+          currency: _selectedCurrency,
+          transactionType: _selectedType,
+          description: description,
+          metadata: metadata.isNotEmpty ? metadata : null,
+        );
+        await provider.updateTransaction(updated);
+      } else {
+        await provider.createTransaction(
+          amount: amount,
+          currency: _selectedCurrency,
+          transactionType: _selectedType,
+          description: description,
+          metadata: metadata.isNotEmpty ? metadata : null,
+        );
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(isEditing ? 'Transacción actualizada' : 'Transacción creada'),
+            backgroundColor: Color(AppConstants.successColor),
+          ),
+        );
+        Navigator.of(context).pop();
+      }
+    } on Failure catch (e) {
+      _showError(e);
+    } catch (e) {
+      _showError(DatabaseFailure.transactionFailed(e.toString()));
+    } finally {
+      if (mounted) {
+        setState(() => _isSubmitting = false);
+      }
+    }
+  }
+
+  void _showError(Failure failure) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(failure.message),
+        backgroundColor: Color(AppConstants.errorColor),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mis Tareas'),
-        backgroundColor: AppConstants.primaryColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () => _showFilterDialog(context),
-          ),
-        ],
+        title: Text(isEditing ? 'Editar transacción' : 'Nueva transacción'),
+        backgroundColor: Color(AppConstants.primaryColor),
       ),
-      body: Column(
-        children: [
-          BlocBuilder<SyncBloc, SyncState>(
-            builder: (context, state) {
-              if (!state.isConnected) {
-                return const OfflineBanner();
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-          _buildSearchBar(),
-          _buildFilterChips(),
-          Expanded(
-            child: _buildTaskList(),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToTaskDetail(context, null),
-        backgroundColor: AppConstants.primaryColor,
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-          hintText: 'Buscar tareas...',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: _searchQuery.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    _searchController.clear();
-                    setState(() {
-                      _searchQuery = '';
-                    });
-                  },
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-          fillColor: Colors.grey[100],
-        ),
-        onChanged: (value) {
-          setState(() {
-            _searchQuery = value.toLowerCase();
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _buildFilterChips() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          _buildFilterChip('all', 'Todas'),
-          const SizedBox(width: 8),
-          _buildFilterChip('pending', 'Pendientes'),
-          const SizedBox(width: 8),
-          _buildFilterChip('in_progress', 'En Progreso'),
-          const SizedBox(width: 8),
-          _buildFilterChip('completed', 'Completadas'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFilterChip(String value, String label) {
-    final isSelected = _selectedFilter == value;
-    return FilterChip(
-      label: Text(label),
-      selected: isSelected,
-      onSelected: (selected) {
-        setState(() {
-          _selectedFilter = value;
-        });
-      },
-      selectedColor: AppConstants.primaryColor.withOpacity(0.2),
-      checkmarkColor: AppConstants.primaryColor,
-    );
-  }
-
-  Widget _buildTaskList() {
-    return BlocBuilder<TaskBloc, TaskState>(
-      builder: (context, state) {
-        if (state is TaskLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (state is TaskError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppConstants.errorColor,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  state.message,
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<TaskBloc>().add(LoadTasks());
-                  },
-                  child: const Text('Reintentar'),
-                ),
-              ],
-            ),
-          );
-        }
-
-        if (state is TaskLoaded) {
-          final filteredTasks = _filterTasks(state.tasks);
-          
-          if (filteredTasks.isEmpty) {
-            return _buildEmptyState();
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async {
-              context.read<TaskBloc>().add(LoadTasks());
-            },
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: filteredTasks.length,
-              itemBuilder: (context, index) {
-                final task = filteredTasks[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: TaskCard(
-                    task: task,
-                    onTap: () => _navigateToTaskDetail(context, task),
-                    onLongPress: () => _showTaskOptions(context, task),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-
-        return const Center(
-          child: Text('Cargando tareas...'),
-        );
-      },
-    );
-  }
-
-  List<TaskEntity> _filterTasks(List<TaskEntity> tasks) {
-    var filteredTasks = tasks;
-
-    if (_searchQuery.isNotEmpty) {
-      filteredTasks = filteredTasks.where((task) {
-        return task.title.toLowerCase().contains(_searchQuery) ||
-               (task.description?.toLowerCase().contains(_searchQuery) ?? false);
-      }).toList();
-    }
-
-    switch (_selectedFilter) {
-      case 'pending':
-        filteredTasks = filteredTasks
-            .where((t) => t.status == AppConstants.taskStatusPending)
-            .toList();
-        break;
-      case 'in_progress':
-        filteredTasks = filteredTasks
-            .where((t) => t.status == AppConstants.taskStatusInProgress)
-            .toList();
-        break;
-      case 'completed':
-        filteredTasks = filteredTasks
-            .where((t) => t.status == AppConstants.taskStatusCompleted)
-            .toList();
-        break;
-      case 'all':
-      default:
-        break;
-    }
-
-    filteredTasks.sort((a, b) {
-      final priorityOrder = {
-        AppConstants.taskPriorityHigh: 0,
-        AppConstants.taskPriorityMedium: 1,
-        AppConstants.taskPriorityLow: 2,
-      };
-      
-      final priorityCompare = (priorityOrder[a.priority] ?? 3)
-          .compareTo(priorityOrder[b.priority] ?? 3);
-      
-      if (priorityCompare != 0) return priorityCompare;
-      
-      return b.updatedAt.compareTo(a.updatedAt);
-    });
-
-    return filteredTasks;
-  }
-
-  Widget _buildEmptyState() {
-    String message;
-    IconData icon;
-    
-    switch (_selectedFilter) {
-      case 'pending':
-        message = 'No hay tareas pendientes';
-        icon = Icons.check_circle_outline;
-        break;
-      case 'in_progress':
-        message = 'No hay tareas en progreso';
-        icon = Icons.play_circle_outline;
-        break;
-      case 'completed':
-        message = 'No hay tareas completadas';
-        icon = Icons.task_alt;
-        break;
-      default:
-        if (_searchQuery.isNotEmpty) {
-          message = 'No se encontraron tareas con "$_searchQuery"';
-          icon = Icons.search_off;
-        } else {
-          message = 'No hay tareas disponibles';
-          icon = Icons.inbox_outlined;
-        }
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 80, color: Colors.grey[400]),
-          const SizedBox(height: 16),
-          Text(
-            message,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () => _navigateToTaskDetail(context, null),
-            icon: const Icon(Icons.add),
-            label: const Text('Crear Nueva Tarea'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppConstants.primaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showFilterDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Filtrar Tareas',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 24),
-              _buildFilterOption('all', 'Todas las tareas'),
-              _buildFilterOption('priority_high', 'Alta prioridad'),
-              _buildFilterOption('priority_medium', 'Media prioridad'),
-              _buildFilterOption('priority_low', 'Baja prioridad'),
-              _buildFilterOption('sync_pending', 'Pendientes de sincronización'),
-              _buildFilterOption('sync_conflict', 'Con conflictos'),
-              const SizedBox(height: 16),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildFilterOption(String value, String label) {
-    return ListTile(
-      title: Text(label),
-      leading: Radio<String>(
-        value: value,
-        groupValue: _selectedFilter,
-        onChanged: (newValue) {
-          setState(() {
-            _selectedFilter = newValue ?? 'all';
-          });
-          Navigator.pop(context);
-        },
-      ),
-      onTap: () {
-        setState(() {
-          _selectedFilter = value;
-        });
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  void _showTaskOptions(BuildContext context, TaskEntity task) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('Editar Tarea'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _navigateToTaskDetail(context, task);
-                },
-              ),
-              if (task.status != AppConstants.taskStatusCompleted)
-                ListTile(
-                  leading: const Icon(Icons.check_circle),
-                  title: const Text('Marcar como Completada'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _updateTaskStatus(context, task, AppConstants.taskStatusCompleted);
-                  },
-                ),
-              if (task.status == AppConstants.taskStatusPending)
-                ListTile(
-                  leading: const Icon(Icons.play_arrow),
-                  title: const Text('Iniciar Tarea'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _updateTaskStatus(context, task, AppConstants.taskStatusInProgress);
-                  },
-                ),
-              ListTile(
-                leading: const Icon(Icons.delete, color: AppConstants.errorColor),
-                title: const Text('Eliminar Tarea', style: TextStyle(color: AppConstants.errorColor)),
-                onTap: () {
-                  Navigator.pop(context);
-                  _confirmDeleteTask(context, task);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _updateTaskStatus(BuildContext context, TaskEntity task, String newStatus) {
-    final updatedTask = TaskEntity(
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      status: newStatus,
-      priority: task.priority,
-      dueDate: task.dueDate,
-      assignedTo: task.assignedTo,
-      createdAt: task.createdAt,
-      updatedAt: DateTime.now(),
-      syncStatus: task.syncStatus,
-      version: task.version,
-    );
-    context.read<TaskBloc>().add(UpdateTask(updatedTask));
-  }
-
-  void _confirmDeleteTask(BuildContext context, TaskEntity task) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Eliminar Tarea'),
-          content: Text('¿Estás seguro de eliminar la tarea "${task.title}"?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                context.read<TaskBloc>().add(DeleteTask(task.id));
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: AppConstants.errorColor,
-              ),
-              child: const Text('Eliminar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _navigateToTaskDetail(BuildContext context, TaskEntity? task) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TaskDetailPage(task: task),
-      ),
-    );
-  }
-}
-
-// === ARCHIVO: lib/presentation/pages/task_detail_page.dart ===
-package field_app.presentation.pages;
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/presentation/bloc/task/task_bloc.dart';
-import 'package:field_app/presentation/bloc/sync/sync_bloc.dart';
-import 'package:uuid/uuid.dart';
-
-class TaskDetailPage extends StatefulWidget {
-  final TaskEntity? task;
-
-  const TaskDetailPage({super.key, this.task});
-
-  @override
-  State<TaskDetailPage> createState() => _TaskDetailPageState();
-}
-
-class _TaskDetailPageState extends State<TaskDetailPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _assignedToController = TextEditingController();
-  
-  String _selectedPriority = AppConstants.taskPriorityMedium;
-  String _selectedStatus = AppConstants.taskStatusPending;
-  DateTime? _dueDate;
-  bool _isEditing = false;
-  bool _hasChanges = false;
-
-  bool get isNewTask => widget.task == null;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeForm();
-  }
-
-  void _initializeForm() {
-    if (widget.task != null) {
-      _titleController.text = widget.task!.title;
-      _descriptionController.text = widget.task!.description ?? '';
-      _assignedToController.text = widget.task!.assignedTo ?? '';
-      _selectedPriority = widget.task!.priority;
-      _selectedStatus = widget.task!.status;
-      _dueDate = widget.task!.dueDate;
-      _isEditing = true;
-    }
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    _assignedToController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<TaskBloc, TaskState>(
-      listener: (context, state) {
-        if (state is TaskSaved) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(isNewTask ? 'Tarea creada exitosamente' : 'Tarea actualizada exitosamente'),
-              backgroundColor: Colors.green,
-            ),
-          );
-          Navigator.pop(context);
-        } else if (state is TaskError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error: ${state.message}'),
-              backgroundColor: AppConstants.errorColor,
-            ),
-          );
-        }
-      },
-      child: WillPopScope(
-        onWillPop: () async {
-          if (_hasChanges) {
-            return await _showDiscardChangesDialog();
-          }
-          return true;
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(isNewTask ? 'Nueva Tarea' : 'Detalle de Tarea'),
-            backgroundColor: AppConstants.primaryColor,
-            actions: [
-              if (!isNewTask)
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => _confirmDeleteTask(),
-                ),
-            ],
-          ),
-          body: BlocBuilder<SyncBloc, SyncState>(
-            builder: (context, syncState) {
-              return Column(
-                children: [
-                  if (!syncState.isConnected)
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(8),
-                      color: AppConstants.warningColor,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.cloud_off, size: 16, color: Colors.white),
-                          SizedBox(width: 8),
-                          Text(
-                            'Sin conexión - Los cambios se guardarán localmente',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Expanded(
-                    child: _buildForm(),
-                  ),
-                ],
-              );
-            },
-          ),
-          bottomNavigationBar: _buildBottomBar(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildForm() {
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSyncStatusInfo(),
-            const SizedBox(height: 24),
-            _buildTitleField(),
-            const SizedBox(height: 16),
-            _buildDescriptionField(),
-            const SizedBox(height: 16),
-            _buildPrioritySelector(),
-            const SizedBox(height: 16),
-            _buildStatusSelector(),
-            const SizedBox(height: 16),
-            _buildAssignedToField(),
-            const SizedBox(height: 16),
-            _buildDueDatePicker(),
-            const SizedBox(height: 24),
-            if (!isNewTask) _buildMetadataSection(),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildAmountField(),
+              const SizedBox(height: 16),
+              _buildCurrencyDropdown(),
+              const SizedBox(height: 16),
+              _buildTypeDropdown(),
+              const SizedBox(height: 16),
+              _buildDescriptionField(),
+              const SizedBox(height: 16),
+              _buildMetadataField(),
+              const SizedBox(height: 24),
+              _buildSubmitButton(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildSyncStatusInfo() {
-    if (isNewTask) return const SizedBox.shrink();
-
-    final syncStatus = widget.task?.syncStatus ?? AppConstants.syncStatusPending;
-    Color statusColor;
-    IconData statusIcon;
-    String statusText;
-
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        statusColor = Colors.green;
-        statusIcon = Icons.cloud_done;
-        statusText = 'Sincronizado';
-        break;
-      case AppConstants.syncStatusPending:
-        statusColor = AppConstants.warningColor;
-        statusIcon = Icons.cloud_upload;
-        statusText = 'Pendiente de sincronización';
-        break;
-      case AppConstants.syncStatusFailed:
-        statusColor = AppConstants.errorColor;
-        statusIcon = Icons.cloud_off;
-        statusText = 'Error de sincronización';
-        break;
-      case AppConstants.syncStatusConflict:
-        statusColor = Colors.orange;
-        statusIcon = Icons.warning;
-        statusText = 'Conflicto detectado';
-        break;
-      default:
-        statusColor = Colors.grey;
-        statusIcon = Icons.cloud_queue;
-        statusText = 'Desconocido';
-    }
-
-    return Card(
-      color: statusColor.withOpacity(0.1),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Icon(statusIcon, color: statusColor),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                statusText,
-                style: TextStyle(color: statusColor, fontWeight: FontWeight.w500),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTitleField() {
+  Widget _buildAmountField() {
     return TextFormField(
-      controller: _titleController,
-      decoration: InputDecoration(
-        labelText: 'Título *',
-        hintText: 'Ingrese el título de la tarea',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        prefixIcon: const Icon(Icons.title),
+      controller: _amountController,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+      ],
+      decoration: const InputDecoration(
+        labelText: 'Monto',
+        hintText: '0.00',
+        prefixIcon: Icon(Icons.attach_money),
+        border: OutlineInputBorder(),
       ),
-      maxLength: AppConstants.maxTitleLength,
       validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'El título es obligatorio';
+        if (value == null || value.isEmpty) {
+          return 'El monto es requerido';
         }
-        if (value.trim().length < 3) {
-          return 'El título debe tener al menos 3 caracteres';
+        final amount = double.tryParse(value);
+        if (amount == null || amount <= 0) {
+          return 'Ingrese un monto válido mayor a 0';
         }
         return null;
       },
-      onChanged: (_) => _markAsChanged(),
+    );
+  }
+
+  Widget _buildCurrencyDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _selectedCurrency,
+      decoration: const InputDecoration(
+        labelText: 'Moneda',
+        prefixIcon: Icon(Icons.currency_exchange),
+        border: OutlineInputBorder(),
+      ),
+      items: ['USD', 'EUR', 'GBP', 'MXN', 'COP'].map((currency) {
+        return DropdownMenuItem(
+          value: currency,
+          child: Text(currency),
+        );
+      }).toList(),
+      onChanged: (value) {
+        if (value != null) {
+          setState(() => _selectedCurrency = value);
+        }
+      },
+    );
+  }
+
+  Widget _buildTypeDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _selectedType,
+      decoration: const InputDecoration(
+        labelText: 'Tipo de transacción',
+        prefixIcon: Icon(Icons.category),
+        border: OutlineInputBorder(),
+      ),
+      items: [
+        const DropdownMenuItem(
+          value: 'credit',
+          child: Row(
+            children: [
+              Icon(Icons.arrow_upward, color: Colors.green),
+              SizedBox(width: 8),
+              Text('Crédito'),
+            ],
+          ),
+        ),
+        const DropdownMenuItem(
+          value: 'debit',
+          child: Row(
+            children: [
+              Icon(Icons.arrow_downward, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Débito'),
+            ],
+          ),
+        ),
+      ],
+      onChanged: (value) {
+        if (value != null) {
+          setState(() => _selectedType = value);
+        }
+      },
     );
   }
 
   Widget _buildDescriptionField() {
     return TextFormField(
       controller: _descriptionController,
-      decoration: InputDecoration(
+      maxLines: 3,
+      maxLength: 500,
+      decoration: const InputDecoration(
         labelText: 'Descripción',
-        hintText: 'Ingrese la descripción de la tarea',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        prefixIcon: const Icon(Icons.description),
+        hintText: 'Describe la transacción...',
+        prefixIcon: Icon(Icons.description),
+        border: OutlineInputBorder(),
         alignLabelWithHint: true,
       ),
-      maxLines: 4,
-      maxLength: AppConstants.maxDescriptionLength,
-      onChanged: (_) => _markAsChanged(),
-    );
-  }
-
-  Widget _buildPrioritySelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Prioridad',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            _buildPriorityChip(AppConstants.taskPriorityLow, 'Baja', Colors.green),
-            const SizedBox(width: 8),
-            _buildPriorityChip(AppConstants.taskPriorityMedium, 'Media', AppConstants.warningColor),
-            const SizedBox(width: 8),
-            _buildPriorityChip(AppConstants.taskPriorityHigh, 'Alta', AppConstants.errorColor),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPriorityChip(String value, String label, Color color) {
-    final isSelected = _selectedPriority == value;
-    return ChoiceChip(
-      label: Text(label),
-      selected: isSelected,
-      onSelected: (selected) {
-        if (selected) {
-          setState(() {
-            _selectedPriority = value;
-          });
-          _markAsChanged();
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'La descripción es requerida';
         }
+        return null;
       },
-      selectedColor: color.withOpacity(0.3),
-      labelStyle: TextStyle(
-        color: isSelected ? color : Colors.grey[700],
-        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-      ),
     );
   }
 
-  Widget _buildStatusSelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Estado',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          value: _selectedStatus,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            prefixIcon: const Icon(Icons.flag),
-          ),
-          items: const [
-            DropdownMenuItem(
-              value: AppConstants.taskStatusPending,
-              child: Text('Pendiente'),
-            ),
-            DropdownMenuItem(
-              value: AppConstants.taskStatusInProgress,
-              child: Text('En Progreso'),
-            ),
-            DropdownMenuItem(
-              value: AppConstants.taskStatusCompleted,
-              child: Text('Completada'),
-            ),
-            DropdownMenuItem(
-              value: AppConstants.taskStatusCancelled,
-              child: Text('Cancelada'),
-            ),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _selectedStatus = value;
-              });
-              _markAsChanged();
-            }
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAssignedToField() {
+  Widget _buildMetadataField() {
     return TextFormField(
-      controller: _assignedToController,
-      decoration: InputDecoration(
-        labelText: 'Asignado a',
-        hintText: 'Nombre del responsable',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        prefixIcon: const Icon(Icons.person),
+      controller: _metadataController,
+      maxLines: 2,
+      maxLength: 1000,
+      decoration: const InputDecoration(
+        labelText: 'Metadatos (opcional)',
+        hintText: 'JSON o información adicional...',
+        prefixIcon: Icon(Icons.info_outline),
+        border: OutlineInputBorder(),
+        alignLabelWithHint: true,
       ),
-      onChanged: (_) => _markAsChanged(),
     );
   }
 
-  Widget _buildDueDatePicker() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Fecha Límite',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+  Widget _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: _isSubmitting ? null : _submitForm,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(AppConstants.primaryColor),
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
-        const SizedBox(height: 8),
-        InkWell(
-          onTap: () => _selectDueDate(context),
-          child: InputDecorator(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+      ),
+      child: _isSubmitting
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
-              prefixIcon: const Icon(Icons.calendar_today),
-              suffixIcon: _dueDate != null
-                  ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        setState(() {
-                          _dueDate = null;
-                        });
-                        _markAsChanged();
-                      },
-                    )
-                  : null,
+            )
+          : Text(
+              isEditing ? 'Actualizar transacción' : 'Crear transacción',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            child: Text(
-              _dueDate != null
-                  ? '${_dueDate!.day}/${_dueDate!.month}/${_dueDate!.year}'
-                  : 'Seleccionar fecha',
-              style: TextStyle(
-                color: _dueDate != null ? Colors.black : Colors.grey,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
+}
 
-  Future<void> _selectDueDate(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: _dueDate ?? DateTime.now(),
-      firstDate: DateTime.now().subtract(const Duration(days: 365)),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
-    );
-    if (picked != null) {
-      setState(() {
-        _dueDate = picked;
-      });
-      _markAsChanged();
+// === ARCHIVO: lib/presentation/screens/sync_status_screen.dart ===
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:offline_field_app/domain/entities/sync_record.dart';
+import 'package:offline_field_app/presentation/providers/sync_provider.dart';
+import 'package:offline_field_app/presentation/widgets/sync_progress_indicator.dart';
+import 'package:offline_field_app/core/constants/app_constants.dart';
+import 'package:offline_field_app/core/network/network_info.dart';
+
+class SyncStatusScreen extends StatefulWidget {
+  const SyncStatusScreen({super.key});
+
+  @override
+  State<SyncStatusScreen> createState() => _SyncStatusScreenState();
+}
+
+class _SyncStatusScreenState extends State<SyncStatusScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadSyncStatus();
+    });
+  }
+
+  Future<void> _loadSyncStatus() async {
+    final syncProvider = context.read<SyncProvider>();
+    await syncProvider.loadPendingOperations();
+    await syncProvider.loadConflicts();
+  }
+
+  Future<void> _triggerSync() async {
+    final syncProvider = context.read<SyncProvider>();
+    final networkInfo = context.read<NetworkInfo>();
+
+    final isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No hay conexión a internet'),
+          backgroundColor: Color(AppConstants.warningColor),
+        ),
+      );
+      return;
     }
+
+    await syncProvider.syncAll();
   }
 
-  Widget _buildMetadataSection() {
-    final task = widget.task!;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Estado de sincronización'),
+        backgroundColor: Color(AppConstants.primaryColor),
+      ),
+      body: Consumer<SyncProvider>(
+        builder: (context, provider, child) {
+          if (provider.isSyncing) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SyncProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Sincronizando...'),
+                ],
+              ),
+            );
+          }
+
+          return RefreshIndicator(
+            onRefresh: _loadSyncStatus,
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                _buildSyncSummaryCard(provider),
+                const SizedBox(height: 16),
+                _buildPendingOperationsSection(provider),
+                const SizedBox(height: 16),
+                _buildConflictsSection(provider),
+                const SizedBox(height: 24),
+                _buildSyncButton(provider),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildSyncSummaryCard(SyncProvider provider) {
+    final pendingCount = provider.pendingOperations.length;
+    final conflictCount = provider.conflicts.length;
+    final lastSync = provider.lastSyncTime;
+
     return Card(
-      color: Colors.grey[100],
+      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Información Adicional',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.sync,
+                  color: Color(AppConstants.primaryColor),
+                  size: 28,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Resumen de sincronización',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+            const Divider(height: 24),
+            _buildSummaryRow(
+              Icons.pending_actions,
+              'Operaciones pendientes',
+              pendingCount.toString(),
+              pendingCount > 0 ? Color(AppConstants.warningColor) : Color(AppConstants.successColor),
             ),
             const SizedBox(height: 12),
-            _buildMetadataRow('ID', task.id),
-            _buildMetadataRow('Versión', task.version?.toString() ?? '1'),
-            _buildMetadataRow('Creado', _formatDateTime(task.createdAt)),
-            _buildMetadataRow('Actualizado', _formatDateTime(task.updatedAt)),
+            _buildSummaryRow(
+              Icons.warning_amber,
+              'Conflictos pendientes',
+              conflictCount.toString(),
+              conflictCount > 0 ? Color(AppConstants.errorColor) : Color(AppConstants.successColor),
+            ),
+            const SizedBox(height: 12),
+            _buildSummaryRow(
+              Icons.access_time,
+              'Última sincronización',
+              lastSync != null
+                  ? '${lastSync.day}/${lastSync.month}/${lastSync.year} ${lastSync.hour}:${lastSync.minute.toString().padLeft(2, '0')}'
+                  : 'Nunca',
+              Colors.grey,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMetadataRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
+  Widget _buildSummaryRow(IconData icon, String label, String value, Color color) {
+    return Row(
+      children: [
+        Icon(icon, size: 20, color: color),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: color,
               ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildBottomBar() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Row(
+  Widget _buildPendingOperationsSection(SyncProvider provider) {
+    final operations = provider.pendingOperations;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: () => _handleCancel(),
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+            Row(
+              children: [
+                Icon(
+                  Icons.pending_outlined,
+                  color: Color(AppConstants.warningColor),
                 ),
-                child: const Text('Cancelar'),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              flex: 2,
-              child: ElevatedButton(
-                onPressed: () => _saveTask(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppConstants.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                const SizedBox(width: 8),
+                Text(
+                  'Operaciones pendientes',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                child: Text(isNewTask ? 'Crear Tarea' : 'Guardar Cambios'),
-              ),
+              ],
             ),
+            const Divider(),
+            if (operations.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Center(
+                  child: Text('No hay operaciones pendientes'),
+                ),
+              )
+            else
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: operations.length > 5 ? 5 : operations.length,
+                itemBuilder: (context, index) {
+                  final operation = operations[index];
+                  return _buildOperationTile(operation);
+                },
+              ),
+            if (operations.length > 5)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  'y ${operations.length - 5} más...',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                      ),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
 
-  void _markAsChanged() {
-    if (!_hasChanges) {
-      setState(() {
-        _hasChanges = true;
-      });
-    }
+  Widget _buildOperationTile(SyncRecord operation) {
+    final statusColor = _getStatusColor(operation.syncStatus);
+
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: statusColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          _getOperationIcon(operation.operationType),
+          color: statusColor,
+        ),
+      ),
+      title: Text(
+        operation.entityType ?? 'Unknown',
+        style: const TextStyle(fontWeight: FontWeight.w500),
+      ),
+      subtitle: Text(
+        'ID: ${operation.entityId}',
+        style: const TextStyle(fontSize: 12),
+      ),
+      trailing: Chip(
+        label: Text(
+          operation.syncStatus,
+          style: const TextStyle(fontSize: 10),
+        ),
+        backgroundColor: statusColor.withOpacity(0.2),
+      ),
+    );
   }
 
-  Future<bool> _showDiscardChangesDialog() async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Descartar Cambios'),
-          content: const Text('¿Estás seguro de descartar los cambios realizados?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar'),
+  Widget _buildConflictsSection(SyncProvider provider) {
+    final conflicts = provider.conflicts;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.warning_amber,
+                  color: Color(AppConstants.errorColor),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Conflictos',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              style: TextButton.styleFrom(
-                foregroundColor: AppConstants.errorColor,
+            const Divider(),
+            if (conflicts.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Center(
+                  child: Text('No hay conflictos'),
+                ),
+              )
+            else
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: conflicts.length,
+                itemBuilder: (context, index) {
+                  final conflict = conflicts[index];
+                  return _buildConflictTile(conflict, provider);
+                },
               ),
-              child: const Text('Descartar'),
-            ),
           ],
-        );
-      },
-    );
-    return result ?? false;
-  }
-
-  void _handleCancel() async {
-    if (_hasChanges) {
-      final discard = await _showDiscardChangesDialog();
-      if (discard) {
-        if (mounted) Navigator.pop(context);
-      }
-    } else {
-      Navigator.pop(context);
-    }
-  }
-
-  void _saveTask() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    final now = DateTime.now();
-    final task = TaskEntity(
-      id: widget.task?.id ?? const Uuid().v4(),
-      title: _titleController.text.trim(),
-      description: _descriptionController.text.trim().isEmpty 
-          ? null 
-          : _descriptionController.text.trim(),
-      status: _selectedStatus,
-      priority: _selectedPriority,
-      dueDate: _dueDate,
-      assignedTo: _assignedToController.text.trim().isEmpty 
-          ? null 
-          : _assignedToController.text.trim(),
-      createdAt: widget.task?.createdAt ?? now,
-      updatedAt: now,
-      syncStatus: AppConstants.syncStatusPending,
-      version: (widget.task?.version ?? 0) + 1,
-    );
-
-    if (isNewTask) {
-      context.read<TaskBloc>().add(CreateTask(task));
-    } else {
-      context.read<TaskBloc>().add(UpdateTask(task));
-    }
-  }
-
-  void _confirmDeleteTask() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Eliminar Tarea'),
-          content: const Text('¿Estás seguro de eliminar esta tarea? Esta acción no se puede deshacer.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                context.read<TaskBloc>().add(DeleteTask(widget.task!.id));
-                Navigator.pop(context);
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: AppConstants.errorColor,
-              ),
-              child: const Text('Eliminar'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
   }
 
-  String _formatDateTime(DateTime dateTime) {
-    return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year} '
-        '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  Widget _buildConflictTile(SyncRecord conflict, SyncProvider provider) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Color(AppConstants.errorColor).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Icon(
+          Icons.warning,
+          color: Color(AppConstants.errorColor),
+        ),
+      ),
+      title: Text(
+        conflict.entityType ?? 'Unknown',
+        style: const TextStyle(fontWeight: FontWeight.w500),
+      ),
+      subtitle: Text(
+        'ID: ${conflict.entityId}',
+        style: const TextStyle(fontSize: 12),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.check, color: Colors.green),
+            onPressed: () => _resolveConflict(conflict, 'server'),
+            tooltip: 'Usar versión del servidor',
+          ),
+          IconButton(
+            icon: const Icon(Icons.restore, color: Colors.blue),
+            onPressed: () => _resolveConflict(conflict, 'client'),
+            tooltip: 'Mantener versión local',
+          ),
+        ],
+      ),
+    );
   }
-}
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/task_entity.dart';
-import '../../core/constants/app_constants.dart';
-import '../bloc/task/task_bloc.dart';
-import '../bloc/task/task_event.dart';
-
-class TaskCard extends StatelessWidget {
-  final TaskEntity task;
-  final VoidCallback? onTap;
-  final VoidCallback? onDelete;
-  final VoidCallback? onSync;
-
-  const TaskCard({
-    super.key,
-    required this.task,
-    this.onTap,
-    this.onDelete,
-    this.onSync,
-  });
-
-  Color _getPriorityColor(String priority) {
-    switch (priority) {
-      case AppConstants.taskPriorityHigh:
-        return AppConstants.errorColor;
-      case AppConstants.taskPriorityMedium:
-        return AppConstants.warningColor;
-      case AppConstants.taskPriorityLow:
-        return AppConstants.primaryColor;
-      default:
-        return AppConstants.surfaceColor;
-    }
+  Future<void> _resolveConflict(SyncRecord conflict, String resolution) async {
+    final provider = context.read<SyncProvider>();
+    await provider.resolveConflict(conflict.entityId, resolution);
+    await _loadSyncStatus();
   }
 
-  IconData _getStatusIcon(String status) {
+  Widget _buildSyncButton(SyncProvider provider) {
+    return ElevatedButton.icon(
+      onPressed: provider.isSyncing ? null : _triggerSync,
+      icon: const Icon(Icons.sync),
+      label: const Text('Sincronizar ahora'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(AppConstants.primaryColor),
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
+  }
+
+  Color _getStatusColor(String status) {
     switch (status) {
-      case AppConstants.taskStatusPending:
-        return Icons.schedule;
-      case AppConstants.taskStatusInProgress:
-        return Icons.play_circle_outline;
-      case AppConstants.taskStatusCompleted:
-        return Icons.check_circle_outline;
-      case AppConstants.taskStatusCancelled:
-        return Icons.cancel_outlined;
-      default:
-        return Icons.help_outline;
-    }
-  }
-
-  Color _getSyncStatusColor(String syncStatus) {
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        return Colors.green;
       case AppConstants.syncStatusPending:
-        return Colors.orange;
+        return Color(AppConstants.warningColor);
+      case AppConstants.syncStatusInProgress:
+        return Colors.blue;
+      case AppConstants.syncStatusCompleted:
+        return Color(AppConstants.successColor);
       case AppConstants.syncStatusFailed:
-        return AppConstants.errorColor;
+        return Color(AppConstants.errorColor);
       case AppConstants.syncStatusConflict:
-        return Colors.purple;
+        return Color(AppConstants.errorColor);
       default:
         return Colors.grey;
     }
   }
 
-  IconData _getSyncStatusIcon(String syncStatus) {
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        return Icons.cloud_done;
-      case AppConstants.syncStatusPending:
-        return Icons.cloud_upload;
-      case AppConstants.syncStatusFailed:
-        return Icons.cloud_off;
-      case AppConstants.syncStatusConflict:
-        return Icons.warning_amber_rounded;
+  IconData _getOperationIcon(String? operationType) {
+    switch (operationType) {
+      case 'create':
+        return Icons.add_circle;
+      case 'update':
+        return Icons.edit;
+      case 'delete':
+        return Icons.delete;
       default:
-        return Icons.cloud_queue;
+        return Icons.help_outline;
     }
   }
+}
 
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = now.difference(date);
 
-    if (difference.inDays == 0) {
-      if (difference.inHours == 0) {
-        return '${difference.inMinutes} min ago';
-      }
-      return '${difference.inHours}h ago';
-    } else if (difference.inDays == 1) {
-      return 'Yesterday';
-    } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
-    } else {
-      return '${date.day}/${date.month}/${date.year}';
-    }
-  }
+// === ARCHIVO: lib/presentation/widgets/transaction_tile.dart ===
+package presentation.widgets;
+
+import 'package:flutter/material.dart';
+import '../../domain/entities/transaction.dart';
+import '../../core/constants/app_constants.dart';
+
+class TransactionTile extends StatelessWidget {
+  final Transaction transaction;
+  final VoidCallback? onTap;
+  final VoidCallback? onSyncTap;
+  final bool showSyncStatus;
+
+  const TransactionTile({
+    super.key,
+    required this.transaction,
+    this.onTap,
+    this.onSyncTap,
+    this.showSyncStatus = true,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isPending = transaction.syncStatus == AppConstants.syncStatusPending;
+    final isFailed = transaction.syncStatus == AppConstants.syncStatusFailed;
+    
     return Card(
-      elevation: 2,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: isFailed 
+            ? BorderSide(color: theme.colorScheme.error, width: 2)
+            : BorderSide.none,
       ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border(
-              left: BorderSide(
-                color: _getPriorityColor(task.priority),
-                width: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildTransactionType(context),
+                  _buildAmount(context),
+                ],
               ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            task.title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          if (task.description != null &&
-                              task.description!.isNotEmpty) ...[
-                            const SizedBox(height: 8),
-                            Text(
-                              task.description!,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                    Icon(
-                      _getSyncStatusIcon(task.syncStatus),
-                      color: _getSyncStatusColor(task.syncStatus),
-                      size: 24,
-                    ),
-                  ],
+              const SizedBox(height: 12),
+              if (transaction.description != null && 
+                  transaction.description!.isNotEmpty)
+                Text(
+                  transaction.description!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _getPriorityColor(task.priority)
-                            .withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        task.priority.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: _getPriorityColor(task.priority),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Icon(
-                      _getStatusIcon(task.status),
-                      size: 16,
-                      color: Colors.grey[600],
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      task.status.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      _formatDate(task.updatedAt),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildTimestamp(context),
+                  if (showSyncStatus) _buildSyncStatus(context),
+                ],
+              ),
+              if (isPending && onSyncTap != null) ...[
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (task.syncStatus == AppConstants.syncStatusFailed ||
-                        task.syncStatus == AppConstants.syncStatusConflict)
-                      TextButton.icon(
-                        onPressed: onSync,
-                        icon: const Icon(Icons.sync, size: 18),
-                        label: const Text('Retry'),
-                        style: TextButton.styleFrom(
-                          foregroundColor: AppConstants.warningColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                        ),
-                      ),
-                    TextButton.icon(
-                      onPressed: onDelete,
-                      icon: const Icon(Icons.delete_outline, size: 18),
-                      label: const Text('Delete'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppConstants.errorColor,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: onSyncTap,
+                    icon: const Icon(Icons.sync, size: 18),
+                    label: const Text('Sincronizar ahora'),
+                  ),
                 ),
               ],
-            ),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget _buildTransactionType(BuildContext context) {
+    final theme = Theme.of(context);
+    final isCredit = transaction.transactionType.toUpperCase() == 'CREDIT' ||
+        transaction.transactionType.toUpperCase() == 'DEPOSIT';
+    
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: isCredit 
+            ? Colors.green.shade50 
+            : Colors.red.shade50,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            isCredit ? Icons.arrow_downward : Icons.arrow_upward,
+            size: 16,
+            color: isCredit ? Colors.green.shade700 : Colors.red.shade700,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            transaction.transactionType.toUpperCase(),
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: isCredit ? Colors.green.shade700 : Colors.red.shade700,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAmount(BuildContext context) {
+    final theme = Theme.of(context);
+    final isCredit = transaction.transactionType.toUpperCase() == 'CREDIT' ||
+        transaction.transactionType.toUpperCase() == 'DEPOSIT';
+    final formattedAmount = AppConstants.formatAmount(
+      transaction.amount, 
+      transaction.currency,
+    );
+    
+    return Text(
+      '${isCredit ? '+' : '-'}$formattedAmount',
+      style: theme.textTheme.titleLarge?.copyWith(
+        color: isCredit ? Colors.green.shade700 : Colors.red.shade700,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildTimestamp(BuildContext context) {
+    final theme = Theme.of(context);
+    final createdAt = transaction.createdAt;
+    final formattedDate = '${createdAt.day.toString().padLeft(2, '0')}/'
+        '${createdAt.month.toString().padLeft(2, '0')}/'
+        '${createdAt.year} '
+        '${createdAt.hour.toString().padLeft(2, '0')}:'
+        '${createdAt.minute.toString().padLeft(2, '0')}';
+    
+    return Row(
+      children: [
+        Icon(
+          Icons.access_time,
+          size: 14,
+          color: theme.colorScheme.outline,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          formattedDate,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.outline,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSyncStatus(BuildContext context) {
+    final theme = Theme.of(context);
+    IconData icon;
+    Color color;
+    String label;
+    
+    switch (transaction.syncStatus) {
+      case AppConstants.syncStatusPending:
+        icon = Icons.cloud_queue;
+        color = Colors.orange;
+        label = 'Pendiente';
+        break;
+      case AppConstants.syncStatusInProgress:
+        icon = Icons.cloud_sync;
+        color = Colors.blue;
+        label = 'Sincronizando';
+        break;
+      case AppConstants.syncStatusCompleted:
+        icon = Icons.cloud_done;
+        color = Colors.green;
+        label = 'Sincronizado';
+        break;
+      case AppConstants.syncStatusFailed:
+        icon = Icons.cloud_off;
+        color = Colors.red;
+        label = 'Fallido';
+        break;
+      case AppConstants.syncStatusConflict:
+        icon = Icons.warning_amber;
+        color = Colors.amber;
+        label = 'Conflicto';
+        break;
+      default:
+        icon = Icons.cloud_queue;
+        color = Colors.grey;
+        label = 'Desconocido';
+    }
+    
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class TaskCardSkeleton extends StatelessWidget {
-  const TaskCardSkeleton({super.key});
+// === ARCHIVO: lib/presentation/widgets/connectivity_banner.dart ===
+package presentation.widgets;
+
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../core/network/network_info.dart';
+import '../../core/constants/app_constants.dart';
+
+class ConnectivityBanner extends StatefulWidget {
+  final Widget? child;
+  final bool showBanner;
+  final Duration animationDuration;
+
+  const ConnectivityBanner({
+    super.key,
+    this.child,
+    this.showBanner = true,
+    this.animationDuration = const Duration(milliseconds: 300),
+  });
+
+  @override
+  State<ConnectivityBanner> createState() => _ConnectivityBannerState();
+}
+
+class _ConnectivityBannerState extends State<ConnectivityBanner> {
+  StreamSubscription? _connectivitySubscription;
+  NetworkStatus _currentStatus = NetworkStatus.connected;
+  bool _isVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initConnectivityListener();
+  }
+
+  void _initConnectivityListener() {
+    final networkInfo = context.read<NetworkInfo>();
+    _connectivitySubscription = networkInfo.onConnectivityChanged.listen(
+      (status) {
+        setState(() {
+          _currentStatus = status;
+          _isVisible = status == NetworkStatus.disconnected ||
+              status == NetworkStatus.connecting;
+        });
+      },
+      onError: (error) {
+        debugPrint('Error en listener de conectividad: $error');
+      },
+    );
+    
+    networkInfo.checkConnectivity().then((_) {
+      if (mounted) {
+        setState(() {
+          _isVisible = _currentStatus == NetworkStatus.disconnected ||
+              _currentStatus == NetworkStatus.connecting;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AnimatedSlide(
+          duration: widget.animationDuration,
+          curve: Curves.easeInOut,
+          offset: _isVisible && widget.showBanner 
+              ? Offset.zero 
+              : const Offset(0, -1),
+          child: AnimatedOpacity(
+            duration: widget.animationDuration,
+            opacity: _isVisible && widget.showBanner ? 1.0 : 0.0,
+            child: _buildBanner(context),
+          ),
+        ),
+        if (widget.child != null) widget.child!,
+      ],
+    );
+  }
+
+  Widget _buildBanner(BuildContext context) {
+    final theme = Theme.of(context);
+    final isConnecting = _currentStatus == NetworkStatus.connecting;
+    final isDisconnected = _currentStatus == NetworkStatus.disconnected;
+    
+    Color backgroundColor;
+    Color textColor;
+    IconData icon;
+    String message;
+    
+    if (isConnecting) {
+      backgroundColor = Colors.orange.shade100;
+      textColor = Colors.orange.shade800;
+      icon = Icons.wifi_find;
+      message = 'Conectando...';
+    } else if (isDisconnected) {
+      backgroundColor = Colors.red.shade100;
+      textColor = Colors.red.shade800;
+      icon = Icons.wifi_off;
+      message = 'Sin conexión - Modo offline';
+    } else {
+      backgroundColor = Colors.green.shade100;
+      textColor = Colors.green.shade800;
+      icon = Icons.wifi;
+      message = 'Conectado';
+    }
+    
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: SafeArea(
+        bottom: false,
+        child: Row(
           children: [
-            Container(
-              height: 16,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(4),
+            if (isConnecting)
+              SizedBox(
+                width: 18,
+                height: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(textColor),
+                ),
+              )
+            else
+              Icon(icon, color: textColor, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: textColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            Container(
-              height: 12,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(4),
+            if (isDisconnected)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: textColor.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'OFFLINE',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Container(
-                  height: 20,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  height: 20,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -8893,181 +7032,313 @@ class TaskCardSkeleton extends StatelessWidget {
   }
 }
 
-class TaskCardCompact extends StatelessWidget {
-  final TaskEntity task;
-  final VoidCallback? onTap;
+// === ARCHIVO: lib/presentation/widgets/sync_progress_indicator.dart ===
+package presentation.widgets;
 
-  const TaskCardCompact({
-    super.key,
-    required this.task,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      leading: CircleAvatar(
-        backgroundColor: _getPriorityColor(task.priority),
-        child: Icon(
-          _getStatusIcon(task.status),
-          color: Colors.white,
-          size: 20,
-        ),
-      ),
-      title: Text(
-        task.title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontWeight: FontWeight.w500),
-      ),
-      subtitle: Text(
-        task.description ?? '',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-      ),
-      trailing: Icon(
-        _getSyncStatusIcon(task.syncStatus),
-        color: _getSyncStatusColor(task.syncStatus),
-        size: 20,
-      ),
-    );
-  }
-
-  Color _getPriorityColor(String priority) {
-    switch (priority) {
-      case AppConstants.taskPriorityHigh:
-        return AppConstants.errorColor;
-      case AppConstants.taskPriorityMedium:
-        return AppConstants.warningColor;
-      case AppConstants.taskPriorityLow:
-        return AppConstants.primaryColor;
-      default:
-        return AppConstants.surfaceColor;
-    }
-  }
-
-  IconData _getStatusIcon(String status) {
-    switch (status) {
-      case AppConstants.taskStatusPending:
-        return Icons.schedule;
-      case AppConstants.taskStatusInProgress:
-        return Icons.play_circle_outline;
-      case AppConstants.taskStatusCompleted:
-        return Icons.check_circle_outline;
-      case AppConstants.taskStatusCancelled:
-        return Icons.cancel_outlined;
-      default:
-        return Icons.help_outline;
-    }
-  }
-
-  IconData _getSyncStatusIcon(String syncStatus) {
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        return Icons.cloud_done;
-      case AppConstants.syncStatusPending:
-        return Icons.cloud_upload;
-      case AppConstants.syncStatusFailed:
-        return Icons.cloud_off;
-      case AppConstants.syncStatusConflict:
-        return Icons.warning_amber_rounded;
-      default:
-        return Icons.cloud_queue;
-    }
-  }
-}
-// === ARCHIVO: lib/presentation/widgets/sync_indicator.dart ===
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/constants/app_constants.dart';
-import '../bloc/sync/sync_bloc.dart';
-import '../bloc/sync/sync_state.dart';
 
-enum SyncIndicatorStyle { compact, detailed, animated }
+enum SyncIndicatorStyle {
+  compact,
+  expanded,
+  circular,
+  linear,
+}
 
-class SyncIndicator extends StatelessWidget {
+class SyncProgressIndicator extends StatelessWidget {
+  final int totalItems;
+  final int processedItems;
+  final int failedItems;
+  final String? currentOperation;
   final SyncIndicatorStyle style;
-  final bool showLabel;
-  final double size;
+  final VoidCallback? onCancel;
+  final VoidCallback? onRetry;
+  final bool showDetails;
 
-  const SyncIndicator({
+  const SyncProgressIndicator({
     super.key,
-    this.style = SyncIndicatorStyle.compact,
-    this.showLabel = true,
-    this.size = 24,
+    required this.totalItems,
+    required this.processedItems,
+    this.failedItems = 0,
+    this.currentOperation,
+    this.style = SyncIndicatorStyle.expanded,
+    this.onCancel,
+    this.onRetry,
+    this.showDetails = true,
   });
 
+  double get progress => totalItems > 0 ? processedItems / totalItems : 0.0;
+  bool get isComplete => processedItems >= totalItems;
+  bool get hasFailures => failedItems > 0;
+  
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SyncBloc, SyncState>(
-      builder: (context, state) {
-        switch (style) {
-          case SyncIndicatorStyle.compact:
-            return _buildCompactIndicator(state);
-          case SyncIndicatorStyle.detailed:
-            return _buildDetailedIndicator(context, state);
-          case SyncIndicatorStyle.animated:
-            return _buildAnimatedIndicator(state);
-        }
-      },
-    );
+    switch (style) {
+      case SyncIndicatorStyle.compact:
+        return _buildCompactIndicator(context);
+      case SyncIndicatorStyle.expanded:
+        return _buildExpandedIndicator(context);
+      case SyncIndicatorStyle.circular:
+        return _buildCircularIndicator(context);
+      case SyncIndicatorStyle.linear:
+        return _buildLinearIndicator(context);
+    }
   }
 
-  Widget _buildCompactIndicator(SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
-    return Tooltip(
-      message: tooltip,
-      child: Icon(
-        icon,
-        color: color,
-        size: size,
-      ),
-    );
-  }
-
-  Widget _buildDetailedIndicator(BuildContext context, SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
-    final pendingCount = state is SyncInProgress
-        ? (state as SyncInProgress).pendingCount
-        : 0;
-    final failedCount = state is SyncFailed
-        ? (state as SyncFailed).failedCount
-        : 0;
-
+  Widget _buildCompactIndicator(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: hasFailures 
+            ? Colors.orange.shade50 
+            : Colors.blue.shade50,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: hasFailures 
+              ? Colors.orange.shade200 
+              : Colors.blue.shade200,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 18),
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                tooltip,
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
+          if (!isComplete)
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  hasFailures ? Colors.orange : Colors.blue,
                 ),
               ),
-              if (pendingCount > 0 || failedCount > 0)
+            )
+          else
+            Icon(
+              hasFailures ? Icons.warning_amber : Icons.check_circle,
+              size: 16,
+              color: hasFailures ? Colors.orange : Colors.green,
+            ),
+          const SizedBox(width: 8),
+          Text(
+            '$processedItems/$totalItems',
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: hasFailures 
+                  ? Colors.orange.shade700 
+                  : Colors.blue.shade700,
+            ),
+          ),
+          if (hasFailures) ...[
+            const SizedBox(width: 4),
+            Icon(
+              Icons.error_outline,
+              size: 14,
+              color: Colors.orange.shade700,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpandedIndicator(BuildContext context) {
+    final theme = Theme.of(context);
+    
+    return Card(
+      margin: const EdgeInsets.all(16),
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  isComplete 
+                      ? (hasFailures ? Icons.sync_problem : Icons.sync)
+                      : Icons.sync,
+                  color: hasFailures 
+                      ? Colors.orange 
+                      : Colors.blue,
+                  size: 28,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isComplete 
+                            ? (hasFailures 
+                                ? 'Sincronización completada con errores'
+                                : 'Sincronización completada')
+                            : 'Sincronizando...',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (currentOperation != null && showDetails)
+                        Text(
+                          currentOperation!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
+                ),
                 Text(
-                  '${pendingCount > 0 ? "$pendingCount pending" : ""}'
-                  '${pendingCount > 0 && failedCount > 0 ? ", " : ""}'
-                  '${failedCount > 0 ? "$failedCount failed" : ""}',
-                  style: TextStyle(
-                    color: color.withValues(alpha: 0.8),
-                    fontSize: 10,
+                  '${(progress * 100).toInt()}%',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: hasFailures 
+                        ? Colors.orange 
+                        : Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: LinearProgressIndicator(
+                value: progress,
+                minHeight: 8,
+                backgroundColor: Colors.grey.shade200,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  hasFailures ? Colors.orange : Colors.blue,
+                ),
+              ),
+            ),
+            if (showDetails) ...[
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildStatItem(
+                    context,
+                    Icons.check_circle_outline,
+                    'Procesados',
+                    processedItems.toString(),
+                    Colors.green,
+                  ),
+                  _buildStatItem(
+                    context,
+                    Icons.pending_outlined,
+                    'Pendientes',
+                    (totalItems - processedItems).toString(),
+                    Colors.grey,
+                  ),
+                  _buildStatItem(
+                    context,
+                    Icons.error_outline,
+                    'Fallidos',
+                    failedItems.toString(),
+                    Colors.red,
+                  ),
+                ],
+              ),
+            ],
+            if (!isComplete && onCancel != null) ...[
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: onCancel,
+                  child: const Text('Cancelar sincronización'),
+                ),
+              ),
+            ],
+            if (isComplete && hasFailures && onRetry != null) ...[
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: onRetry,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Reintentar sincronización'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatItem(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String value,
+    Color color,
+  ) {
+    final theme = Theme.of(context);
+    
+    return Column(
+      children: [
+        Icon(icon, color: color, size: 24),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+        Text(
+          label,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCircularIndicator(BuildContext context) {
+    return SizedBox(
+      width: 80,
+      height: 80,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CircularProgressIndicator(
+            value: progress,
+            strokeWidth: 6,
+            backgroundColor: Colors.grey.shade200,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              hasFailures ? Colors.orange : Colors.blue,
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isComplete)
+                Icon(
+                  hasFailures ? Icons.warning_amber : Icons.check,
+                  color: hasFailures ? Colors.orange : Colors.green,
+                  size: 20,
+                )
+              else
+                Text(
+                  '${(progress * 100).toInt()}%',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
             ],
@@ -9077,572 +7348,36 @@ class SyncIndicator extends StatelessWidget {
     );
   }
 
-  Widget _buildAnimatedIndicator(SyncState state) {
-    final (icon, color, tooltip) = _getSyncData(state);
-    final isSyncing = state is SyncInProgress;
-
-    return Tooltip(
-      message: tooltip,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        child: isSyncing
-            ? _AnimatedSyncIcon(color: color, size: size)
-            : Icon(icon, color: color, size: size),
-      ),
-    );
-  }
-
-  (IconData, Color, String) _getSyncData(SyncState state) {
-    if (state is SyncInitial) {
-      return (
-        Icons.cloud_queue,
-        Colors.grey,
-        'Not synced',
-      );
-    } else if (state is SyncInProgress) {
-      return (
-        Icons.sync,
-        AppConstants.primaryColor,
-        'Syncing... ${state.pendingCount} items',
-      );
-    } else if (state is SyncSuccess) {
-      return (
-        Icons.cloud_done,
-        Colors.green,
-        'Synced successfully',
-      );
-    } else if (state is SyncFailed) {
-      return (
-        Icons.cloud_off,
-        AppConstants.errorColor,
-        'Sync failed - ${state.failedCount} errors',
-      );
-    } else if (state is SyncOffline) {
-      return (
-        Icons.cloud_off,
-        Colors.orange,
-        'Offline - changes saved locally',
-      );
-    } else if (state is SyncConflict) {
-      return (
-        Icons.warning_amber_rounded,
-        Colors.purple,
-        '${state.conflictCount} conflicts need resolution',
-      );
-    }
-    return (
-      Icons.cloud_queue,
-      Colors.grey,
-      'Unknown status',
-    );
-  }
-}
-
-class _AnimatedSyncIcon extends StatefulWidget {
-  final Color color;
-  final double size;
-
-  const _AnimatedSyncIcon({required this.color, required this.size});
-
-  @override
-  State<_AnimatedSyncIcon> createState() => _AnimatedSyncIconState();
-}
-
-class _AnimatedSyncIconState extends State<_AnimatedSyncIcon>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RotationTransition(
-      turns: _controller,
-      child: Icon(
-        Icons.sync,
-        color: widget.color,
-        size: widget.size,
-      ),
-    );
-  }
-}
-
-class SyncStatusBadge extends StatelessWidget {
-  final String syncStatus;
-  final bool showCount;
-  final int? count;
-
-  const SyncStatusBadge({
-    super.key,
-    required this.syncStatus,
-    this.showCount = false,
-    this.count,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final (icon, color, label) = _getStatusData();
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 4),
-          Text(
-            showCount && count != null ? '$label ($count)' : label,
-            style: TextStyle(
-              color: color,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  (IconData, Color, String) _getStatusData() {
-    switch (syncStatus) {
-      case AppConstants.syncStatusSynced:
-        return (Icons.check_circle, Colors.green, 'Synced');
-      case AppConstants.syncStatusPending:
-        return (Icons.schedule, Colors.orange, 'Pending');
-      case AppConstants.syncStatusFailed:
-        return (Icons.error, AppConstants.errorColor, 'Failed');
-      case AppConstants.syncStatusConflict:
-        return (Icons.warning, Colors.purple, 'Conflict');
-      default:
-        return (Icons.help, Colors.grey, 'Unknown');
-    }
-  }
-}
-
-class SyncProgressIndicator extends StatelessWidget {
-  final double progress;
-  final String? label;
-  final bool showPercentage;
-
-  const SyncProgressIndicator({
-    super.key,
-    required this.progress,
-    this.label,
-    this.showPercentage = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildLinearIndicator(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
-        if (label != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  label!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                if (showPercentage)
-                  Text(
-                    '${(progress * 100).toInt()}%',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-              ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              currentOperation ?? 'Sincronizando...',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
-          ),
+            Text(
+              '$processedItems/$totalItems',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
             value: progress,
-            backgroundColor: Colors.grey[300],
+            minHeight: 4,
+            backgroundColor: Colors.grey.shade200,
             valueColor: AlwaysStoppedAnimation<Color>(
-              AppConstants.primaryColor,
-            ),
-            minHeight: 6,
-          ),
-        ),
-      ],
-    );
-  }
-}
-// === ARCHIVO: lib/presentation/widgets/offline_banner.dart ===
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/constants/app_constants.dart';
-import '../bloc/sync/sync_bloc.dart';
-import '../bloc/sync/sync_state.dart';
-
-class OfflineBanner extends StatelessWidget {
-  final bool isOffline;
-  final VoidCallback? onRetry;
-  final bool showRetryButton;
-  final Duration? autoHideDuration;
-
-  const OfflineBanner({
-    super.key,
-    required this.isOffline,
-    this.onRetry,
-    this.showRetryButton = true,
-    this.autoHideDuration,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!isOffline) {
-      return const SizedBox.shrink();
-    }
-
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      height: isOffline ? 56 : 0,
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 300),
-        opacity: isOffline ? 1.0 : 0.0,
-        child: Material(
-          color: Colors.orange[800],
-          child: SafeArea(
-            bottom: false,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.wifi_off,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'You are offline',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          'Changes will sync when connection is restored',
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.8),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (showRetryButton)
-                    TextButton(
-                      onPressed: onRetry,
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white.withValues(alpha: 0.2),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                      ),
-                      child: const Text(
-                        'Retry',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+              hasFailures ? Colors.orange : Colors.blue,
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class OfflineBannerWithSyncStatus extends StatelessWidget {
-  final bool isOffline;
-  final VoidCallback? onRetry;
-  final VoidCallback? onResolveConflicts;
-
-  const OfflineBannerWithSyncStatus({
-    super.key,
-    required this.isOffline,
-    this.onRetry,
-    this.onResolveConflicts,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SyncBloc, SyncState>(
-      builder: (context, syncState) {
-        if (isOffline) {
-          return _buildOfflineBanner();
-        }
-
-        if (syncState is SyncConflict) {
-          return _buildConflictBanner(context, syncState);
-        }
-
-        if (syncState is SyncFailed) {
-          return _buildFailedBanner(context, syncState);
-        }
-
-        return const SizedBox.shrink();
-      },
-    );
-  }
-
-  Widget _buildOfflineBanner() {
-    return Container(
-      color: Colors.orange[800],
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: SafeArea(
-        bottom: false,
-        child: Row(
-          children: [
-            const Icon(Icons.wifi_off, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'No internet connection',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    'Your changes are saved locally and will sync automatically',
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.8),
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildConflictBanner(BuildContext context, SyncConflict state) {
-    return Container(
-      color: Colors.purple[700],
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: SafeArea(
-        bottom: false,
-        child: Row(
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '${state.conflictCount} conflict${state.conflictCount > 1 ? 's' : ''} detected',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const Text(
-                    'Some items have conflicting changes that need review',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: onResolveConflicts,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.purple[700],
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              ),
-              child: const Text(
-                'Resolve',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFailedBanner(BuildContext context, SyncFailed state) {
-    return Container(
-      color: AppConstants.errorColor,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: SafeArea(
-        bottom: false,
-        child: Row(
-          children: [
-            const Icon(Icons.sync_problem, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Sync failed',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    '${state.failedCount} item${state.failedCount > 1 ? 's' : ''} could not be synced',
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              onPressed: onRetry,
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.white.withValues(alpha: 0.2),
-              ),
-              child: const Text(
-                'Retry',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ConnectionStatusIndicator extends StatelessWidget {
-  final bool isConnected;
-  final bool showLabel;
-  final double iconSize;
-
-  const ConnectionStatusIndicator({
-    super.key,
-    required this.isConnected,
-    this.showLabel = true,
-    this.iconSize = 16,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isConnected ? Colors.green : Colors.red,
-          ),
-        ),
-        if (showLabel) ...[
-          const SizedBox(width: 6),
-          Text(
-            isConnected ? 'Online' : 'Offline',
-            style: TextStyle(
-              fontSize: 12,
-              color: isConnected ? Colors.green[700] : Colors.red[700],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class OfflineModeDialog extends StatelessWidget {
-  final VoidCallback? onContinueOffline;
-  final VoidCallback? onWaitForConnection;
-
-  const OfflineModeDialog({
-    super.key,
-    this.onContinueOffline,
-    this.onWaitForConnection,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Row(
-        children: [
-          Icon(Icons.wifi_off, color: Colors.orange[700]),
-          const SizedBox(width: 8),
-          const Text('No Connection'),
-        ],
-      ),
-      content: const Text(
-        'You are currently offline. You can continue working with local data, '
-        'or wait for the connection to be restored to sync automatically.',
-      ),
-      actions: [
-        TextButton(
-          onPressed: onWaitForConnection,
-          child: const Text('Wait for Connection'),
-        ),
-        ElevatedButton(
-          onPressed: onContinueOffline,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppConstants.primaryColor,
-            foregroundColor: Colors.white,
-          ),
-          child: const Text('Continue Offline'),
         ),
       ],
     );
@@ -9650,1517 +7385,844 @@ class OfflineModeDialog extends StatelessWidget {
 }
 
 
-// === ARCHIVO: docs/arquitectura_offline_first.md ===
-# Arquitectura Offline-First para Aplicación de Campo
+// === ARCHIVO: lib/presentation/providers/transaction_provider.dart ===
+package offline_field_app.presentation.providers;
+
+import 'package:flutter/foundation.dart';
+import 'package:offline_field_app/domain/entities/transaction.dart';
+import 'package:offline_field_app/domain/repositories/transaction_repository.dart';
+import 'package:offline_field_app/domain/usecases/create_transaction.dart';
+import 'package:offline_field_app/domain/usecases/get_pending_transactions.dart';
+import 'package:offline_field_app/core/errors/failures.dart';
+import 'package:offline_field_app/core/errors/exceptions.dart';
+
+enum TransactionListState { initial, loading, loaded, error }
+enum TransactionCreateState { initial, creating, success, error }
+
+class TransactionProvider extends ChangeNotifier {
+  final TransactionRepository _repository;
+  final CreateTransaction _createTransactionUseCase;
+  final GetPendingTransactions _getPendingTransactionsUseCase;
+
+  TransactionProvider({
+    required TransactionRepository repository,
+    required CreateTransaction createTransactionUseCase,
+    required GetPendingTransactions getPendingTransactionsUseCase,
+  })  : _repository = repository,
+        _createTransactionUseCase = createTransactionUseCase,
+        _getPendingTransactionsUseCase = getPendingTransactionsUseCase;
+
+  TransactionListState _listState = TransactionListState.initial;
+  TransactionCreateState _createState = TransactionCreateState.initial;
+  List<Transaction> _transactions = [];
+  Transaction? _selectedTransaction;
+  Failure? _lastFailure;
+  String? _successMessage;
+
+  TransactionListState get listState => _listState;
+  TransactionCreateState get createState => _createState;
+  List<Transaction> get transactions => List.unmodifiable(_transactions);
+  Transaction? get selectedTransaction => _selectedTransaction;
+  Failure? get lastFailure => _lastFailure;
+  String? get successMessage => _successMessage;
+  bool get isLoading => _listState == TransactionListState.loading;
+  bool get isCreating => _createState == TransactionCreateState.creating;
+  int get pendingCount => _transactions.where((t) => t.syncStatus == 'pending').length;
+  int get failedCount => _transactions.where((t) => t.syncStatus == 'failed').length;
+
+  Future<void> loadTransactions() async {
+    _listState = TransactionListState.loading;
+    _lastFailure = null;
+    notifyListeners();
 
-## 1. Resumen Ejecutivo
-
-Este documento describe la arquitectura offline-first implementada en la aplicación de campo para logística. El objetivo principal es permitir que los trabajadores realicen sus tareas en áreas remotas sin dependencia de conectividad constante, sincronizando datos cuando la conexión se restablezca.
-
-## 2. Principios Fundamentales
-
-### 2.1 Filosofía Offline-First
-La aplicación sigue el patrón offline-first donde:
-- **Los datos locales son la fuente primaria de verdad** para el usuario
-- **La conectividad es un lujo**, no una necesidad
-- **La sincronización ocurre en segundo plano** de forma transparente
-- **Los conflictos se detectan y resuelven** de manera automática o manual
-
-### 2.2 Objetivos de Arquitectura
-- Tolerancia a fallos de red completa
-- Consistencia eventual de datos garantizada
-- Experiencia de usuario fluida sin importar el estado de conexión
-- Capacidad de trabajo en modo completamente desconectado
-- Sincronización eficiente minimizando consumo de datos
-
-## 3. Arquitectura de Componentes
-
-### 3.1 Capas de la Aplicación
-
-```
-┌─────────────────────────────────────────────────┐
-│                 PRESENTATION                     │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
-│  │   Pages     │  │   Widgets   │  │  Blocs  │ │
-│  └─────────────┘  └─────────────┘  └─────────┘ │
-├─────────────────────────────────────────────────┤
-│                   DOMAIN                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
-│  │  Entities   │  │ Repositories│  │ UseCases│ │
-│  └─────────────┘  └─────────────┘  └─────────┘ │
-├─────────────────────────────────────────────────┤
-│                    DATA                          │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
-│  │   Models    │  │DataSources  │  │Repository│ │
-│  └─────────────┘  └─────────────┘  │ Impls   │ │
-│                                     └─────────┘ │
-├─────────────────────────────────────────────────┤
-│                 INFRASTRUCTURE                   │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
-│  │  SQLite DB  │  │  Dio HTTP   │  │Connectiv.│ │
-│  └─────────────┘  └─────────────┘  └─────────┘ │
-└─────────────────────────────────────────────────┘
-```
-
-### 3.2 Componentes Clave
-
-#### Capa de Presentación (Presentation Layer)
-- **TaskBloc**: Gestiona el estado de las tareas locales
-- **SyncBloc**: Controla el estado de sincronización
-- **Pages**: UI que consume los blocs
-- **Widgets**: Componentes reutilizables con estado de sincronización
-
-#### Capa de Dominio (Domain Layer)
-- **TaskEntity**: Entidad de dominio representando una tarea
-- **SyncStatusEntity**: Estado de sincronización de cada entidad
-- **TaskRepository**: Contrato abstracto para acceso a tareas
-- **UseCases**: GetLocalTasks, SaveTaskLocal, SyncTasks, ResolveConflict
-
-#### Capa de Datos (Data Layer)
-- **TaskModel**: Modelo de datos con serialización JSON
-- **TaskLocalDataSource**: Acceso a SQLite
-- **TaskRemoteDataSource**: Acceso a API REST via Dio
-- **TaskRepositoryImpl**: Implementación del repositorio
-
-#### Capa de Infraestructura (Infrastructure Layer)
-- **DatabaseHelper**: Gestión de SQLite
-- **NetworkInfo**: Detección de conectividad
-- **Dio Client**: Cliente HTTP configurado
-
-## 4. Flujo de Datos
-
-### 4.1 Operación de Lectura
-1. UI solicita tareas al TaskBloc
-2. TaskBloc invoca GetLocalTasks
-3. GetLocalTasks consulta TaskRepository
-4. TaskRepository obtiene datos de TaskLocalDataSource (SQLite)
-5. Datos se retornan a la UI inmediatamente
-6. En paralelo, si hay conexión, se verifica si hay actualizaciones del servidor
-
-### 4.2 Operación de Escritura
-1. Usuario crea/modifica una tarea en la UI
-2. TaskBloc envía evento SaveTaskLocal
-3. SaveTaskLocal ejecuta:
-   a. Guarda en SQLite con sync_status = 'pending'
-   b. Registra operación en sync_status_table
-4. UI se actualiza inmediatamente mostrando datos locales
-5. SyncBloc detecta cambio pendiente y programa sincronización
-
-### 4.3 Proceso de Synchronización
-1. SyncBloc detecta conexión disponible
-2. Invoca SyncTasks use case
-3. Para cada entidad pendiente:
-   a. Obtiene versión local
-   b. Compara con versión del servidor
-   c. Si no hay conflicto: envía al servidor
-   d. Si hay conflicto: invoca ResolveConflict
-4. Actualiza sync_status a 'synced' o 'failed'
-5. Notifica a la UI del resultado
-
-## 5. Manejo de Conflictos
-
-### 5.1 Estrategia de Detección
-- Cada entidad tiene campo `version` y `updated_at`
-- En sincronización se comparan versiones
-- Si version_local < version_server: conflicto de actualización
-- Si version_local == version_server pero contenido diferente: conflicto de edición concurrente
-
-### 5.2 Estrategias de Resolución
-- **Server Wins**: Siempre prevalece el servidor
-- **Client Wins**: Siempre prevalece el cliente
-- **Last Write Wins**: Gana el que tenga timestamp más reciente
-- **Manual**: Se presenta al usuario ambas versiones
-
-### 5.3 Flujo de Resolución Manual
-1. Se detecta conflicto
-2. Se pausa sincronización automática
-3. Se notifica al usuario con ambas versiones
-4. Usuario selecciona la versión correcta
-5. Se guarda selección y se reanuda sincronización
-
-## 6. Gestión de Conectividad
-
-### 6.1 Monitoreo de Estado
-- NetworkInfo usa connectivity_plus para detectar cambios
-- Se suscribe a cambios de conectividad en tiempo real
-- Mantiene cache del último estado conocido
-
-### 6.2 Reacción a Cambios
-- **Sin conexión → Con conexión**: Inicia proceso de sincronización automáticamente
-- **Con conexión → Sin conexión**: UI muestra banner de modo offline, continúa trabajo local
-
-### 6.3 Políticas de Sincronización
-- Sincronización automática cada X minutos (configurable)
-- Sincronización inmediata tras cambio local
-- Debounce para evitar sincronizaciones excesivas
-- Retry automático con backoff exponencial
-
-## 7. Consideraciones de Rendimiento
-
-### 7.1 Optimización de SQLite
-- Índices en columnas de sincronización
-- Transacciones para operaciones múltiples
-- Batch inserts para sincronización masiva
-- Vacuum periódico para mantener tamaño
-
-### 7.2 Optimización de Red
-- Compresión de payloads JSON
-- Solo envía campos modificados (diff)
-- Pagination en respuestas grandes
-- Cache de respuestas frecuentes
-
-### 7.3 Memoria y UI
-- Lazy loading de listas grandes
-- Pagination en UI de tareas
-- Optimización de rebuilds con equatable
-- Uso de isolates para procesamiento pesado
-
-## 8. Seguridad
-
-### 8.1 Datos en Reposo
-- SQLite con encryption (considerar en versión producción)
-- No almacenar credenciales en texto plano
-- Limpiar datos sensibles en logout
-
-### 8.2 Datos en Tránsito
-- HTTPS obligatorio
-- Certificate pinning (configurable)
-- Tokens de sesión con expiración
-
-### 8.3 Acceso Local
-- Validación de permisos de almacenamiento
-- Sanitización de queries SQL
-- Rate limiting en sincronización
-
-## 9. Métricas y Monitoreo
-
-### 9.1 Métricas de Salud
-- Tiempo promedio de sincronización
-- Tasa de conflictos por entidad
-- Cantidad de reintentos
-- Latencia de operaciones locales
-
-### 9.2 Logs
-- Nivel configurable (debug, info, warning, error)
-- Tags para filtrado (sync, network, db)
-- Timestamps en UTC
-- Stack traces en errores
-
-## 10. Testing
-
-### 10.1 Estrategia de Pruebas
-- **Unit Tests**: Use cases, repositories, blocs
-- **Integration Tests**: Flujos completos de sincronización
-- **Manual Tests**: Escenarios de conectividad variable
-
-### 10.2 Escenarios Críticos a Probar
-- Sincronización con conexión intermitente
-- Conflictos de edición concurrente
-- Recovery tras falla de sincronización
-- Integridad de datos tras app kill
-- Rendimiento con 1000+ tareas offline
-
-## 11. Referencias
-
-- Documentación de dependencias: sqflite, dio, flutter_bloc, connectivity_plus
-- Clean Architecture por Robert C. Martin
-- Offline-First Mobile Apps por Sean Newman
-- OWASP MASVS para consideraciones de seguridad móvil
-
----
-*Versión del documento: 1.0.0*
-*Última actualización: 2024*
-*Autor: Equipo de Arquitectura*
-
-// === ARCHIVO: docs/diagrama_arquitectura.drawio ===
-<mxfile host="app.diagrams.net" modified="2024-01-15T00:00:00.000Z" agent="Flutter" version="21.0.0" type="device">
-  <diagram id="arquitectura-offline-first" name="Arquitectura Offline-First">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        
-        <!-- TÍTULO PRINCIPAL -->
-        <mxCell id="title" value="ARQUITECTURA OFFLINE-FIRST - APLICACIÓN DE CAMPO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="200" y="20" width="800" height="40" as="geometry" />
-        </mxCell>
-        
-        <!-- CAPA DE PRESENTACIÓN -->
-        <mxCell id="presentation-layer" value="PRESENTATION LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F4FD;strokeColor=#1E88E5;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="40" y="80" width="200" height="30" as="geometry" />
-        </mxCell>
-        
-        <!-- TASK BLOC -->
-        <mxCell id="task-bloc" value="TaskBloc&#xa;(Gestión de Estado Tareas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="60" y="130" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- SYNC BLOC -->
-        <mxCell id="sync-bloc" value="SyncBloc&#xa;(Gestión de Sincronización)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="60" y="200" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- PAGES -->
-        <mxCell id="pages" value="Pages&#xa;(HomePage, TaskList, TaskDetail)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="60" y="270" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- WIDGETS -->
-        <mxCell id="widgets" value="Widgets&#xa;(TaskCard, SyncIndicator, OfflineBanner)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="60" y="340" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- FLECHA PRESENTATION -> DOMAIN -->
-        <mxCell id="arrow-pd1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="task-bloc" target="domain-layer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <!-- CAPA DE DOMINIO -->
-        <mxCell id="domain-layer" value="DOMAIN LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="280" y="80" width="200" height="30" as="geometry" />
-        </mxCell>
-        
-        <!-- ENTITIES -->
-        <mxCell id="entities" value="Entities&#xa;• TaskEntity&#xa;• SyncStatusEntity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="300" y="130" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- REPOSITORIES (CONTRACTS) -->
-        <mxCell id="repositories" value="Repositories (Abstract)&#xa;• TaskRepository&#xa;• SyncRepository" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="300" y="210" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- USE CASES -->
-        <mxCell id="usecases" value="Use Cases&#xa;• GetLocalTasks&#xa;• SaveTaskLocal&#xa;• SyncTasks&#xa;• ResolveConflict" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="300" y="290" width="160" height="80" as="geometry" />
-        </mxCell>
-        
-        <!-- FLECHA DOMAIN -> DATA -->
-        <mxCell id="arrow-dd1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="repositories" target="data-layer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <!-- CAPA DE DATOS -->
-        <mxCell id="data-layer" value="DATA LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FB8C00;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="520" y="80" width="200" height="30" as="geometry" />
-        </mxCell>
-        
-        <!-- MODELS -->
-        <mxCell id="models" value="Models&#xa;• TaskModel&#xa;• SyncStatusModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="540" y="130" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- LOCAL DATASOURCE -->
-        <mxCell id="local-ds" value="Local DataSource&#xa;• TaskLocalDataSource&#xa;• DatabaseHelper (SQLite)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="540" y="210" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- REMOTE DATASOURCE -->
-        <mxCell id="remote-ds" value="Remote DataSource&#xa;• TaskRemoteDataSource (Dio)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="540" y="290" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- REPOSITORY IMPLS -->
-        <mxCell id="repo-impls" value="Repository Implementations&#xa;• TaskRepositoryImpl&#xa;• SyncRepositoryImpl" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="540" y="370" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- FLECHA DATA -> INFRA -->
-        <mxCell id="arrow-di1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="local-ds" target="infra-layer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <!-- CAPA DE INFRAESTRUCTURA -->
-        <mxCell id="infra-layer" value="INFRASTRUCTURE LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#E91E63;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="760" y="80" width="200" height="30" as="geometry" />
-        </mxCell>
-        
-        <!-- DATABASE -->
-        <mxCell id="database" value="SQLite Database&#xa;(Almacenamiento Local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="780" y="130" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- NETWORK -->
-        <mxCell id="network" value="Network Layer&#xa;• Dio HTTP Client&#xa;• NetworkInfo (Connectivity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="780" y="200" width="160" height="60" as="geometry" />
-        </mxCell>
-        
-        <!-- EXTERNAL API -->
-        <mxCell id="external-api" value="External API&#xa;(Backend Server)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="780" y="280" width="160" height="50" as="geometry" />
-        </mxCell>
-        
-        <!-- CONEXIONES LATERALES -->
-        <mxCell id="arrow-sync1" value="Detecta&#xa;Conectividad" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E91E63;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sync-bloc" target="network">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="arrow-sync2" value="Sincroniza&#xa;Datos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#43A047;strokeWidth=2;" edge="1" parent="1" source="usecases" target="repo-impls">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <!-- CAJA DE FLUJO DE DATOS -->
-        <mxCell id="flow-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;" vertex="1" parent="1">
-          <mxGeometry x="40" y="430" width="920" height="180" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="flow-title" value="FLUJO DE DATOS - OPERACIONES OFFLINE-FIRST" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="60" y="440" width="300" height="20" as="geometry" />
-        </mxCell>
-        
-        <!-- FLUJO 1: LECTURA -->
-        <mxCell id="flow1" value="1. READ: UI → TaskBloc → GetLocalTasks → TaskRepository → TaskLocalDataSource → SQLite → Datos Locales" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#2196F3;fontColor=#1565C0;" vertex="1" parent="1">
-          <mxGeometry x="60" y="470" width="880" height="35" as="geometry" />
-        </mxCell>
-        
-        <!-- FLUJO 2: ESCRITURA -->
-        <mxCell id="flow2" value="2. WRITE: UI → TaskBloc → SaveTaskLocal → TaskRepository → TaskLocalDataSource → SQLite (sync_status='pending') → UI Actualizada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#4CAF50;fontColor=#2E7D32;" vertex="1" parent="1">
-          <mxGeometry x="60" y="515" width="880" height="35" as="geometry" />
-        </mxCell>
-        
-        <!-- FLUJO 3: SINCRONIZACIÓN -->
-        <mxCell id="flow3" value="3. SYNC: SyncBloc (conexión) → SyncTasks → Compara versiones → Envía a servidor → Actualiza sync_status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF9800;fontColor=#E65100;" vertex="1" parent="1">
-          <mxGeometry x="60" y="560" width="880" height="35" as="geometry" />
-        </mxCell>
-        
-        <!-- CAJA DE CONFLICTOS -->
-        <mxCell id="conflict-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#F44336;" vertex="1" parent="1">
-          <mxGeometry x="40" y="630" width="920" height="140" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="conflict-title" value="MANEJO DE CONFLICTOS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
-          <mxGeometry x="60" y="640" width="200" height="20" as="geometry" />
-        </mxCell>
-        
-        <!-- DETECCIÓN -->
-        <mxCell id="detection" value="DETECCIÓN&#xa;• Comparar versión local vs servidor&#xa;• Comparar timestamps (updated_at)&#xa;• Marcar como 'conflict' si difieren" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
-          <mxGeometry x="60" y="670" width="200" height="80" as="geometry" />
-        </mxCell>
-        
-        <!-- ESTRATEGIAS -->
-        <mxCell id="strategies" value="ESTRATEGIAS DE RESOLUCIÓN&#xa;• Server Wins (servidor prevalece)&#xa;• Client Wins (cliente prevalece)&#xa;• Last Write Wins (timestamp más reciente)&#xa;• Manual (usuario elige)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
-          <mxGeometry x="280" y="670" width="280" height="80" as="geometry" />
-        </mxCell>
-        
-        <!-- RESOLUCIÓN -->
-        <mxCell id="resolution" value="RESOLUCIÓN&#xa;• ResolveConflict Use Case&#xa;• Actualizar sync_status&#xa;• Notificar a la UI&#xa;• Reanudar sincronización" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
-          <mxGeometry x="580" y="670" width="200" height="80" as="geometry" />
-        </mxCell>
-        
-        <!-- LEYENDA -->
-        <mxCell id="legend" value="LEYENDA:&#xa;■ Capa Presentación&#xa;■ Capa Dominio&#xa;■ Capa Datos&#xa;■ Capa Infraestructura" style="text;html=1;strokeColor=#BDBDBD;fillColor=#FAFAFA;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#616161;" vertex="1" parent="1">
-          <mxGeometry x="820" y="430" width="130" height="100" as="geometry" />
-        </mxCell>
-        
-        <!-- ESTADO DE SINCRONIZACIÓN -->
-        <mxCell id="sync-status-title" value="TABLAS DE SINCRONIZACIÓN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
-          <mxGeometry x="850" y="540" width="100" height="20" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="sync-status-pending" value="pending - Pendiente de sincronizar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF9800;fontColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="820" y="565" width="150" height="20" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="sync-status-synced" value="synced - Sincronizado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4CAF50;fontColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="820" y="590" width="150" height="20" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="sync-status-failed" value="failed - Error en sincronización" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F44336;fontColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="820" y="615" width="150" height="20" as="geometry" />
-        </mxCell>
-        
-        <mxCell id="sync-status-conflict" value="conflict - Conflicto detectado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9C27B0;fontColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="820" y="640" width="150" height="20" as="geometry" />
-        </mxCell>
-        
-      </root>
-    </mxGraphModel>
-  </diagram>
-</mxfile>
-
-// === ARCHIVO: lib/domain/repositories/task_repository.dart ===
-package field_app.domain.repositories;
-
-import 'package:field_app/domain/entities/task_entity.dart';
-
-abstract class TaskRepository {
-  Future<List<TaskEntity>> getTasks();
-  Future<TaskEntity?> getTaskById(String id);
-  Future<List<TaskEntity>> getTasksByStatus(String status);
-  Future<List<TaskEntity>> getTasksByPriority(String priority);
-  Future<List<TaskEntity>> getPendingSyncTasks();
-  Future<TaskEntity> saveTask(TaskEntity task);
-  Future<void> deleteTask(String id);
-  Future<void> deleteAllTasks();
-  Future<int> getTaskCount();
-  Future<int> getPendingSyncCount();
-  Future<List<TaskEntity>> searchTasks(String query);
-  Future<void> updateTaskSyncStatus(String id, String syncStatus);
-  Future<void> incrementTaskVersion(String id);
-  Future<List<TaskEntity>> getTasksDueSoon(Duration within);
-  Future<List<TaskEntity>> getOverdueTasks();
-  Future<void> batchSaveTasks(List<TaskEntity> tasks);
-  Stream<List<TaskEntity>> watchTasks();
-  Stream<TaskEntity?> watchTask(String id);
-  Future<TaskEntity> updateTask(TaskEntity task);
-  Future<void> markTaskAsConflict(String id);
-  Future<void> markTaskAsSynced(String id);
-  Future<TaskEntity?> getServerTaskById(String id);
-  Future<List<TaskEntity>> getConflictingTasks();
-  Future<void> resolveConflict(String taskId, String resolution, TaskEntity winningVersion);
-  Future<void> syncTask(TaskEntity task);
-}
-
-// === ARCHIVO: lib/data/datasources/local/task_local_datasource.dart ===
-package field_app.data.datasources.local;
-
-import 'package:field_app/data/models/task_model.dart';
-import 'package:field_app/data/models/sync_status_model.dart';
-import 'package:sqflite/sqflite.dart';
-
-abstract class TaskLocalDataSource {
-  Future<List<TaskModel>> getAllTasks();
-  Future<List<TaskModel>> getPendingSyncTasks();
-  Future<TaskModel?> getTaskById(String id);
-  Future<void> saveTask(TaskModel task);
-  Future<void> saveTasks(List<TaskModel> tasks);
-  Future<void> updateTask(TaskModel task);
-  Future<void> deleteTask(String id);
-  Future<void> markTaskAsSynced(String id);
-  Future<void> markTaskAsFailed(String id, String error);
-  Future<void> markTaskAsConflict(String id);
-  Future<int> getPendingTasksCount();
-  Future<void> clearAllTasks();
-  Future<SyncStatusModel?> getSyncStatus(String entityId);
-  Future<void> saveSyncStatus(SyncStatusModel status);
-  Future<List<SyncStatusModel>> getAllSyncStatuses();
-  Future<List<TaskModel>> getTasks();
-  Future<void> cacheTasks(List<TaskModel> tasks);
-  Future<void> cacheTask(TaskModel task);
-  Future<void> updateTaskSyncStatus(String id, String syncStatus);
-  Future<List<TaskModel>> getPendingTasks();
-  Future<List<TaskModel>> searchTasks(String query);
-  Future<List<TaskModel>> getTasksByStatus(String status);
-  Future<List<TaskModel>> getTasksByPriority(String priority);
-}
-
-class TaskLocalDataSourceImpl implements TaskLocalDataSource {
-  final DatabaseHelper databaseHelper;
-  final Uuid _uuid;
-
-  TaskLocalDataSourceImpl({
-    required this.databaseHelper,
-    required Uuid uuid,
-  }) : _uuid = uuid;
-
-  Future<Database> get _db async => databaseHelper.database;
-
-  @override
-  Future<List<TaskModel>> getAllTasks() async {
-    final db = await _db;
-    final maps = await db.query('tasks', where: 'is_deleted = ?', whereArgs: [0]);
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<List<TaskModel>> getPendingSyncTasks() async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: 'sync_status = ? AND is_deleted = ?',
-      whereArgs: ['pending', 0],
-    );
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<TaskModel?> getTaskById(String id) async {
-    final db = await _db;
-    final maps = await db.query('tasks', where: 'id = ?', whereArgs: [id]);
-    if (maps.isEmpty) return null;
-    return TaskModel.fromMap(maps.first);
-  }
-
-  @override
-  Future<void> saveTask(TaskModel task) async {
-    final db = await _db;
-    await db.insert('tasks', task.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  @override
-  Future<void> saveTasks(List<TaskModel> tasks) async {
-    final db = await _db;
-    final batch = db.batch();
-    for (final task in tasks) {
-      batch.insert('tasks', task.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-    }
-    await batch.commit(noResult: true);
-  }
-
-  @override
-  Future<void> updateTask(TaskModel task) async {
-    final db = await _db;
-    await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
-  }
-
-  @override
-  Future<void> deleteTask(String id) async {
-    final db = await _db;
-    await db.delete('tasks', where: 'id = ?', whereArgs: [id]);
-  }
-
-  @override
-  Future<void> markTaskAsSynced(String id) async {
-    await updateTaskSyncStatus(id, 'synced');
-  }
-
-  @override
-  Future<void> markTaskAsFailed(String id, String error) async {
-    await updateTaskSyncStatus(id, 'failed');
-  }
-
-  @override
-  Future<void> markTaskAsConflict(String id) async {
-    await updateTaskSyncStatus(id, 'conflict');
-  }
-
-  @override
-  Future<int> getPendingTasksCount() async {
-    final db = await _db;
-    final result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM tasks WHERE sync_status = ? AND is_deleted = ?',
-      ['pending', 0],
-    );
-    return result.first['count'] as int;
-  }
-
-  @override
-  Future<void> clearAllTasks() async {
-    final db = await _db;
-    await db.delete('tasks');
-  }
-
-  @override
-  Future<SyncStatusModel?> getSyncStatus(String entityId) async {
-    final db = await _db;
-    final maps = await db.query('sync_status', where: 'entity_id = ?', whereArgs: [entityId]);
-    if (maps.isEmpty) return null;
-    return SyncStatusModel.fromMap(maps.first);
-  }
-
-  @override
-  Future<void> saveSyncStatus(SyncStatusModel status) async {
-    final db = await _db;
-    await db.insert('sync_status', status.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  @override
-  Future<List<SyncStatusModel>> getAllSyncStatuses() async {
-    final db = await _db;
-    final maps = await db.query('sync_status');
-    return maps.map((map) => SyncStatusModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<List<TaskModel>> getTasks() async {
-    return getAllTasks();
-  }
-
-  @override
-  Future<void> cacheTasks(List<TaskModel> tasks) async {
-    await saveTasks(tasks);
-  }
-
-  @override
-  Future<void> cacheTask(TaskModel task) async {
-    await saveTask(task);
-  }
-
-  @override
-  Future<void> updateTaskSyncStatus(String id, String syncStatus) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {'sync_status': syncStatus, 'updated_at': DateTime.now().toIso8601String()},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<List<TaskModel>> getPendingTasks() async {
-    return getPendingSyncTasks();
-  }
-
-  @override
-  Future<List<TaskModel>> searchTasks(String query) async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: '(title LIKE ? OR description LIKE ?) AND is_deleted = ?',
-      whereArgs: ['%$query%', '%$query%', 0],
-    );
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<List<TaskModel>> getTasksByStatus(String status) async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: 'status = ? AND is_deleted = ?',
-      whereArgs: [status, 0],
-    );
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<List<TaskModel>> getTasksByPriority(String priority) async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: 'priority = ? AND is_deleted = ?',
-      whereArgs: [priority, 0],
-    );
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-}
-
-// === ARCHIVO: lib/domain/repositories/sync_repository.dart ===
-abstract class SyncRepository extends Equatable {
-  const SyncRepository();
-  Future<Either<Failure, void>> syncPendingTasks();
-  Future<Either<Failure, SyncResult>> syncAllData();
-  Future<Either<Failure, ConflictResolutionResult>> resolveConflict(
-    String entityId,
-    ConflictResolutionStrategy strategy,
-  );
-  Future<Either<Failure, List<SyncStatusSummary>>>> getSyncStatusSummary();
-  Future<Either<Failure, void>> retryFailedSync(String entityId);
-  Future<Either<Failure, void>> cancelSync(String syncId);
-  Stream<SyncProgress> get syncProgressStream;
-  Future<void> recordSyncOperation({
-    required String entityType,
-    required int totalCount,
-    required int successCount,
-    required int failedCount,
-    required int conflictCount,
-  });
-}
-
-class SyncResult extends Equatable {
-  final int totalSynced;
-  final int totalFailed;
-  final int totalConflicts;
-  final Duration syncDuration;
-  final List<String> syncedEntityIds;
-  final List<SyncErrorDetails> failedEntities;
-  final List<ConflictDetails> conflicts;
-
-  const SyncResult({
-    required this.totalSynced,
-    required this.totalFailed,
-    required this.totalConflicts,
-    required this.syncDuration,
-    this.syncedEntityIds = const [],
-    this.failedEntities = const [],
-    this.conflicts = const [],
-  });
-
-  bool get hasErrors => totalFailed > 0;
-  bool get hasConflicts => totalConflicts > 0;
-  bool get isFullySuccessful => totalSynced > 0 && totalFailed == 0 && totalConflicts == 0;
-
-  @override
-  List<Object?> get props => [
-        totalSynced,
-        totalFailed,
-        totalConflicts,
-        syncDuration,
-        syncedEntityIds,
-        failedEntities,
-        conflicts,
-      ];
-}
-
-class SyncErrorDetails extends Equatable {
-  final String entityId;
-  final String entityType;
-  final String errorMessage;
-  final int retryCount;
-  final DateTime lastAttempt;
-
-  const SyncErrorDetails({
-    required this.entityId,
-    required this.entityType,
-    required this.errorMessage,
-    required this.retryCount,
-    required this.lastAttempt,
-  });
-
-  @override
-  List<Object?> get props => [entityId, entityType, errorMessage, retryCount, lastAttempt];
-}
-
-class ConflictDetails extends Equatable {
-  final String entityId;
-  final String entityType;
-  final Map<String, dynamic> localData;
-  final Map<String, dynamic> remoteData;
-  final DateTime localModifiedAt;
-  final DateTime remoteModifiedAt;
-  final List<String> conflictingFields;
-
-  const ConflictDetails({
-    required this.entityId,
-    required this.entityType,
-    required this.localData,
-    required this.remoteData,
-    required this.localModifiedAt,
-    required this.remoteModifiedAt,
-    required this.conflictingFields,
-  });
-
-  @override
-  List<Object?> get props => [
-        entityId,
-        entityType,
-        localData,
-        remoteData,
-        localModifiedAt,
-        remoteModifiedAt,
-        conflictingFields,
-      ];
-}
-
-enum ConflictResolutionStrategy {}
-
-class ConflictResolutionResult extends Equatable {
-  final bool success;
-  final String entityId;
-  final ConflictResolutionStrategy usedStrategy;
-  final Map<String, dynamic>? resolvedData;
-  final String? errorMessage;
-
-  const ConflictResolutionResult({
-    required this.success,
-    required this.entityId,
-    required this.usedStrategy,
-    this.resolvedData,
-    this.errorMessage,
-  });
-
-  @override
-  List<Object?> get props => [success, entityId, usedStrategy, resolvedData, errorMessage];
-}
-
-class SyncStatusSummary extends Equatable {
-  final int pendingCount;
-  final int syncedCount;
-  final int failedCount;
-  final int conflictCount;
-  final DateTime? lastSyncAt;
-  final bool isSyncing;
-
-  const SyncStatusSummary({
-    required this.pendingCount,
-    required this.syncedCount,
-    required this.failedCount,
-    required this.conflictCount,
-    this.lastSyncAt,
-    this.isSyncing = false,
-  });
-
-  int get totalCount => pendingCount + syncedCount + failedCount + conflictCount;
-
-  @override
-  List<Object?> get props => [
-        pendingCount,
-        syncedCount,
-        failedCount,
-        conflictCount,
-        lastSyncAt,
-        isSyncing,
-      ];
-}
-
-class SyncProgress extends Equatable {
-  final String phase;
-  final int currentItem;
-  final int totalItems;
-  final String? currentEntityId;
-  final double progressPercentage;
-  final String? statusMessage;
-
-  const SyncProgress({
-    required this.phase,
-    required this.currentItem,
-    required this.totalItems,
-    this.currentEntityId,
-    required this.progressPercentage,
-    this.statusMessage,
-  });
-
-  @override
-  List<Object?> get props => [
-        phase,
-        currentItem,
-        totalItems,
-        currentEntityId,
-        progressPercentage,
-        statusMessage,
-      ];
-}
-
-// === ARCHIVO: lib/data/repositories/sync_repository_impl.dart ===
-package lib.data.repositories;
-
-import 'package:field_app/data/datasources/local/task_local_datasource.dart';
-import 'package:field_app/data/datasources/remote/task_remote_datasource.dart';
-import 'package:field_app/domain/repositories/sync_repository.dart';
-import 'package:field_app/domain/entities/task_entity.dart';
-import 'package:field_app/core/network/network_info.dart';
-import 'package:uuid/uuid.dart';
-import 'package:either_dart/either.dart';
-import 'package:field_app/core/errors/failures.dart';
-
-class SyncRepositoryImpl implements SyncRepository {
-  final TaskLocalDataSource localDataSource;
-  final TaskRemoteDataSource remoteDataSource;
-  final NetworkInfo networkInfo;
-  final Uuid uuid;
-
-  SyncRepositoryImpl({
-    required this.localDataSource,
-    required this.remoteDataSource,
-    required this.networkInfo,
-    required this.uuid,
-  });
-
-  @override
-  Future<Either<Failure, void>> syncPendingTasks() async {
     try {
-      await syncAll();
-      return const Right(null);
-    } catch (e) {
-      return Left(SyncFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, SyncResult>> syncAllData() async {
-    try {
-      final result = await syncAll();
-      return Right(result);
-    } catch (e) {
-      return Left(SyncFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, ConflictResolutionResult>> resolveConflict(
-    String entityId,
-    ConflictResolutionStrategy strategy,
-  ) async {
-    return const Right(ConflictResolutionResult(
-      success: true,
-      entityId: '',
-      usedStrategy: ConflictResolutionStrategy.values,
-    ));
-  }
-
-  @override
-  Future<Either<Failure, List<SyncStatusSummary>>> getSyncStatusSummary() async {
-    return const Right([]);
-  }
-
-  @override
-  Future<Either<Failure, void>> retryFailedSync(String entityId) async {
-    return const Right(null);
-  }
-
-  @override
-  Future<Either<Failure, void>> cancelSync(String syncId) async {
-    return const Right(null);
-  }
-
-  @override
-  Stream<SyncProgress> get syncProgressStream => const Stream.empty();
-
-  @override
-  Future<void> recordSyncOperation({
-    required String entityType,
-    required int totalCount,
-    required int successCount,
-    required int failedCount,
-    required int conflictCount,
-  }) async {
-    // Record sync operation in local database
-    final status = SyncStatusModel.create(
-      id: uuid.v4(),
-      entityType: entityType,
-      entityId: uuid.v4(),
-      status: failedCount > 0 ? 'failed' : (conflictCount > 0 ? 'conflict' : 'synced'),
-      version: 1,
-    );
-    await localDataSource.saveSyncStatus(status);
-  }
-
-  Future<SyncResult> syncAll() async {
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      return const SyncResult(
-        totalSynced: 0,
-        totalFailed: 0,
-        totalConflicts: 0,
-        syncDuration: Duration.zero,
-      );
-    }
-
-    final pendingTasks = await localDataSource.getPendingSyncTasks();
-    if (pendingTasks.isEmpty) {
-      return const SyncResult(
-        totalSynced: 0,
-        totalFailed: 0,
-        totalConflicts: 0,
-        syncDuration: Duration.zero,
-      );
-    }
-
-    int synced = 0;
-    int failed = 0;
-    int conflicts = 0;
-
-    for (final task in pendingTasks) {
-      try {
-        await remoteDataSource.updateTask(task);
-        await localDataSource.markTaskAsSynced(task.id);
-        synced++;
-      } catch (e) {
-        failed++;
-      }
-    }
-
-    return SyncResult(
-      totalSynced: synced,
-      totalFailed: failed,
-      totalConflicts: conflicts,
-      syncDuration: Duration.zero,
-    );
-  }
-
-  Future<SyncResult> syncTask(String taskId) async {
-    return syncAll();
-  }
-
-  Future<List<TaskEntity>> getPendingSyncItems() async {
-    final tasks = await localDataSource.getPendingSyncTasks();
-    return tasks.map((m) => m.toEntity()).toList();
-  }
-
-  Future<DateTime?> getLastSyncTime() async {
-    return null;
-  }
-
-  Future<void> clearSyncQueue() async {
-    // Implementation
-  }
-}
-
-class SyncConflict extends Equatable {
-  final String taskId;
-  final TaskEntity localVersion;
-  final TaskEntity? remoteVersion;
-  final String conflictType;
-
-  const SyncConflict({
-    required this.taskId,
-    required this.localVersion,
-    this.remoteVersion,
-    required this.conflictType,
-  });
-
-  @override
-  List<Object?> get props => [taskId, localVersion, remoteVersion, conflictType];
-}
-
-
-// === ARCHIVO: lib/data/datasources/local/task_local_datasource.dart ===
-package field_app.data.datasources.local;
-
-import 'package:field_app/data/models/task_model.dart';
-import 'package:field_app/data/models/sync_status_model.dart';
-import 'package:sqflite/sqflite.dart';
-
-abstract class TaskLocalDataSource {
-  Future<List<TaskModel>> getAllTasks();
-  Future<List<TaskModel>> getPendingSyncTasks();
-  Future<TaskModel?> getTaskById(String id);
-  Future<void> saveTask(TaskModel task);
-  Future<void> saveTasks(List<TaskModel> tasks);
-  Future<void> updateTask(TaskModel task);
-  Future<void> deleteTask(String id);
-  Future<void> markTaskAsSynced(String id);
-  Future<void> markTaskAsFailed(String id, String error);
-  Future<void> markTaskAsConflict(String id);
-  Future<int> getPendingTasksCount();
-  Future<void> clearAllTasks();
-  Future<SyncStatusModel?> getSyncStatus(String entityId);
-  Future<void> saveSyncStatus(SyncStatusModel status);
-  Future<List<SyncStatusModel>> getAllSyncStatuses();
-  Future<void> updateTaskSyncStatus(String id, String syncStatus);
-  Future<DateTime?> getLastSyncTime();
-  Future<void> clearPendingSyncTasks();
-  Future<void> insertTask(TaskModel task);
-  Future<void> updateLastSyncTime(DateTime time);
-  Future<void> insertSyncStatus(SyncStatusModel status);
-}
-
-class TaskLocalDataSourceImpl implements TaskLocalDataSource {
-  final DatabaseHelper databaseHelper;
-  final Uuid _uuid;
-
-  TaskLocalDataSourceImpl({
-    required this.databaseHelper,
-    required this.uuid,
-  });
-
-  Future<Database> get _db async => await databaseHelper.database;
-
-  @override
-  Future<List<TaskModel>> getAllTasks() async {
-    final db = await _db;
-    final maps = await db.query('tasks', where: 'is_deleted = ?', whereArgs: [0]);
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<List<TaskModel>> getPendingSyncTasks() async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: 'sync_status = ? AND is_deleted = ?',
-      whereArgs: ['pending', 0],
-    );
-    return maps.map((map) => TaskModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<TaskModel?> getTaskById(String id) async {
-    final db = await _db;
-    final maps = await db.query(
-      'tasks',
-      where: 'id = ? AND is_deleted = ?',
-      whereArgs: [id, 0],
-    );
-    if (maps.isEmpty) return null;
-    return TaskModel.fromMap(maps.first);
-  }
-
-  @override
-  Future<void> saveTask(TaskModel task) async {
-    final db = await _db;
-    await db.insert(
-      'tasks',
-      task.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  @override
-  Future<void> saveTasks(List<TaskModel> tasks) async {
-    final db = await _db;
-    final batch = db.batch();
-    for (final task in tasks) {
-      batch.insert(
-        'tasks',
-        task.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
-    await batch.commit(noResult: true);
-  }
-
-  @override
-  Future<void> updateTask(TaskModel task) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      task.toMap(),
-      where: 'id = ?',
-      whereArgs: [task.id],
-    );
-  }
-
-  @override
-  Future<void> deleteTask(String id) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {'is_deleted': 1, 'updated_at': DateTime.now().toIso8601String()},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<void> markTaskAsSynced(String id) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {'sync_status': 'synced', 'updated_at': DateTime.now().toIso8601String()},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<void> markTaskAsFailed(String id, String error) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {
-        'sync_status': 'failed',
-        'updated_at': DateTime.now().toIso8601String(),
-      },
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<void> markTaskAsConflict(String id) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {'sync_status': 'conflict', 'updated_at': DateTime.now().toIso8601String()},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<int> getPendingTasksCount() async {
-    final db = await _db;
-    final result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM tasks WHERE sync_status = ? AND is_deleted = ?',
-      ['pending', 0],
-    );
-    return Sqflite.firstIntValue(result) ?? 0;
-  }
-
-  @override
-  Future<void> clearAllTasks() async {
-    final db = await _db;
-    await db.delete('tasks');
-  }
-
-  @override
-  Future<SyncStatusModel?> getSyncStatus(String entityId) async {
-    final db = await _db;
-    final maps = await db.query(
-      'sync_status',
-      where: 'entity_id = ?',
-      whereArgs: [entityId],
-    );
-    if (maps.isEmpty) return null;
-    return SyncStatusModel.fromMap(maps.first);
-  }
-
-  @override
-  Future<void> saveSyncStatus(SyncStatusModel status) async {
-    final db = await _db;
-    await db.insert(
-      'sync_status',
-      status.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  @override
-  Future<List<SyncStatusModel>> getAllSyncStatuses() async {
-    final db = await _db;
-    final maps = await db.query('sync_status', orderBy: 'created_at DESC');
-    return maps.map((map) => SyncStatusModel.fromMap(map)).toList();
-  }
-
-  @override
-  Future<void> updateTaskSyncStatus(String id, String syncStatus) async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {
-        'sync_status': syncStatus,
-        'updated_at': DateTime.now().toIso8601String(),
-      },
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  @override
-  Future<DateTime?> getLastSyncTime() async {
-    final db = await _db;
-    final maps = await db.query(
-      'sync_status',
-      where: 'entity_type = ?',
-      whereArgs: ['_meta'],
-      orderBy: 'last_sync_at DESC',
-      limit: 1,
-    );
-    if (maps.isEmpty) return null;
-    final lastSyncAt = maps.first['last_sync_at'];
-    if (lastSyncAt == null) return null;
-    return DateTime.tryParse(lastSyncAt.toString());
-  }
-
-  @override
-  Future<void> clearPendingSyncTasks() async {
-    final db = await _db;
-    await db.update(
-      'tasks',
-      {'sync_status': 'synced'},
-      where: 'sync_status = ?',
-      whereArgs: ['pending'],
-    );
-  }
-
-  @override
-  Future<void> insertTask(TaskModel task) async {
-    final db = await _db;
-    await db.insert(
-      'tasks',
-      task.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  @override
-  Future<void> updateLastSyncTime(DateTime time) async {
-    final db = await _db;
-    final existing = await db.query(
-      'sync_status',
-      where: 'entity_id = ?',
-      whereArgs: ['_last_sync'],
-    );
-    
-    if (existing.isEmpty) {
-      await db.insert('sync_status', {
-        'id': '_last_sync',
-        'entity_type': '_meta',
-        'entity_id': '_last_sync',
-        'status': 'synced',
-        'version': 1,
-        'last_sync_at': time.toIso8601String(),
-        'created_at': DateTime.now().toIso8601String(),
-        'updated_at': DateTime.now().toIso8601String(),
-        'retry_count': 0,
-      });
-    } else {
-      await db.update(
-        'sync_status',
-        {
-          'last_sync_at': time.toIso8601String(),
-          'updated_at': DateTime.now().toIso8601String(),
+      final result = await _repository.getAllTransactions();
+      result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _listState = TransactionListState.error;
         },
-        where: 'entity_id = ?',
-        whereArgs: ['_last_sync'],
+        (transactions) {
+          _transactions = transactions;
+          _listState = TransactionListState.loaded;
+        },
       );
+    } catch (e) {
+      _lastFailure = const OfflineFailure.database('Failed to load transactions');
+      _listState = TransactionListState.error;
+    }
+    notifyListeners();
+  }
+
+  Future<void> loadPendingTransactions() async {
+    _listState = TransactionListState.loading;
+    _lastFailure = null;
+    notifyListeners();
+
+    try {
+      final result = await _getPendingTransactionsUseCase();
+      result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _listState = TransactionListState.error;
+        },
+        (transactions) {
+          _transactions = transactions;
+          _listState = TransactionListState.loaded;
+        },
+      );
+    } catch (e) {
+      _lastFailure = const OfflineFailure.database('Failed to load pending transactions');
+      _listState = TransactionListState.error;
+    }
+    notifyListeners();
+  }
+
+  Future<bool> createTransaction({
+    required double amount,
+    required String currency,
+    required String transactionType,
+    String? description,
+    Map<String, dynamic>? metadata,
+  }) async {
+    _createState = TransactionCreateState.creating;
+    _lastFailure = null;
+    _successMessage = null;
+    notifyListeners();
+
+    try {
+      final result = await _createTransactionUseCase(
+        amount: amount,
+        currency: currency,
+        transactionType: transactionType,
+        description: description,
+        metadata: metadata,
+      );
+
+      return result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _createState = TransactionCreateState.error;
+          notifyListeners();
+          return false;
+        },
+        (transaction) {
+          _transactions.insert(0, transaction);
+          _createState = TransactionCreateState.success;
+          _successMessage = 'Transaction created successfully';
+          notifyListeners();
+          return true;
+        },
+      );
+    } on ValidationException catch (e) {
+      _lastFailure = ValidationFailure(e.fieldErrors);
+      _createState = TransactionCreateState.error;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _lastFailure = DatabaseFailure.transactionFailed(e.toString());
+      _createState = TransactionCreateState.error;
+      notifyListeners();
+      return false;
     }
   }
 
-  @override
-  Future<void> insertSyncStatus(SyncStatusModel status) async {
-    final db = await _db;
-    await db.insert(
-      'sync_status',
-      status.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+  Future<bool> updateTransaction(Transaction transaction) async {
+    _listState = TransactionListState.loading;
+    _lastFailure = null;
+    notifyListeners();
+
+    try {
+      final result = await _repository.updateTransaction(transaction);
+      return result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _listState = TransactionListState.error;
+          notifyListeners();
+          return false;
+        },
+        (updated) {
+          final index = _transactions.indexWhere((t) => t.id == updated.id);
+          if (index != -1) {
+            _transactions[index] = updated;
+          }
+          _listState = TransactionListState.loaded;
+          _successMessage = 'Transaction updated successfully';
+          notifyListeners();
+          return true;
+        },
+      );
+    } catch (e) {
+      _lastFailure = DatabaseFailure.transactionFailed(e.toString());
+      _listState = TransactionListState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> deleteTransaction(String id) async {
+    _listState = TransactionListState.loading;
+    _lastFailure = null;
+    notifyListeners();
+
+    try {
+      final result = await _repository.deleteTransaction(id);
+      return result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _listState = TransactionListState.error;
+          notifyListeners();
+          return false;
+        },
+        (_) {
+          _transactions.removeWhere((t) => t.id == id);
+          _listState = TransactionListState.loaded;
+          _successMessage = 'Transaction deleted successfully';
+          notifyListeners();
+          return true;
+        },
+      );
+    } catch (e) {
+      _lastFailure = DatabaseFailure.transactionFailed(e.toString());
+      _listState = TransactionListState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void selectTransaction(Transaction? transaction) {
+    _selectedTransaction = transaction;
+    notifyListeners();
+  }
+
+  Future<void> retryFailedTransaction(String id) async {
+    final index = _transactions.indexWhere((t) => t.id == id);
+    if (index != -1) {
+      final transaction = _transactions[index];
+      final updated = Transaction(
+        id: transaction.id,
+        externalId: transaction.externalId,
+        amount: transaction.amount,
+        currency: transaction.currency,
+        transactionType: transaction.transactionType,
+        description: transaction.description,
+        metadata: transaction.metadata,
+        createdAt: transaction.createdAt,
+        updatedAt: DateTime.now(),
+        version: transaction.version,
+        syncStatus: 'pending',
+        hash: transaction.hash,
+      );
+      await updateTransaction(updated);
+    }
+  }
+
+  void clearMessages() {
+    _lastFailure = null;
+    _successMessage = null;
+    notifyListeners();
+  }
+
+  void reset() {
+    _listState = TransactionListState.initial;
+    _createState = TransactionCreateState.initial;
+    _transactions = [];
+    _selectedTransaction = null;
+    _lastFailure = null;
+    _successMessage = null;
+    notifyListeners();
+  }
+}
+
+// === ARCHIVO: lib/presentation/providers/sync_provider.dart ===
+package offline_field_app.presentation.providers;
+
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:offline_field_app/core/network/network_info.dart';
+import 'package:offline_field_app/domain/repositories/sync_repository.dart';
+import 'package:offline_field_app/domain/entities/sync_record.dart';
+import 'package:offline_field_app/domain/usecases/sync_transactions.dart';
+import 'package:offline_field_app/domain/usecases/resolve_conflict.dart';
+import 'package:offline_field_app/core/errors/failures.dart';
+import 'package:offline_field_app/core/errors/exceptions.dart';
+
+enum SyncState { idle, checking, syncing, completed, error }
+enum ConflictResolutionState { none, detecting, resolved, manualRequired }
+
+class SyncProvider extends ChangeNotifier {
+  final SyncRepository _syncRepository;
+  final SyncTransactions _syncTransactionsUseCase;
+  final ResolveConflict _resolveConflictUseCase;
+  final NetworkInfo _networkInfo;
+
+  SyncProvider({
+    required SyncRepository syncRepository,
+    required SyncTransactions syncTransactionsUseCase,
+    required ResolveConflict resolveConflictUseCase,
+    required NetworkInfo networkInfo,
+  })  : _syncRepository = syncRepository,
+        _syncTransactionsUseCase = syncTransactionsUseCase,
+        _resolveConflictUseCase = resolveConflictUseCase,
+        _networkInfo = networkInfo {
+    _initConnectivityListener();
+  }
+
+  SyncState _syncState = SyncState.idle;
+  ConflictResolutionState _conflictState = ConflictResolutionState.none;
+  NetworkStatus _networkStatus = NetworkStatus.disconnected;
+  List<SyncRecord> _syncHistory = [];
+  SyncRecord? _lastSyncRecord;
+  Failure? _lastFailure;
+  String? _successMessage;
+  double _syncProgress = 0.0;
+  int _totalItems = 0;
+  int _processedItems = 0;
+  Map<String, dynamic>? _currentConflict;
+  StreamSubscription<NetworkStatus>? _connectivitySubscription;
+  Timer? _autoSyncTimer;
+  bool _autoSyncEnabled = false;
+
+  SyncState get syncState => _syncState;
+  ConflictResolutionState get conflictState => _conflictState;
+  NetworkStatus get networkStatus => _networkStatus;
+  List<SyncRecord> get syncHistory => List.unmodifiable(_syncHistory);
+  SyncRecord? get lastSyncRecord => _lastSyncRecord;
+  Failure? get lastFailure => _lastFailure;
+  String? get successMessage => _successMessage;
+  double get syncProgress => _syncProgress;
+  int get totalItems => _totalItems;
+  int get processedItems => _processedItems;
+  Map<String, dynamic>? get currentConflict => _currentConflict;
+  bool get isOnline => _networkStatus == NetworkStatus.connected;
+  bool get isSyncing => _syncState == SyncState.syncing;
+  bool get autoSyncEnabled => _autoSyncEnabled;
+  bool get hasConflicts => _conflictState == ConflictResolutionState.detecting ||
+                           _conflictState == ConflictResolutionState.manualRequired;
+
+  void _initConnectivityListener() {
+    _connectivitySubscription = _networkInfo.onConnectivityChanged.listen(
+      (status) {
+        final previousStatus = _networkStatus;
+        _networkStatus = status;
+        notifyListeners();
+        if (previousStatus == NetworkStatus.disconnected &&
+            status == NetworkStatus.connected) {
+          if (_autoSyncEnabled) {
+            syncPendingTransactions();
+          }
+        }
+      },
+    );
+    _checkInitialConnectivity();
+  }
+
+  Future<void> _checkInitialConnectivity() async {
+    await _networkInfo.checkConnectivity();
+    _networkStatus = _networkInfo.isConnected ? NetworkStatus.connected : NetworkStatus.disconnected;
+    notifyListeners();
+  }
+
+  Future<void> loadSyncHistory() async {
+    try {
+      final result = await _syncRepository.getSyncHistory();
+      result.fold(
+        (failure) {
+          _lastFailure = failure;
+        },
+        (records) {
+          _syncHistory = records;
+          if (records.isNotEmpty) {
+            _lastSyncRecord = records.first;
+          }
+        },
+      );
+    } catch (e) {
+      _lastFailure = OfflineFailure.database('Failed to load sync history');
+    }
+    notifyListeners();
+  }
+
+  Future<bool> syncPendingTransactions() async {
+    if (_syncState == SyncState.syncing) {
+      return false;
+    }
+
+    if (!isOnline) {
+      _lastFailure = const OfflineFailure.networkUnavailable();
+      notifyListeners();
+      return false;
+    }
+
+    _syncState = SyncState.syncing;
+    _lastFailure = null;
+    _successMessage = null;
+    _syncProgress = 0.0;
+    _processedItems = 0;
+    notifyListeners();
+
+    try {
+      final result = await _syncTransactionsUseCase();
+      return result.fold(
+        (failure) {
+          _handleSyncFailure(failure);
+          return false;
+        },
+        (syncResult) async {
+          _totalItems = syncResult['total'] ?? 0;
+          _processedItems = syncResult['processed'] ?? 0;
+          _syncProgress = _totalItems > 0 ? _processedItems / _totalItems : 1.0;
+
+          if (syncResult['conflicts'] != null && (syncResult['conflicts'] as List).isNotEmpty) {
+            _conflictState = ConflictResolutionState.detecting;
+            _currentConflict = syncResult['conflicts'].first as Map<String, dynamic>;
+          } else {
+            _conflictState = ConflictResolutionState.resolved;
+            _currentConflict = null;
+          }
+
+          await _saveSyncRecord(syncResult);
+          _syncState = SyncState.completed;
+          _successMessage = 'Sync completed: $_processedItems of $_totalItems items';
+          notifyListeners();
+          return true;
+        },
+      );
+    } on SyncConflictException catch (e) {
+      _conflictState = ConflictResolutionState.manualRequired;
+      _currentConflict = e.toConflictData();
+      _syncState = SyncState.error;
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _lastFailure = SyncFailure.serverError(e.toString());
+      _syncState = SyncState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void _handleSyncFailure(Failure failure) {
+    _syncState = SyncState.error;
+    _lastFailure = failure;
+    if (failure is SyncFailure) {
+      if (failure.code == 'timeout') {
+        _lastFailure = SyncFailure.timeout();
+      } else if (failure.code == 'unauthorized') {
+        _lastFailure = SyncFailure.unauthorized();
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> _saveSyncRecord(Map<String, dynamic> syncResult) async {
+    final record = SyncRecord(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      syncStatus: syncResult['success'] == true ? 'completed' : 'failed',
+      recordsProcessed: syncResult['processed'] ?? 0,
+      recordsFailed: syncResult['failed'] ?? 0,
+      conflictsDetected: (syncResult['conflicts'] as List?)?.length ?? 0,
+      startedAt: DateTime.now().subtract(const Duration(seconds: 30)),
+      completedAt: DateTime.now(),
+      errorDetails: _lastFailure?.message,
+    );
+
+    final result = await _syncRepository.saveSyncRecord(record);
+    result.fold(
+      (failure) {},
+      (_) {
+        _syncHistory.insert(0, record);
+        _lastSyncRecord = record;
+      },
     );
   }
-}
 
-// === ARCHIVO: lib/data/datasources/remote/task_remote_datasource.dart ===
-package field_app.data.datasources.remote;
-
-import 'package:dio/dio.dart';
-import 'package:field_app/data/models/task_model.dart';
-import 'package:field_app/core/errors/exceptions.dart';
-
-abstract class TaskRemoteDataSource {
-  Future<List<TaskModel>> getTasks();
-  Future<TaskModel> getTaskById(String id);
-  Future<TaskModel> createTask(TaskModel task);
-  Future<TaskModel> updateTask(TaskModel task);
-  Future<void> deleteTask(String id);
-  Future<List<TaskModel>> syncTasks(List<TaskModel> tasks);
-  Future<List<TaskModel>> getTasksSince(DateTime? since);
-}
-
-class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
-  final Dio _dio;
-
-  TaskRemoteDataSourceImpl({required Dio dio}) : _dio = dio;
-
-  @override
-  Future<List<TaskModel>> getTasks() async {
-    try {
-      final response = await _dio.get('/tasks');
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => TaskModel.fromJson(json)).toList();
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks');
+  Future<bool> resolveConflict({
+    required String entityId,
+    required String resolution,
+    Map<String, dynamic>? resolvedData,
+  }) async {
+    if (_currentConflict == null) {
+      return false;
     }
-  }
 
-  @override
-  Future<TaskModel> getTaskById(String id) async {
-    try {
-      final response = await _dio.get('/tasks/$id');
-      final data = response.data['data'] ?? response.data;
-      return TaskModel.fromJson(data);
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/$id');
-    }
-  }
+    _conflictState = ConflictResolutionState.detecting;
+    notifyListeners();
 
-  @override
-  Future<TaskModel> createTask(TaskModel task) async {
     try {
-      final response = await _dio.post('/tasks', data: task.toJson());
-      final data = response.data['data'] ?? response.data;
-      return TaskModel.fromJson(data);
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks');
-    }
-  }
-
-  @override
-  Future<TaskModel> updateTask(TaskModel task) async {
-    try {
-      final response = await _dio.put('/tasks/${task.id}', data: task.toJson());
-      final data = response.data['data'] ?? response.data;
-      return TaskModel.fromJson(data);
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/${task.id}');
-    }
-  }
-
-  @override
-  Future<void> deleteTask(String id) async {
-    try {
-      await _dio.delete('/tasks/$id');
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/$id');
-    }
-  }
-
-  @override
-  Future<List<TaskModel>> syncTasks(List<TaskModel> tasks) async {
-    try {
-      final response = await _dio.post(
-        '/tasks/sync',
-        data: {'tasks': tasks.map((t) => t.toJson()).toList()},
+      final result = await _resolveConflictUseCase(
+        entityId: entityId,
+        resolution: resolution,
+        resolvedData: resolvedData,
       );
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => TaskModel.fromJson(json)).toList();
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks/sync');
+
+      return result.fold(
+        (failure) {
+          _lastFailure = failure;
+          _conflictState = ConflictResolutionState.manualRequired;
+          notifyListeners();
+          return false;
+        },
+        (_) {
+          _conflictState = ConflictResolutionState.resolved;
+          _currentConflict = null;
+          _successMessage = 'Conflict resolved successfully';
+          notifyListeners();
+          return true;
+        },
+      );
+    } catch (e) {
+      _lastFailure = SyncFailure.serverError(e.toString());
+      _conflictState = ConflictResolutionState.manualRequired;
+      notifyListeners();
+      return false;
     }
+  }
+
+  void enableAutoSync({Duration interval = const Duration(minutes: 5)}) {
+    _autoSyncEnabled = true;
+    _autoSyncTimer?.cancel();
+    _autoSyncTimer = Timer.periodic(interval, (_) {
+      if (isOnline) {
+        syncPendingTransactions();
+      }
+    });
+    notifyListeners();
+  }
+
+  void disableAutoSync() {
+    _autoSyncEnabled = false;
+    _autoSyncTimer?.cancel();
+    _autoSyncTimer = null;
+    notifyListeners();
+  }
+
+  Future<void> checkAndSync() async {
+    if (!isOnline) {
+      return;
+    }
+
+    _syncState = SyncState.checking;
+    notifyListeners();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    final hasPending = await _checkPendingItems();
+    if (hasPending) {
+      await syncPendingTransactions();
+    } else {
+      _syncState = SyncState.idle;
+      notifyListeners();
+    }
+  }
+
+  Future<bool> _checkPendingItems() async {
+    try {
+      final result = await _syncRepository.getPendingOperationsCount();
+      return result.fold(
+        (_) => false,
+        (count) => count > 0,
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void clearConflict() {
+    _currentConflict = null;
+    _conflictState = ConflictResolutionState.none;
+    notifyListeners();
+  }
+
+  void clearMessages() {
+    _lastFailure = null;
+    _successMessage = null;
+    notifyListeners();
+  }
+
+  void reset() {
+    _syncState = SyncState.idle;
+    _conflictState = ConflictResolutionState.none;
+    _syncHistory = [];
+    _lastSyncRecord = null;
+    _lastFailure = null;
+    _successMessage = null;
+    _syncProgress = 0.0;
+    _totalItems = 0;
+    _processedItems = 0;
+    _currentConflict = null;
+    notifyListeners();
   }
 
   @override
-  Future<List<TaskModel>> getTasksSince(DateTime? since) async {
-    try {
-      final queryParams = <String, dynamic>{};
-      if (since != null) {
-        queryParams['since'] = since.toIso8601String();
-      }
-      final response = await _dio.get('/tasks', queryParameters: queryParams);
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => TaskModel.fromJson(json)).toList();
-    } on DioException catch (e) {
-      throw _handleDioError(e, '/tasks');
-    }
-  }
-
-  AppException _handleDioError(DioException e, String endpoint) {
-    switch (e.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return NetworkException(
-          message: 'Timeout connecting to server',
-          url: endpoint,
-          isConnectionError: false,
-          isTimeout: true,
-          isSslError: false,
-        );
-      case DioExceptionType.connectionError:
-        return NetworkException(
-          message: 'No internet connection',
-          url: endpoint,
-          isConnectionError: true,
-          isTimeout: false,
-          isSslError: false,
-        );
-      case DioExceptionType.badResponse:
-        final statusCode = e.response?.statusCode;
-        final message = e.response?.data?['message'] ?? 'Server error';
-        return ServerException(
-          message: message,
-          statusCode: statusCode,
-          endpoint: endpoint,
-        );
-      default:
-        return NetworkException(
-          message: e.message ?? 'Unknown error',
-          url: endpoint,
-          isConnectionError: false,
-          isTimeout: false,
-          isSslError: false,
-        );
-    }
+  void dispose() {
+    _connectivitySubscription?.cancel();
+    _autoSyncTimer?.cancel();
+    super.dispose();
   }
 }
 
-// === ARCHIVO: lib/domain/repositories/task_repository.dart ===
-package field_app.domain.repositories;
+// === ARCHIVO: lib/domain/repositories/transaction_repository.dart ===
+library;
 
-import 'package:field_app/domain/entities/task_entity.dart';
+import 'package:equatable/equatable.dart';
+import '../../domain/entities/transaction.dart';
+import '../../domain/entities/sync_record.dart';
 
-abstract class TaskRepository {
-  Future<List<TaskEntity>> getTasks();
-  Future<TaskEntity?> getTaskById(String id);
-  Future<List<TaskEntity>> getTasksByStatus(String status);
-  Future<List<TaskEntity>> getTasksByPriority(String priority);
-  Future<List<TaskEntity>> getPendingSyncTasks();
-  Future<TaskEntity> saveTask(TaskEntity task);
-  Future<void> deleteTask(String id);
-  Future<void> deleteAllTasks();
-  Future<int> getTaskCount();
-  Future<int> getPendingSyncCount();
-  Future<List<TaskEntity>> searchTasks(String query);
-  Future<void> updateTaskSyncStatus(String id, String syncStatus);
-  Future<void> incrementTaskVersion(String id);
-  Future<List<TaskEntity>> getTasksDueSoon(Duration within);
-  Future<List<TaskEntity>> getOverdueTasks();
-  Future<void> batchSaveTasks(List<TaskEntity> tasks);
-  Stream<List<TaskEntity>> watchTasks();
-  Stream<TaskEntity?> watchTask(String id);
-  Future<List<TaskEntity>> getRemoteTasks();
+abstract class TransactionRepository {
+  Future<Transaction> createTransaction(Transaction transaction);
+  Future<Transaction> updateTransaction(Transaction transaction);
+  Future<void> deleteTransaction(String id);
+  Future<Transaction?> getTransactionById(String id);
+  Future<Transaction?> getTransactionByExternalId(String externalId);
+  Future<Transaction?> getTransactionByHash(String operationHash);
+  Future<List<Transaction>> getAllTransactions();
+  Future<List<Transaction>> getTransactionsBySyncStatus(String syncStatus);
+  Future<List<Transaction>> getTransactionsByType(String transactionType);
+  Future<List<Transaction>> getTransactionsByDateRange(DateTime startDate, DateTime endDate);
+  Future<List<Transaction>> getPendingTransactions({int? limit, int? offset, String? transactionType, DateTime? fromDate, DateTime? toDate});
+  Future<int> getTransactionCount();
+  Future<int> getTransactionCountBySyncStatus(String syncStatus);
+  Future<int> getPendingCount();
+  Future<void> updateSyncStatus(String id, String syncStatus, {String? externalId});
+  Future<void> updateSyncStatusBatch(List<String> ids, String syncStatus, {String? externalId});
+  Stream<List<Transaction>> watchAllTransactions();
+  Stream<List<Transaction>> watchTransactionsBySyncStatus(String syncStatus);
+  Future<void> markAsSynced(String id, String externalId, int version);
+  Future<void> markAsFailed(String id, String errorDetails);
+  Future<List<Transaction>> getUnsyncedTransactions();
+  Future<Map<String, dynamic>> exportTransactions(String startDate, String endDate);
+  Future<void> importTransactions(Map<String, dynamic> data);
+  Future<Transaction?> findByIdempotencyKey(String idempotencyKey);
+  Future<void> incrementVersion(String id);
+  Future<List<SyncRecord>> getSyncRecordsForEntity(String entityId);
+  Future<Map<String, dynamic>?> syncTransaction(Transaction transaction);
+  Future<void> resolveConflict(String entityId, Map<String, dynamic> serverData, String resolution);
+  Future<void> forceSync(Transaction transaction);
+  Future<List<Transaction>> getServerTransactions();
+  Future<Transaction?> getByExternalId(String externalId);
+  Future<Transaction?> create(Transaction transaction);
+  Future<Transaction?> update(Transaction transaction);
+  Future<Transaction?> getServerTransactionById(String entityId);
+  Future<List<Transaction>> getPendingWithConflicts();
+}
+
+class TransactionFilter extends Equatable {
+  final String? syncStatus;
+  final String? transactionType;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final double? minAmount;
+  final double? maxAmount;
+  final String? currency;
+  final bool? isDeleted;
+
+  const TransactionFilter({
+    this.syncStatus,
+    this.transactionType,
+    this.startDate,
+    this.endDate,
+    this.minAmount,
+    this.maxAmount,
+    this.currency,
+    this.isDeleted,
+  });
+
+  TransactionFilter copyWith({
+    String? syncStatus,
+    String? transactionType,
+    DateTime? startDate,
+    DateTime? endDate,
+    double? minAmount,
+    double? maxAmount,
+    String? currency,
+    bool? isDeleted,
+  }) {
+    return TransactionFilter(
+      syncStatus: syncStatus ?? this.syncStatus,
+      transactionType: transactionType ?? this.transactionType,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      minAmount: minAmount ?? this.minAmount,
+      maxAmount: maxAmount ?? this.maxAmount,
+      currency: currency ?? this.currency,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        syncStatus,
+        transactionType,
+        startDate,
+        endDate,
+        minAmount,
+        maxAmount,
+        currency,
+        isDeleted,
+      ];
+}
+
+class TransactionResult extends Equatable {
+  final Transaction transaction;
+  final bool isNew;
+  final bool wasSynced;
+
+  const TransactionResult({
+    required this.transaction,
+    required this.isNew,
+    required this.wasSynced,
+  });
+
+  @override
+  List<Object?> get props => [transaction, isNew, wasSynced];
 }
 
 // === ARCHIVO: lib/domain/repositories/sync_repository.dart ===
+library;
+
+import 'package:equatable/equatable.dart';
+import '../../domain/entities/sync_record.dart';
+
 abstract class SyncRepository {
-  Future<List<SyncStatusEntity>> getPendingSyncItems();
+  Future<SyncRecord> createSyncRecord(SyncRecord record);
+  Future<SyncRecord> updateSyncRecord(SyncRecord record);
+  Future<void> deleteSyncRecord(String id);
+  Future<SyncRecord?> getSyncRecordById(String id);
+  Future<List<SyncRecord>> getAllSyncRecords();
+  Future<List<SyncRecord>> getSyncRecordsByStatus(String status);
+  Future<List<SyncRecord>> getPendingSyncRecords();
+  Future<List<SyncRecord>> getFailedSyncRecords();
+  Future<List<SyncRecord>> getCompletedSyncRecords();
+  Future<void> markAsPending(String id);
+  Future<void> markAsInProgress(String id);
+  Future<void> markAsCompleted(String id, {String? externalId});
+  Future<void> markAsFailed(String id, String errorDetails);
+  Future<void> markAsConflict(String id, String conflictData);
+  Future<int> getPendingCount();
+  Future<int> getFailedCount();
+  Future<int> getCompletedCount();
+  Future<void> clearCompletedRecords({DateTime? before});
+  Future<void> clearFailedRecords({DateTime? before});
+  Future<void> retryFailedRecords();
+  Future<void> cancelPendingSync();
+  Stream<List<SyncRecord>> watchSyncRecords();
+  Stream<List<SyncRecord>> watchPendingSyncRecords();
+  Future<Map<String, dynamic>> getSyncStatistics();
+  Future<void> updateRetryCount(String id);
+  Future<int> getRetryCount(String id);
+  Future<void> scheduleSync(String entityType, String entityId, String operationType);
+  Future<List<SyncRecord>> getSyncRecordsForEntity(String entityType, String entityId);
+  Future<void> removeSyncRecordsForEntity(String entityType, String entityId);
+  Future<void> updateConflictResolution(String id, String resolution, String resolvedData);
+  Future<SyncRecord?> getLatestSyncRecordForEntity(String entityType, String entityId);
+  Future<List<SyncRecord>> getSyncRecordsByOperationType(String operationType);
+  Future<void> bulkUpdateStatus(List<String> ids, String status);
+  Future<List<SyncRecord>> getConflictedRecords();
+  Future<void> resolveConflict(String id, String resolution, String resolvedData);
+  Future<void> cancelSync(String id);
+  Future<void> pauseSync(String id);
+  Future<void> resumeSync(String id);
+  Future<void> prioritizeSync(String id);
+  Future<void> deprioritizeSync(String id);
+  Future<SyncRecord> saveSyncRecord(SyncRecord record);
 }
 
-extension SyncRepositoryExtension on SyncRepository {
-  Future<List<SyncStatusEntity>> getPendingSyncItems() async {
-    // Default implementation - override in implementation class
-    return [];
+class SyncBatchResult extends Equatable {
+  final int totalRequested;
+  final int successfullySynced;
+  final int failed;
+  final int pending;
+  final Duration elapsedTime;
+  final List<String> failedIds;
+  final List<String> pendingIds;
+
+  const SyncBatchResult({
+    required this.totalRequested,
+    required this.successfullySynced,
+    required this.failed,
+    required this.pending,
+    required this.elapsedTime,
+    this.failedIds = const [],
+    this.pendingIds = const [],
+  });
+
+  bool get isFullySuccessful => failed == 0 && pending == 0;
+  bool get hasFailures => failed > 0;
+  bool get hasPending => pending > 0;
+  double get successRate => totalRequested > 0 ? successfullySynced / totalRequested : 0.0;
+
+  @override
+  List<Object?> get props => [
+        totalRequested,
+        successfullySynced,
+        failed,
+        pending,
+        elapsedTime,
+        failedIds,
+        pendingIds,
+      ];
+}
+
+class SyncConfiguration extends Equatable {
+  final int maxRetries;
+  final int retryDelaySeconds;
+  final int batchSize;
+  final bool autoSync;
+  final bool syncOnWifiOnly;
+  final bool syncOnCharging;
+  final String conflictStrategy;
+  final Duration syncInterval;
+  final Duration maxSyncDuration;
+
+  const SyncConfiguration({
+    this.maxRetries = 3,
+    this.retryDelaySeconds = 5,
+    this.batchSize = 50,
+    this.autoSync = true,
+    this.syncOnWifiOnly = false,
+    this.syncOnCharging = false,
+    this.conflictStrategy = 'last_write_wins',
+    this.syncInterval = const Duration(minutes: 15),
+    this.maxSyncDuration = const Duration(minutes: 5),
+  });
+
+  SyncConfiguration copyWith({
+    int? maxRetries,
+    int? retryDelaySeconds,
+    int? batchSize,
+    bool? autoSync,
+    bool? syncOnWifiOnly,
+    bool? syncOnCharging,
+    String? conflictStrategy,
+    Duration? syncInterval,
+    Duration? maxSyncDuration,
+  }) {
+    return SyncConfiguration(
+      maxRetries: maxRetries ?? this.maxRetries,
+      retryDelaySeconds: retryDelaySeconds ?? this.retryDelaySeconds,
+      batchSize: batchSize ?? this.batchSize,
+      autoSync: autoSync ?? this.autoSync,
+      syncOnWifiOnly: syncOnWifiOnly ?? this.syncOnWifiOnly,
+      syncOnCharging: syncOnCharging ?? this.syncOnCharging,
+      conflictStrategy: conflictStrategy ?? this.conflictStrategy,
+      syncInterval: syncInterval ?? this.syncInterval,
+      maxSyncDuration: maxSyncDuration ?? this.maxSyncDuration,
+    );
   }
+
+  @override
+  List<Object?> get props => [
+        maxRetries,
+        retryDelaySeconds,
+        batchSize,
+        autoSync,
+        syncOnWifiOnly,
+        syncOnCharging,
+        conflictStrategy,
+        syncInterval,
+        maxSyncDuration,
+      ];
 }
 
 ```

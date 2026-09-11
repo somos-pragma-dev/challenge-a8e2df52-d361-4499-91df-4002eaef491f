@@ -1,131 +1,113 @@
-import 'package:flutter/material.dart';
-
 class AppConstants {
-  static const String appName = 'Field App';
-  static const String appVersion = '1.0.0';
+  static const String appName = 'Field Operations';
+  static const int primaryColor = 0xFF1E88E5;
+  static const int errorColor = 0xFFD32F2F;
+  static const int successColor = 0xFF388E3C;
+  static const int warningColor = 0xFFF57C00;
   
-  static const Color primaryColor = Color(0xFF1565C0);
-  static const Color secondaryColor = Color(0xFF43A047);
-  static const Color errorColor = Color(0xFFD32F2F);
-  static const Color warningColor = Color(0xFFFFA000);
-  static const Color surfaceColor = Color(0xFFF5F5F5);
-  
-  static const String baseUrl = 'https://api.fieldapp.example.com';
+  static const String baseUrl = 'https://api.fieldoperations.example.com';
   static const String apiVersion = 'v1';
   static const int connectionTimeout = 30000;
   static const int receiveTimeout = 30000;
   
-  static const int maxRetryAttempts = 3;
-  static const int retryDelayMilliseconds = 1000;
-  static const int syncIntervalMinutes = 5;
-  static const int conflictResolutionTimeoutSeconds = 30;
-  
-  static const String databaseName = 'field_app.db';
+  static const String databaseName = 'field_operations.db';
   static const int databaseVersion = 1;
   
-  static const int taskTableId = 1;
-  static const String taskTableName = 'tasks';
-  static const String syncStatusTableName = 'sync_status';
+  static const String transactionsTable = 'transactions';
+  static const String syncRecordsTable = 'sync_records';
+  static const String pendingOperationsTable = 'pending_operations';
   
-  static const int maxOfflineTasks = 1000;
-  static const int batchSyncSize = 50;
+  static const int schemaVersion = 1;
+  static const int minSchemaVersion = 1;
   
-  static const Duration networkCheckInterval = Duration(seconds: 10);
-  static const Duration syncDebounceDelay = Duration(seconds: 2);
+  static const int maxRetryAttempts = 3;
+  static const int retryDelaySeconds = 5;
+  static const int syncBatchSize = 50;
   
   static const String syncStatusPending = 'pending';
-  static const String syncStatusSynced = 'synced';
+  static const String syncStatusInProgress = 'in_progress';
+  static const String syncStatusCompleted = 'completed';
   static const String syncStatusFailed = 'failed';
   static const String syncStatusConflict = 'conflict';
   
-  static const String taskPriorityLow = 'low';
-  static const String taskPriorityMedium = 'medium';
-  static const String taskPriorityHigh = 'high';
+  static const String conflictStrategyLastWriteWins = 'last_write_wins';
+  static const String conflictStrategyServerWins = 'server_wins';
+  static const String conflictStrategyClientWins = 'client_wins';
+  static const String conflictStrategyManual = 'manual';
   
-  static const String taskStatusPending = 'pending';
-  static const String taskStatusInProgress = 'in_progress';
-  static const String taskStatusCompleted = 'completed';
-  static const String taskStatusCancelled = 'cancelled';
+  static const int defaultPageSize = 20;
+  static const int maxPageSize = 100;
   
-  static const String conflictResolutionStrategyServer = 'server';
-  static const String conflictResolutionStrategyClient = 'client';
-  static const String conflictResolutionStrategyManual = 'manual';
-  static const String conflictResolutionStrategyLastWriteWins = 'last_write_wins';
-  
-  static const List<String> validTaskPriorities = [
-    taskPriorityLow,
-    taskPriorityMedium,
-    taskPriorityHigh,
+  static const List<String> supportedTransactionTypes = [
+    'sale',
+    'return',
+    'exchange',
+    'refund',
+    'adjustment',
   ];
   
-  static const List<String> validTaskStatuses = [
-    taskStatusPending,
-    taskStatusInProgress,
-    taskStatusCompleted,
-    taskStatusCancelled,
+  static const List<String> supportedCurrencies = [
+    'USD',
+    'EUR',
+    'GBP',
+    'MXN',
+    'COP',
   ];
   
-  static const int maxTitleLength = 200;
-  static const int maxDescriptionLength = 2000;
-  
-  static const String locale = 'es_ES';
-  static const String timezone = 'America/Bogota';
-  
-  static const bool enableOfflineMode = true;
-  static const bool enableAutoSync = true;
-  static const bool enableConflictDetection = true;
-  static const bool enableDetailedLogs = true;
-  
-  static const Map<String, dynamic> defaultHeaders = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-App-Version': appVersion,
-    'X-Platform': 'android',
-    'X-Locale': locale,
+  static const Map<String, int> maxAmountsByCurrency = {
+    'USD': 10000,
+    'EUR': 10000,
+    'GBP': 8000,
+    'MXN': 200000,
+    'COP': 40000000,
   };
+  
+  static const Map<String, String> currencySymbols = {
+    'USD': '\$',
+    'EUR': '€',
+    'GBP': '£',
+    'MXN': '\$',
+    'COP': '\$',
+  };
+  
+  static String getApiUrl(String endpoint) {
+    return '$baseUrl/$apiVersion/$endpoint';
+  }
+  
+  static String formatAmount(double amount, String currency) {
+    final symbol = currencySymbols[currency] ?? currency;
+    return '$symbol${amount.toStringAsFixed(2)}';
+  }
+  
+  static bool isValidAmount(double amount, String currency) {
+    final maxAmount = maxAmountsByCurrency[currency];
+    if (maxAmount == null) return false;
+    return amount > 0 && amount <= maxAmount;
+  }
+  
+  static bool isValidTransactionType(String type) {
+    return supportedTransactionTypes.contains(type);
+  }
+  
+  static bool isValidCurrency(String currency) {
+    return supportedCurrencies.contains(currency);
+  }
 }
 
-class DatabaseConstants {
-  static const String tasksTable = '''
-    CREATE TABLE tasks (
-      id TEXT PRIMARY KEY,
-      title TEXT NOT NULL,
-      description TEXT,
-      priority TEXT NOT NULL,
-      status TEXT NOT NULL,
-      due_date INTEGER,
-      assigned_to TEXT,
-      location_lat REAL,
-      location_lng REAL,
-      created_at INTEGER NOT NULL,
-      updated_at INTEGER NOT NULL,
-      synced_at INTEGER,
-      sync_status TEXT NOT NULL,
-      version INTEGER NOT NULL DEFAULT 1,
-      is_deleted INTEGER NOT NULL DEFAULT 0,
-      metadata TEXT
-    )
-  ''';
-  
-  static const String syncStatusTable = '''
-    CREATE TABLE sync_status (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      entity_type TEXT NOT NULL,
-      entity_id TEXT NOT NULL,
-      operation TEXT NOT NULL,
-      status TEXT NOT NULL,
-      created_at INTEGER NOT NULL,
-      updated_at INTEGER NOT NULL,
-      error_message TEXT,
-      retry_count INTEGER NOT NULL DEFAULT 0
-    )
-  ''';
-  
-  static const String createTasksIndex = '''
-    CREATE INDEX idx_tasks_sync_status ON tasks(sync_status)
-  ''';
-  
-  static const String createSyncStatusIndex = '''
-    CREATE INDEX idx_sync_status_entity ON sync_status(entity_type, entity_id)
-  ''';
+class DatabaseColumns {
+  static const String id = 'id';
+  static const String uuid = 'uuid';
+  static const String externalId = 'external_id';
+  static const String amount = 'amount';
+  static const String currency = 'currency';
+  static const String transactionType = 'transaction_type';
+  static const String description = 'description';
+  static const String metadata = 'metadata';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+  static const String version = 'version';
+  static const String syncStatus = 'sync_status';
+  static const String hash = 'hash';
+  static const String operationType = 'operation_type';
+  static const String conflictData = 'conflict_data';
 }

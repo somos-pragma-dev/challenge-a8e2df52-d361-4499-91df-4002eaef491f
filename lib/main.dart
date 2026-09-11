@@ -1,98 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:get_it/get_it.dart';
-import 'package:field_app/core/constants/app_constants.dart';
-import 'package:field_app/core/network/network_info.dart';
-import 'package:field_app/core/errors/failures.dart';
-import 'package:field_app/core/errors/exceptions.dart';
-import 'package:field_app/data/datasources/local/task_local_datasource.dart';
-import 'package:field_app/data/datasources/local/database_helper.dart';
-import 'package:field_app/data/datasources/remote/task_remote_datasource.dart';
-import 'package:field_app/data/repositories/task_repository_impl.dart';
-import 'package:field_app/data/repositories/sync_repository_impl.dart';
-import 'package:field_app/domain/repositories/task_repository.dart';
-import 'package:field_app/domain/repositories/sync_repository.dart';
-import 'package:field_app/domain/usecases/get_local_tasks.dart';
-import 'package:field_app/domain/usecases/save_task_local.dart';
-import 'package:field_app/domain/usecases/sync_tasks.dart';
-import 'package:field_app/domain/usecases/resolve_conflict.dart';
-import 'package:field_app/presentation/bloc/task/task_bloc.dart';
-import 'package:field_app/presentation/bloc/task/task_event.dart';
-import 'package:field_app/presentation/bloc/sync/sync_bloc.dart';
-import 'package:field_app/presentation/bloc/sync/sync_event.dart';
-import 'package:field_app/presentation/pages/home_page.dart';
-
-final GetIt sl = GetIt.instance;
-
-Future<void> initializeDependencies() async {
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
-  
-  final databaseHelper = DatabaseHelper();
-  await databaseHelper.database;
-  sl.registerLazySingleton<DatabaseHelper>(() => databaseHelper);
-  
-  sl.registerLazySingleton<TaskLocalDataSource>(
-    () => TaskLocalDataSourceImpl(databaseHelper: sl()),
-  );
-  
-  sl.registerLazySingleton<TaskRemoteDataSource>(
-    () => TaskRemoteDataSourceImpl(dio: sl()),
-  );
-  
-  sl.registerLazySingleton<TaskRepository>(
-    () => TaskRepositoryImpl(
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
-  
-  sl.registerLazySingleton<SyncRepository>(
-    () => SyncRepositoryImpl(
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-      networkInfo: sl(),
-    ),
-  );
-  
-  sl.registerLazySingleton(() => GetLocalTasks(sl()));
-  sl.registerLazySingleton(() => SaveTaskLocal(sl()));
-  sl.registerLazySingleton(() => SyncTasks(sl()));
-  sl.registerLazySingleton(() => ResolveConflict(sl()));
-  
-  sl.registerFactory(() => TaskBloc(
-    getLocalTasks: sl(),
-    saveTaskLocal: sl(),
-    resolveConflict: sl(),
-  ));
-  
-  sl.registerFactory(() => SyncBloc(
-    syncTasks: sl(),
-    networkInfo: sl(),
-  ));
-}
+import 'package:offline_field_app/core/constants/app_constants.dart';
+import 'package:offline_field_app/core/network/network_info.dart';
+import 'package:offline_field_app/data/datasources/local/database_helper.dart';
+import 'package:offline_field_app/data/datasources/local/transaction_local_datasource.dart';
+import 'package:offline_field_app/data/datasources/local/sync_local_datasource.dart';
+import 'package:offline_field_app/data/repositories/transaction_repository_impl.dart';
+import 'package:offline_field_app/data/repositories/sync_repository_impl.dart';
+import 'package:offline_field_app/domain/repositories/transaction_repository.dart';
+import 'package:offline_field_app/domain/repositories/sync_repository.dart';
+import 'package:offline_field_app/domain/usecases/create_transaction.dart';
+import 'package:offline_field_app/domain/usecases/get_pending_transactions.dart';
+import 'package:offline_field_app/domain/usecases/sync_transactions.dart';
+import 'package:offline_field_app/domain/usecases/resolve_conflict.dart';
+import 'package:offline_field_app/presentation/providers/transaction_provider.dart';
+import 'package:offline_field_app/presentation/providers/sync_provider.dart';
+import 'package:offline_field_app/presentation/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await initializeDependencies();
+  final databaseHelper = DatabaseHelper();
+  await databaseHelper.database;
   
-  runApp(const FieldApp());
+  runApp(const OfflineFieldApp());
 }
 
-class FieldApp extends StatelessWidget {
-  const FieldApp({super.key});
+class OfflineFieldApp extends StatelessWidget {
+  const OfflineFieldApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider<TaskBloc>(
-          create: (context) => sl<TaskBloc>()..add(LoadTasksEvent()),
+        Provider<DatabaseHelper>(
+          create: (_) => DatabaseHelper(),
         ),
-        BlocProvider<SyncBloc>(
-          create: (context) => sl<SyncBloc>()..add(StartNetworkMonitoring()),
+        Provider<TransactionLocalDataSource>(
+          create: (context) => TransactionLocalDataSourceImpl(
+            databaseHelper: context.read<DatabaseHelper>(),
+          ),
+        ),
+        Provider<SyncLocalDataSource>(
+          create: (context) => SyncLocalDataSourceImpl(
+            databaseHelper: context.read<DatabaseHelper>(),
+          ),
+        ),
+        Provider<TransactionRepository>(
+          create: (context) => TransactionRepositoryImpl(
+            localDataSource: context.read<TransactionLocalDataSource>(),
+            syncLocalDataSource: context.read<SyncLocalDataSource>(),
+          ),
+        ),
+        Provider<SyncRepository>(
+          create: (context) => SyncRepositoryImpl(
+            localDataSource: context.read<SyncLocalDataSource>(),
+          ),
+        ),
+        Provider<CreateTransaction>(
+          create: (context) => CreateTransaction(
+            repository: context.read<TransactionRepository>(),
+          ),
+        ),
+        Provider<GetPendingTransactions>(
+          create: (context) => GetPendingTransactions(
+            repository: context.read<TransactionRepository>(),
+          ),
+        ),
+        Provider<SyncTransactions>(
+          create: (context) => SyncTransactions(
+            transactionRepository: context.read<TransactionRepository>(),
+            syncRepository: context.read<SyncRepository>(),
+          ),
+        ),
+        Provider<ResolveConflict>(
+          create: (context) => ResolveConflict(
+            syncRepository: context.read<SyncRepository>(),
+          ),
+        ),
+        StreamProvider<NetworkStatus>(
+          create: (context) => NetworkInfoImpl().onConnectivityChanged,
+          initialData: NetworkStatus.unknown,
+        ),
+        ChangeNotifierProvider<TransactionProvider>(
+          create: (context) => TransactionProvider(
+            createTransaction: context.read<CreateTransaction>(),
+            getPendingTransactions: context.read<GetPendingTransactions>(),
+          ),
+        ),
+        ChangeNotifierProvider<SyncProvider>(
+          create: (context) => SyncProvider(
+            syncTransactions: context.read<SyncTransactions>(),
+            resolveConflict: context.read<ResolveConflict>(),
+          ),
         ),
       ],
       child: MaterialApp(
@@ -104,24 +104,8 @@ class FieldApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
           useMaterial3: true,
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            elevation: 0,
-          ),
-          cardTheme: CardThemeData(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            filled: true,
-          ),
         ),
-        home: const HomePage(),
+        home: const HomeScreen(),
       ),
     );
   }

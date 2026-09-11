@@ -1,15 +1,15 @@
-# Implementación de una arquitectura offline-first en una aplicación de campo
+# Implementación de una app de campo offline-first
 
-La aplicación de campo de una compañía de logística necesita funcionar sin conexión a internet para que los trabajadores puedan continuar sus tareas en áreas remotas. La arquitectura debe permitir la sincronización de datos cuando la conexión se restablezca, manejando conflictos y asegurando la consistencia de la información.
+La aplicación de campo debe permitir a los agentes realizar operaciones de manera eficiente tanto en línea como sin conexión. Los agentes deben poder registrar transacciones, consultar datos y sincronizar la información cuando vuelvan a tener conectividad. La aplicación debe manejar la sincronización de datos de manera idempotente para evitar duplicados y mantener la consistencia de la información.
 
 ## Informacion General
 
 | Campo | Valor |
 |-------|-------|
 | **Tema** | Arquitectura offline-first en Flutter |
-| **Nivel** | junior-l3 |
+| **Nivel** | senior-l2 |
 | **Tipo** | practical |
-| **Tiempo estimado** | 2 semanas |
+| **Tiempo estimado** | 40 horas |
 
 ## Fases del Reto
 
@@ -38,85 +38,85 @@ La aplicación de campo de una compañía de logística necesita funcionar sin c
 
 </details>
 
-### Fase 1: Diseño de la arquitectura offline-first
+### Fase 1: Diseño del modelo de datos y persistencia local
 
-**Objetivo:** Definir la estructura de la aplicación que permita el funcionamiento sin conexión y la sincronización de datos al recuperar la conexión.
+**Objetivo:** Definir el modelo de datos y la estrategia de persistencia local para la aplicación.
 
-**Tiempo estimado:** 3 días
+**Tiempo estimado:** 10 horas
 
 **Instrucciones:**
 
-- Identificar los componentes clave de la arquitectura (almacenamiento local, sincronización de datos, manejo de conflictos).
-- Establecer criterios de aceptación para la fase de diseño.
+- Identificar los datos que deben ser almacenados localmente.
+- Definir el modelo de datos para las transacciones y consultas.
+- Establecer una estrategia para la persistencia local que garantice la idempotencia y la consistencia.
 
-**Entregable:** Diagrama de la arquitectura propuesta y documento de diseño detallado.
+**Entregable:** Modelo de datos y estrategia de persistencia local documentados.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Considerar patrones de arquitectura comunes para aplicaciones offline-first.
-- Evaluar diferentes estrategias para el manejo de conflictos de datos.
+- Considerar el uso de un sistema de base de datos local.
+- Evaluar diferentes opciones para la persistencia de datos.
 
 </details>
 
-### Fase 2: Implementación del almacenamiento local
+### Fase 2: Implementación de la lógica de negocio y widgets
 
-**Objetivo:** Implementar el almacenamiento local de datos para permitir el funcionamiento de la aplicación sin conexión.
+**Objetivo:** Implementar la lógica de negocio y los widgets necesarios para la interacción del usuario.
 
-**Tiempo estimado:** 5 días
+**Tiempo estimado:** 15 horas
 
 **Instrucciones:**
 
-- Seleccionar una solución de almacenamiento local adecuada para Flutter.
-- Implementar la persistencia de datos críticos para el funcionamiento offline de la aplicación.
-- Establecer criterios de aceptación para la implementación del almacenamiento local.
+- Desarrollar los widgets para la entrada y visualización de datos.
+- Implementar la lógica de negocio para el registro y consulta de transacciones.
+- Asegurar que la aplicación funcione correctamente tanto en línea como sin conexión.
 
-**Entregable:** Código fuente que implementa el almacenamiento local de datos.
+**Entregable:** Widgets y lógica de negocio implementados y funcionales.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Investigar y seleccionar una solución de almacenamiento local que se integre bien con Flutter.
-- Considerar la eficiencia y el rendimiento del almacenamiento local.
+- Utilizar patrones de diseño adecuados para la separación de la lógica de negocio y la interfaz de usuario.
+- Implementar mecanismos para manejar la conectividad y la sincronización de datos.
 
 </details>
 
-### Fase 3: Implementación de la sincronización de datos
+### Fase 3: Sincronización de datos y manejo de conflictos
 
-**Objetivo:** Implementar la sincronización de datos entre el almacenamiento local y el servidor cuando la conexión se restablezca.
+**Objetivo:** Implementar la sincronización de datos y el manejo de conflictos cuando la aplicación vuelve a tener conectividad.
 
-**Tiempo estimado:** 5 días
+**Tiempo estimado:** 10 horas
 
 **Instrucciones:**
 
-- Diseñar y implementar un mecanismo de sincronización de datos.
-- Manejar conflictos de datos durante la sincronización.
-- Establecer criterios de aceptación para la implementación de la sincronización de datos.
+- Desarrollar la lógica para la sincronización de datos con el servidor.
+- Implementar mecanismos para manejar conflictos de datos durante la sincronización.
+- Asegurar que la sincronización sea idempotente y no genere duplicados.
 
-**Entregable:** Código fuente que implementa la sincronización de datos.
+**Entregable:** Lógica de sincronización de datos y manejo de conflictos implementados.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Investigar y seleccionar un mecanismo de sincronización de datos adecuado para Flutter.
-- Considerar diferentes estrategias para el manejo de conflictos de datos durante la sincronización.
+- Utilizar técnicas de sincronización optimista o pesimista.
+- Implementar mecanismos para la resolución de conflictos de datos.
 
 </details>
 
 ## Dimensiones Evaluadas
 
-- **queEs**: ¿Qué es una arquitectura offline-first y por qué es importante para una aplicación de campo?
-- **paraQueSirve**: ¿Para qué sirve el almacenamiento local en una arquitectura offline-first?
-- **comoSeUsa**: ¿Cómo se usa un mecanismo de sincronización de datos en una arquitectura offline-first?
-- **erroresComunes**: ¿Cuáles son los errores comunes al implementar una arquitectura offline-first y cómo se pueden evitar?
-- **queDecisionesImplica**: ¿Qué decisiones implica el diseño de una arquitectura offline-first para una aplicación de campo?
+- **queEs**: ¿Qué es la arquitectura offline-first y por qué es importante en una aplicación de campo?
+- **paraQueSirve**: ¿Para qué sirve la separación de la lógica de negocio y la interfaz de usuario en una aplicación Flutter?
+- **comoSeUsa**: ¿Cómo se usa un sistema de base de datos local para la persistencia de datos en una aplicación Flutter?
+- **erroresComunes**: ¿Cuáles son los errores comunes al implementar una aplicación offline-first y cómo se pueden evitar?
+- **queDecisionesImplica**: ¿Qué decisiones implica la implementación de la sincronización de datos y el manejo de conflictos en una aplicación offline-first?
 
 ## Criterios de Evaluacion
 
-- Definición clara de la arquitectura offline-first.
-- Implementación efectiva del almacenamiento local de datos.
-- Implementación efectiva de la sincronización de datos.
-- Manejo adecuado de conflictos de datos durante la sincronización.
+- Definición clara del modelo de datos y la estrategia de persistencia local.
+- Implementación funcional de los widgets y la lógica de negocio.
+- Implementación efectiva de la sincronización de datos y el manejo de conflictos.
 
 ## Como trabajar con un asistente de IA
 
