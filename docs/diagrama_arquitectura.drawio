@@ -1,0 +1,204 @@
+<mxfile host="app.diagrams.net" modified="2024-01-15T00:00:00.000Z" agent="Flutter" version="21.0.0" type="device">
+  <diagram id="arquitectura-offline-first" name="Arquitectura Offline-First">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- TÍTULO PRINCIPAL -->
+        <mxCell id="title" value="ARQUITECTURA OFFLINE-FIRST - APLICACIÓN DE CAMPO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- CAPA DE PRESENTACIÓN -->
+        <mxCell id="presentation-layer" value="PRESENTATION LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F4FD;strokeColor=#1E88E5;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- TASK BLOC -->
+        <mxCell id="task-bloc" value="TaskBloc&#xa;(Gestión de Estado Tareas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="130" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- SYNC BLOC -->
+        <mxCell id="sync-bloc" value="SyncBloc&#xa;(Gestión de Sincronización)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- PAGES -->
+        <mxCell id="pages" value="Pages&#xa;(HomePage, TaskList, TaskDetail)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="270" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- WIDGETS -->
+        <mxCell id="widgets" value="Widgets&#xa;(TaskCard, SyncIndicator, OfflineBanner)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- FLECHA PRESENTATION -> DOMAIN -->
+        <mxCell id="arrow-pd1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="task-bloc" target="domain-layer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- CAPA DE DOMINIO -->
+        <mxCell id="domain-layer" value="DOMAIN LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="280" y="80" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- ENTITIES -->
+        <mxCell id="entities" value="Entities&#xa;• TaskEntity&#xa;• SyncStatusEntity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="300" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- REPOSITORIES (CONTRACTS) -->
+        <mxCell id="repositories" value="Repositories (Abstract)&#xa;• TaskRepository&#xa;• SyncRepository" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="300" y="210" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- USE CASES -->
+        <mxCell id="usecases" value="Use Cases&#xa;• GetLocalTasks&#xa;• SaveTaskLocal&#xa;• SyncTasks&#xa;• ResolveConflict" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="300" y="290" width="160" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- FLECHA DOMAIN -> DATA -->
+        <mxCell id="arrow-dd1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="repositories" target="data-layer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- CAPA DE DATOS -->
+        <mxCell id="data-layer" value="DATA LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FB8C00;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- MODELS -->
+        <mxCell id="models" value="Models&#xa;• TaskModel&#xa;• SyncStatusModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="540" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- LOCAL DATASOURCE -->
+        <mxCell id="local-ds" value="Local DataSource&#xa;• TaskLocalDataSource&#xa;• DatabaseHelper (SQLite)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="540" y="210" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- REMOTE DATASOURCE -->
+        <mxCell id="remote-ds" value="Remote DataSource&#xa;• TaskRemoteDataSource (Dio)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="540" y="290" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- REPOSITORY IMPLS -->
+        <mxCell id="repo-impls" value="Repository Implementations&#xa;• TaskRepositoryImpl&#xa;• SyncRepositoryImpl" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F57C00;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="540" y="370" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- FLECHA DATA -> INFRA -->
+        <mxCell id="arrow-di1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#455A64;strokeWidth=2;" edge="1" parent="1" source="local-ds" target="infra-layer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- CAPA DE INFRAESTRUCTURA -->
+        <mxCell id="infra-layer" value="INFRASTRUCTURE LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#E91E63;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="760" y="80" width="200" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- DATABASE -->
+        <mxCell id="database" value="SQLite Database&#xa;(Almacenamiento Local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="780" y="130" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- NETWORK -->
+        <mxCell id="network" value="Network Layer&#xa;• Dio HTTP Client&#xa;• NetworkInfo (Connectivity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="780" y="200" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- EXTERNAL API -->
+        <mxCell id="external-api" value="External API&#xa;(Backend Server)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD9;strokeColor=#D81B60;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="780" y="280" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- CONEXIONES LATERALES -->
+        <mxCell id="arrow-sync1" value="Detecta&#xa;Conectividad" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E91E63;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sync-bloc" target="network">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-sync2" value="Sincroniza&#xa;Datos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#43A047;strokeWidth=2;" edge="1" parent="1" source="usecases" target="repo-impls">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- CAJA DE FLUJO DE DATOS -->
+        <mxCell id="flow-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;" vertex="1" parent="1">
+          <mxGeometry x="40" y="430" width="920" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-title" value="FLUJO DE DATOS - OPERACIONES OFFLINE-FIRST" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="440" width="300" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- FLUJO 1: LECTURA -->
+        <mxCell id="flow1" value="1. READ: UI → TaskBloc → GetLocalTasks → TaskRepository → TaskLocalDataSource → SQLite → Datos Locales" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#2196F3;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="470" width="880" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- FLUJO 2: ESCRITURA -->
+        <mxCell id="flow2" value="2. WRITE: UI → TaskBloc → SaveTaskLocal → TaskRepository → TaskLocalDataSource → SQLite (sync_status='pending') → UI Actualizada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#4CAF50;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="60" y="515" width="880" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- FLUJO 3: SINCRONIZACIÓN -->
+        <mxCell id="flow3" value="3. SYNC: SyncBloc (conexión) → SyncTasks → Compara versiones → Envía a servidor → Actualiza sync_status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF9800;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="60" y="560" width="880" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- CAJA DE CONFLICTOS -->
+        <mxCell id="conflict-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#F44336;" vertex="1" parent="1">
+          <mxGeometry x="40" y="630" width="920" height="140" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="conflict-title" value="MANEJO DE CONFLICTOS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="60" y="640" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- DETECCIÓN -->
+        <mxCell id="detection" value="DETECCIÓN&#xa;• Comparar versión local vs servidor&#xa;• Comparar timestamps (updated_at)&#xa;• Marcar como 'conflict' si difieren" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
+          <mxGeometry x="60" y="670" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- ESTRATEGIAS -->
+        <mxCell id="strategies" value="ESTRATEGIAS DE RESOLUCIÓN&#xa;• Server Wins (servidor prevalece)&#xa;• Client Wins (cliente prevalece)&#xa;• Last Write Wins (timestamp más reciente)&#xa;• Manual (usuario elige)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
+          <mxGeometry x="280" y="670" width="280" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- RESOLUCIÓN -->
+        <mxCell id="resolution" value="RESOLUCIÓN&#xa;• ResolveConflict Use Case&#xa;• Actualizar sync_status&#xa;• Notificar a la UI&#xa;• Reanudar sincronización" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A2E;align=center;" vertex="1" parent="1">
+          <mxGeometry x="580" y="670" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- LEYENDA -->
+        <mxCell id="legend" value="LEYENDA:&#xa;■ Capa Presentación&#xa;■ Capa Dominio&#xa;■ Capa Datos&#xa;■ Capa Infraestructura" style="text;html=1;strokeColor=#BDBDBD;fillColor=#FAFAFA;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#616161;" vertex="1" parent="1">
+          <mxGeometry x="820" y="430" width="130" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- ESTADO DE SINCRONIZACIÓN -->
+        <mxCell id="sync-status-title" value="TABLAS DE SINCRONIZACIÓN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+          <mxGeometry x="850" y="540" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sync-status-pending" value="pending - Pendiente de sincronizar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF9800;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="820" y="565" width="150" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sync-status-synced" value="synced - Sincronizado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4CAF50;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="820" y="590" width="150" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sync-status-failed" value="failed - Error en sincronización" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F44336;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="820" y="615" width="150" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sync-status-conflict" value="conflict - Conflicto detectado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9C27B0;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="820" y="640" width="150" height="20" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
